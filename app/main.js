@@ -10,11 +10,11 @@ define([
     "lib/soma.min",
     "lib/phaser.min",
     // COMMANDS
-    "commands/start_application",
-    "commands/preload_assets",
-    "commands/create_world",
+    "commands/start_application_command",
+    "commands/preload_assets_command",
+    "commands/create_world_command",
     // MEDIATORS
-    "mediators/test",
+    "mediators/player_mediator",
     // OTHER
     "util/log",
     "util/config"
@@ -29,7 +29,7 @@ function(
     preload_assets_command,
     create_world_command,
     // MEDIATORS
-    test_mediator,
+    player_mediator,
     // OTHER
     log,
     config
@@ -63,7 +63,7 @@ function(
             // this.injector.mapClass('game_model', berghain2.GameModel, true);
 
             // Mediator
-            this.mediators.create(berghain2.TestMediator, {replace_me:"with a PhaserIO object"});
+            
 
             // Views
             // E.G this.createTemplate(anatomy.MenuView, this.element.querySelector('.soma-menu'));
