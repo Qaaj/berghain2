@@ -1,0 +1,16 @@
+var Foo = function()
+{
+
+    var privateStaticMethod = function() {};
+    var privateStaticVariable = "foo";
+
+    var constructor = function Foo(foo, bar)
+    {
+        var privateMethod = function() {};
+        this.publicMethod = function() {};
+    };
+
+    constructor.publicStaticMethod = function() {};
+
+    return constructor;
+}();
