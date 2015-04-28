@@ -4,7 +4,7 @@
 
     var TestMediator = function(target, dispatcher, mediators, lo) {
 
-    	lo.g(target);
+    	lo.g("MEDIATOR","we can add custom Phaser objects to our mediators. WEEEE. This is just a test object:", target);
 
         dispatcher.addEventListener('event', function(event) {
 

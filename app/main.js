@@ -56,7 +56,7 @@ function(
             // E.G. this.injector.mapClass('content_model', anatomy.ContentModel, true);
 
             // Mediator
-            this.mediators.create(berghain2.TestMediator, {text:"Testing"});
+            this.mediators.create(berghain2.TestMediator, {replace_me:"with a PhaserIO object"});
 
             // Views
             // E.G this.createTemplate(anatomy.MenuView, this.element.querySelector('.soma-menu'));

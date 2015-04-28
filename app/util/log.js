@@ -4,7 +4,7 @@
         var Log = function() {
 
         var enabled = true;
-        var verbose = true;
+        var verbose = false;
 
         var tracesEnabled = ["MODEL", "MEDIATOR", "COMMAND", "VIEW","EVENT","ERROR","USER","PHYSICS","APPLICATION"];
         // tracesEnabled = ["APPLICATION"];
