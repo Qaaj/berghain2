@@ -11,6 +11,8 @@ define([
     "lib/phaser.min",
     // COMMANDS
     "commands/start_application",
+    "commands/preload_assets",
+    "commands/create_world",
     // MEDIATORS
     "mediators/test",
     // OTHER
@@ -24,6 +26,8 @@ function(
     phaser,
     // COMMANDS
     start_application_command,
+    preload_assets_command,
+    create_world_command,
     // MEDIATORS
     test_mediator,
     // OTHER
@@ -50,10 +54,13 @@ function(
             this.injector.mapClass('config', berghain2.Config, true);
 
             // Commands
-            this.commands.add("start_application",berghain2.StartApplication)
+            this.commands.add("start_application",berghain2.StartApplicationCommand);
+            this.commands.add("preload_assets",berghain2.PreloadAssetsCommand);
+            this.commands.add("create_world",berghain2.CreateWorldCommand);
+
 
             // Model
-            // E.G. this.injector.mapClass('content_model', anatomy.ContentModel, true);
+            // this.injector.mapClass('game_model', berghain2.GameModel, true);
 
             // Mediator
             this.mediators.create(berghain2.TestMediator, {replace_me:"with a PhaserIO object"});
