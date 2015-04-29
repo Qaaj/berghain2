@@ -5,9 +5,9 @@
 
 * Berghain2.com - THE GAME
 
-
-
 * Version 0.1
+
+* Doc with ideas at https://docs.google.com/document/d/1BwV3h55eOatf0nTIxCOrz5LlpF0ImkBqtb9kZEixW-M/edit
 
 
 ### How do I get set up? ###
@@ -97,6 +97,15 @@ The StartApplicationCommand will be executed when you dispatch a "start_applicat
 
 
 ** Phaser.IO - http://phaser.io/ ** 
+
+Docs for PhaserIO are on http://phaser.io/docs
+
+I personally prefer the offline version, found by downloading the github repo at https://github.com/photonstorm/phaser/tree/master/docs
+
+You will need to setup a webserver for local access (phaser can't run through local files - Use PHP server as described for the game, on a different port)
+
+The docs for Phaser are very clear, Actionscript-like in the way things are done. If you need help on doing something, I recommend checking out the hundreds of examples at 
+http://phaser.io/examples
 
 
 
