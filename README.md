@@ -12,18 +12,35 @@
 
 ### How do I get set up? ###
 
-* Setting Up:
+**Setting Up:**
 
  - Pull/Fetch repo
  - $ cd *repo directory* 
  - $ php -S localhost:9200
  - In the browser, go to http://localhost:9200
 
-* Dependencies
+**Dependencies**
 
- We use the following JS Libs:
+We use the following JS Libs:
 
-## RequireJS ## 
+**RequireJS **
+
+Docs at http://requirejs.org/
+
+RequireJS manages the imports of the classes used in our project. Since we use SOMA.js, we only have to import them once, in **main.js**
+
+When you add a new JS class file, please import it. You can do this as follows.
+
+*define([    
+    "commands/start_application_command"
+], 
+
+function(
+    start_application_command,
+{
+*
+
+This will import the StartApplicationCommand class. First line points to the file location, second is a name we give to the import.
 
 * Database configuration
 * How to run tests
