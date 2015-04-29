@@ -135,6 +135,8 @@ I created a handy logger class that we can use instead of console.log(..);
 
 * Please follow the code formatting used in the files. I use SublimeText with the JavaScript Beautify plugin
 
+ - Download SublimeText
+ - Install Package Control from https://packagecontrol.io/installation
  - Open SublimeText
  - CMD + SHIFT + P - "Install Packages"
  - Select Javascript Beautify to install
