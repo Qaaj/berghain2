@@ -7,8 +7,21 @@
         this.execute = function(event) {
 
             lo.g("COMMAND", "Creating HUD");
+
+            showIntroText();
+        }
+
+        function showIntroText() {
+            var screenWidth = game.width;
+            var centerX = screenWidth / 2;
+
+            var screenHeight = game.height;
+            var centerY = screenHeight / 2;
+
+            var text = game.add.bitmapText(centerX, 50, "carrier_command", "GET INTO BERGHAIN", 34);
             
-            var text = game.add.bitmapText(10, 100, "carrier_command", "GET INTO BERGHAIN", 34);
+            // Setting text offset (to center) here text because I can 't do it in the add bitmap constructor?
+            text.x -= (text.width / 2)
         }
 
     };
