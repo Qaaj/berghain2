@@ -23,9 +23,7 @@
 
 We use the following JS Libs:
 
-**RequireJS **
-
-Docs at http://requirejs.org/
+**RequireJS - http://requirejs.org/**
 
 RequireJS manages the imports of the classes used in our project. Since we use SOMA.js, we only have to import them once, in **main.js**
 
@@ -36,7 +34,8 @@ When you add a new JS class file, please import it. You can do this as follows. 
 >    "commands/start_application_command"
 > ], 
 > 
-> function(
+> function
+> (
 >    start_application_command
 > )
 
@@ -64,7 +63,7 @@ It's recommended to map all the commands in the main.js class
 
 E.G. Dispatch the preload_assets command. Listen to events or write a command to listen for it
 
-*listening *
+*listening*
 
 > dispatcher.addEventListener('event', function(event) {});
 
@@ -75,27 +74,29 @@ If you don't have access to the dispatcher object, add it in the constructor cla
 
 > mediators.create(berghain2.PlayerMediator, player); 
 
-E.G. Add a mediator for an object, in this case the Player object. To access the mediators object, just add in in the constructor of the class, SOMAjs handles the injection.
+Add a mediator for an object, in this case the Player object. To access the mediators object, just add in in the constructor of the class, SOMAjs handles the injection.
            
 
 **Map classes (singleton)**
 
 > this.injector.mapClass('lo', berghain2.Log, true); 
 
-E.G. The log class. See further in the document on how to use this. Acces the "lo" class anywhere in the application by adding it in the constructor, SOMAjs handles the injections
+The log class. See further in the document on how to use this. Acces the "lo" class anywhere in the application by adding it in the constructor, SOMAjs handles the injections
 
 **Map value**
 
 > injector.mapValue("game", new Phaser.Game(..)); 
 
-E.G. Map the game object with the name 'game'. Access the 'game' object anywhere in the application by adding it in the constructor. SOMAjs handles the injections
+Map the game object with the name 'game'. Access the 'game' object anywhere in the application by adding it in the constructor. SOMAjs handles the injections
 
 **Commands**
 
 > this.commands.add("start_application",berghain2.StartApplicationCommand); 
 
-E.G. The StartApplicationCommand will be executed when you dispatch a "start_application" event
+The StartApplicationCommand will be executed when you dispatch a "start_application" event
 
+
+** Phaser.IO - http://phaser.io/ ** 
 
 
 
@@ -103,8 +104,6 @@ E.G. The StartApplicationCommand will be executed when you dispatch a "start_app
 
 ### Contribution guidelines ###
 
-* TODO: Tests
-* TODO: Code Review
 * Please follow the code formatting used in the files. I use SublimeText with the JavaScript Beautify plugin
 
  - Open SublimeText
