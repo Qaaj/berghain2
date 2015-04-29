@@ -7,8 +7,8 @@
         this.execute = function(event) {
 
             lo.g("COMMAND", "Creating HUD");
- 
-            console.log("++++++++++++++++++++++++++++");
+            
+            var text = game.add.bitmapText(10, 100, "carrier_command", "GET INTO BERGHAIN", 34);
         }
 
     };
