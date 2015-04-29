@@ -13,6 +13,7 @@ define([
     "commands/start_application_command",
     "commands/preload_assets_command",
     "commands/create_world_command",
+    "commands/create_hud_command",
     // MEDIATORS
     "mediators/player_mediator",
     // OTHER
@@ -28,6 +29,7 @@ function(
     start_application_command,
     preload_assets_command,
     create_world_command,
+    create_hud_command,
     // MEDIATORS
     player_mediator,
     // OTHER
@@ -57,7 +59,7 @@ function(
             this.commands.add("start_application",berghain2.StartApplicationCommand);
             this.commands.add("preload_assets",berghain2.PreloadAssetsCommand);
             this.commands.add("create_world",berghain2.CreateWorldCommand);
-
+            this.commands.add("create_hud",berghain2.CreateHudCommand);
 
             // Model
             // this.injector.mapClass('game_model', berghain2.GameModel, true);

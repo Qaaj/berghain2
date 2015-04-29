@@ -8,16 +8,20 @@
 
             lo.g("COMMAND", "Creating World");
 
+            initGamePhysics();
+            createBackground();
+            createFloor();
+            createSky();
+            createPlayer();
 
+             dispatcher.dispatch('create_hud');
+        }
+
+        function initGamePhysics() {
             //  We're going to be using physics, so enable the Arcade Physics system
             game.physics.startSystem(Phaser.Physics.ARCADE);
             game.stage.smoothed = false;
             game.physics.setBoundsToWorld();
-
-            createBackground();
-            createFloor();            
-            createSky();
-            createPlayer();
         }
 
         function createBackground() {
@@ -36,12 +40,11 @@
 
                 bmd.rect(0, y, window.innerWidth, y + 2, Phaser.Color.getWebRGB(c));
 
-
                 y += 2;
             }
         }
 
-        function createFloor(){
+        function createFloor() {
             // Floor
 
             var env = game.add.group();
@@ -61,7 +64,7 @@
             game.add.sprite(0, 0, "cloud");
         }
 
-        function createPlayer(){
+        function createPlayer() {
             // Create the player 
             var player = game.add.sprite(50, game.world.height - 64 - 96, 'punker')
 
