@@ -109,7 +109,27 @@ http://phaser.io/examples
 
 
 
+** The lo.g class ** 
 
+I created a handy logger class that we can use instead of console.log(..);
+
+- Can be enabled/disabled universally (production vs dev)
+- Has custom colour codes so you can see where your trace comes from. (Mediator? Event? etc)
+- You can enable/disable traces by type (e.g. Only see the logs coming from Events)
+- The verbose boolean toggles long/short traces (do we want to see just text or also the objects that are traced)
+- Takes a many parameters as you want (string, int, object, object, etc)
+
+*USAGE*
+
+- To enable the logger in the class you are working on, simply add it to the constructor and SOMAjs handles the injection, e.g.
+
+> berghain2.StartApplicationCommand = function(dispatcher, injector, lo) { }
+
+- To log, simply type:
+
+> lo.g("COMMAND", "This is a trace coming from the StartApplicationCommand, "Here is some more information", {this:"is an object"});
+
+- You can enable/disable logging in the class file, found under app/util/log.js
 
 ### Contribution guidelines ###
 
