@@ -13,7 +13,7 @@
             game.load.spritesheet('punker', 'assets/punker.png', 96,96);
             game.load.image('moon', 'assets/moon.png');
             game.load.image('logo', 'assets/logo.png');
-
+            game.load.image('cloud', 'assets/cloud.png');
             
         }
 
