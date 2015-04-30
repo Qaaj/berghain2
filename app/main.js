@@ -14,8 +14,12 @@ define([
     "commands/preload_assets_command",
     "commands/create_world_command",
     "commands/create_hud_command",
+    "commands/game_object_created_command",
     // MEDIATORS
     "mediators/player_mediator",
+    "mediators/game_mediator",
+    //INTERFACES
+    "interfaces/input",
     // OTHER
     "util/log",
     "util/config"
@@ -30,8 +34,12 @@ function(
     preload_assets_command,
     create_world_command,
     create_hud_command,
+    game_object_created_command,
     // MEDIATORS
     player_mediator,
+    game_mediator,
+    //INTERFACES
+    input_interface,
     // OTHER
     log,
     config
@@ -56,10 +64,12 @@ function(
             this.injector.mapClass('config', berghain2.Config, true);
 
             // Commands
+            // Startup Commands
             this.commands.add("start_application",berghain2.StartApplicationCommand);
             this.commands.add("preload_assets",berghain2.PreloadAssetsCommand);
             this.commands.add("create_world",berghain2.CreateWorldCommand);
             this.commands.add("create_hud",berghain2.CreateHudCommand);
+            this.commands.add("game_object_created",berghain2.GameObjectCreatedCommand);
 
             // Model
             // this.injector.mapClass('game_model', berghain2.GameModel, true);

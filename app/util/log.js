@@ -19,7 +19,7 @@
         colors["USER"] = "color:magenta; background:#dddddd;";
         colors["PHYSICS"] = "color:navy; background:#dddddd;";
         colors["MODEL"] = "color:seagreen; background:#dddddd;";
-
+        
 
 
         var constructor = function Log() {};

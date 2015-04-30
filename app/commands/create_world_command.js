@@ -2,11 +2,13 @@
 
     'use strict';
 
-    berghain2.CreateWorldCommand = function(dispatcher, mediators, lo, config, game) {
+    berghain2.CreateWorldCommand = function(dispatcher, mediators, lo, config, game, input) {
 
         this.execute = function(event) {
 
             lo.g("COMMAND", "Creating World");
+
+            console.log(input.isLeftDown);
 
             initGamePhysics();
             createBackground();
