@@ -17,8 +17,6 @@
                 },
                 create: function() {
                     dispatcher.dispatch('game_object_created'); // The game object has been created, can now be injected in the game mediator, input interface etc > this triggers the game_object_created_command
-                    
-                    //dispatcher.dispatch('create_world');
                 },
                 update: function() {
                     dispatcher.dispatch('game_update');
