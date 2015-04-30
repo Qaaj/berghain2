@@ -8,12 +8,12 @@
 
             lo.g("COMMAND", "Initializing states");
 
-            game.state.add('Boot', Candy.Boot);
-            game.state.add('Preloader', Candy.Preloader);
-            game.state.add('MainMenu', Candy.MainMenu);
-            game.state.add('Game', Candy.Game);
+           /* game.state.add('Boot', berghain2.Boot);
+            /*game.state.add('Preloader', berghain2.Preloader);
+            game.state.add('MainMenu', berghain2.MainMenu);
+            game.state.add('Game', berghain2.Game); 
 
-            game.state.start('Boot'); 
+            game.state.start('Boot'); */
         }
 
     };
