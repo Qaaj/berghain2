@@ -1,8 +1,8 @@
-(function(berghain2) {
+(function (berghain2) {
 
     'use strict';
 
-    berghain2.PlayerMediator = function(target, game, dispatcher, mediators, lo, input, state_model) {
+    berghain2.PlayerMediator = function (target, game, dispatcher, mediators, lo, input, state_model) {
 
         lo.g("MEDIATOR", "Player mediator instantiated", target);
 
@@ -23,25 +23,17 @@
         //console.log( window.env);
         var state = state_model.PLAYER_GROUND;
 
-        dispatcher.addEventListener('change_player_state', function(event) {
+        dispatcher.addEventListener('change_player_state', function (event) {
 
             state = event.params.data;
-
-
-
-        });
-
-
-
-
-        dispatcher.addEventListener('game_update', function(event) {
-
-            state.update(target);
             
-
+        });
+        
+        dispatcher.addEventListener('game_update', function (event) {
+            
+            state.update(target);
 
         });
-
     };
 
 
