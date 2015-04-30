@@ -18,21 +18,21 @@
 			}
 
 			if (input.goLeft) {
-                target.animations.play('left');
+                target.frame = 27;
                 target.position.x -= 2;
             }
             if (input.goUp) {
                 target.body.velocity.y = -300;
             }
             if (input.goRight) {
-                target.animations.play('right');
+                target.frame = 22;
                 target.position.x += 2;
             }
             if (input.goDown) {}
 
             if (!input.goLeft && !input.goRight) {
                 target.animations.stop();
-                target.frame = 2;
+                target.frame = 23;
             }
 		}
 		
