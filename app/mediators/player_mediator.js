@@ -21,6 +21,7 @@
         // TODO add collisions with floor
         //window.env.enableBodyDebug = true;
         //console.log( window.env);
+        
         var state = state_model.PLAYER_GROUND;
 
         dispatcher.addEventListener('change_player_state', function (event) {
