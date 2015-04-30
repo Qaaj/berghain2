@@ -7,21 +7,21 @@
         this.execute = function(event) {
 
             lo.g("COMMAND", "Creating World");
-             initGamePhysics();
+
+
+            initGamePhysics();
             createBackground();
             createFloor();
             createSky();
             createPlayer();
 
-             dispatcher.dispatch('create_hud');
-
-            
-
+            dispatcher.dispatch('create_hud');
         }
 
         function initGamePhysics() {
             //  We're going to be using physics, so enable the Arcade Physics system
             game.physics.startSystem(Phaser.Physics.ARCADE);
+            game.stage.smoothed = false;
             game.physics.setBoundsToWorld();
         }
 
@@ -49,22 +49,10 @@
             // Floor
 
             var env = game.add.group();
-            env.enableBody = true;
 
             for (var i = 0; i < 20; i++) {
-               var block =  env.create(i * 128, window.innerHeight - 64, 'ground', Math.floor(Math.random() * 4));
-               block.body.immovable = true;
-               block.body.allowGravity = false;
+                env.create(i * 128, window.innerHeight - 64, 'ground', Math.floor(Math.random() * 4));
             };
-
-
-            
-
-
-
-         
-
-            window.env = env;
 
         }
 

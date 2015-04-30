@@ -16,12 +16,9 @@
              // Create the mediator for the game object
             mediators.create(berghain2.GameMediator, game);
 
-
-
-        }
-
-        
-
+            
+            dispatcher.dispatch('init_states');
+        }    
     };
 
 })(window.berghain2 = window.berghain2 || {});

@@ -1,4 +1,4 @@
-(function(anatomy) {
+(function(berghain2) {
 
     'use strict';
 

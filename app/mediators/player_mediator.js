@@ -19,7 +19,7 @@
         target.animations.add('right', [10, 11, 12, 13, 14, 15, 16, 17], 10, true)
 
         // TODO add collisions with floor
-        window.env.enableBodyDebug = true;
+       // window.env.enableBodyDebug = true;
         console.log( window.env);
         var state = state_model.PLAYER_GROUND;
 
