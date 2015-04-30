@@ -8,7 +8,6 @@
 
             lo.g("COMMAND", "Creating World");
 
-            console.log(input.isLeftDown);
 
             initGamePhysics();
             createBackground();

@@ -18,8 +18,13 @@ define([
     // MEDIATORS
     "mediators/player_mediator",
     "mediators/game_mediator",
-    //INTERFACES
+    // MODELS
+    "models/state_model",
+    // INTERFACES
     "interfaces/input",
+    // STATES,
+    "states/player_ground",
+    "states/player_jump",
     // OTHER
     "util/log",
     "util/config"
@@ -38,8 +43,13 @@ function(
     // MEDIATORS
     player_mediator,
     game_mediator,
-    //INTERFACES
-    input_interface,
+    // MODELS
+    state_model,
+    // INTERFACES
+    input_interface,    
+    // STATES
+    player_ground_state,
+    player_jump_state,
     // OTHER
     log,
     config
@@ -63,6 +73,8 @@ function(
             this.injector.mapClass('lo', berghain2.Log, true);
             this.injector.mapClass('config', berghain2.Config, true);
 
+            // States
+
             // Commands
             // Startup Commands
             this.commands.add("start_application",berghain2.StartApplicationCommand);
@@ -72,7 +84,7 @@ function(
             this.commands.add("game_object_created",berghain2.GameObjectCreatedCommand);
 
             // Model
-            // this.injector.mapClass('game_model', berghain2.GameModel, true);
+            this.injector.mapClass('state_model', berghain2.StateModel, true);
 
             // Mediator
             

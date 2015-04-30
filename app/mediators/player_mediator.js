@@ -2,13 +2,14 @@
 
     'use strict';
 
-    berghain2.PlayerMediator = function(target, game, dispatcher, mediators, lo, input) {
+    berghain2.PlayerMediator = function(target, game, dispatcher, mediators, lo, input, state_model) {
 
         lo.g("MEDIATOR", "Player mediator instantiated", target);
 
+        console.log(state_model);
 
         // THIS HAS TO HAPPEN SOMEWHERE ELSE
-         game.physics.arcade.gravity.y = 2500;
+        game.physics.arcade.gravity.y = 2500;
 		game.physics.enable(target, Phaser.Physics.ARCADE);     
 
 		target.body.collideWorldBounds = true;   
@@ -18,26 +19,13 @@
 
         // TODO add collisions with floor
 
+        var state = state_model.PLAYER_GROUND;
 
         dispatcher.addEventListener('game_update', function(event) {
 
-            if (input.goLeft) {
-                target.animations.play('left');
-                target.position.x -= 2;
-            }
-            if (input.goUp) {
-                target.body.velocity.y = -300;
-            }
-            if (input.goRight) {
-                target.animations.play('right');
-                target.position.x += 2;
-            }
-            if (input.goDown) {}
+        	state.update(target);
 
-            if (!input.goLeft && !input.goRight) {
-                target.animations.stop();
-                target.frame = 2;
-            }
+            
         });
 
     };
