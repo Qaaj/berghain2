@@ -21,6 +21,7 @@ define([
     "mediators/game_mediator",
     // MODELS
     "models/state_model",
+    "models/player_model",
     // INTERFACES
     "interfaces/input",
     // STATES,
@@ -49,6 +50,7 @@ function(
     game_mediator,
     // MODELS
     state_model,
+    player_model,
     // INTERFACES
     input_interface,    
     // STATES
@@ -89,6 +91,8 @@ function(
 
             // Model
             this.injector.mapClass('state_model', berghain2.StateModel, true);
+            //this.injector.mapClass('player_model', berghain2.PlayerModel, true);           
+             
         },
         start: function() {
 
