@@ -25,6 +25,7 @@ define([
     "interfaces/input",
     // STATES,
     "states/app_boot",
+    "states/app_playing",
     "states/player_ground",
     "states/player_jump",
     // OTHER
@@ -52,6 +53,7 @@ function(
     input_interface,    
     // STATES
     app_boot,
+    app_playing,
     player_ground_state,
     player_jump_state,
     // OTHER
@@ -75,12 +77,9 @@ function(
 
             // Misc class
             this.injector.mapClass('lo', berghain2.Log, true);
-            this.injector.mapClass('config', berghain2.Config, true);
-
-            // States
-
+            this.injector.mapClass('config', berghain2.Config, true);            
+            
             // Commands
-            // Startup Commands
             this.commands.add("start_application",berghain2.StartApplicationCommand);
             this.commands.add("preload_assets",berghain2.PreloadAssetsCommand);
             this.commands.add("create_world",berghain2.CreateWorldCommand);
@@ -90,15 +89,6 @@ function(
 
             // Model
             this.injector.mapClass('state_model', berghain2.StateModel, true);
-
-            // Mediator
-            
-
-            // Views
-            // E.G this.createTemplate(anatomy.MenuView, this.element.querySelector('.soma-menu'));
-          
-
-
         },
         start: function() {
 

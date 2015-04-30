@@ -1,25 +1,42 @@
-(function(berghain2) {
+(function (berghain2) {
 
     'use strict';
 
-    var Boot = function(dispatcher, input, lo, config, state_model) {
+    var Boot = function (game, input) {
 
-        this.create = function(target) {
-             lo.g("STATE", "Entering Boot state!");
+        this.name = "Application boot state";
 
- 
+        this.init = function (target) {
+            console.log("> APP BOOT INIT");
         }
 
-        this.update = function(target) {
+        this.preload = function (target) {
 
+        }
 
- 
+        this.create = function (target) {
+            console.log("-------> " + input);
+            
+            var text = game.add.bitmapText(100, 50, "carrier_command", "WELCOME TO BERGHAIN II", 34);
+            game.add.bitmapText(100, 100, "carrier_command", "CLICK TO START", 34);
+
+            //TODO Replace by input inject, COULDN'T USE INPUT INJECT HERE?
+            var higherButton = this.game.add.button(160, 100, "higher", this.clickedHigher, this);
+        }
+
+        this.clickedHigher = function () {
+            game.state.start('Playing'); 
+        }
+
+        this.update = function (target) {
+
+        }
+
+        this.shutdown = function (target) {
+
         }
 
     };
-
-    // ContentModel.prototype.clear = function() {
-    // };
 
     berghain2.Boot = Boot;
 
