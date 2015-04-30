@@ -22,7 +22,7 @@
                 target.position.x -= 2;
             }
             if (input.goUp) {
-                target.body.velocity.y = -300;
+                // target.body.velocity.y = -300;
             }
             if (input.goRight) {
                 target.frame = 22;

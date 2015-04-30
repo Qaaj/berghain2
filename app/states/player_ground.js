@@ -23,7 +23,7 @@
                 target.position.x -= 2;
             }
             if (input.goUp) {
-                target.body.velocity.y = -300;
+                target.body.velocity.y = -1000;
             }
             if (input.goRight) {
                 target.animations.play('right');
