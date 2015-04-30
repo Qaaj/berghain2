@@ -16,7 +16,7 @@
             createSky();
             createPlayer();
 
-             dispatcher.dispatch('create_hud');
+            dispatcher.dispatch('create_hud');
         }
 
         function initGamePhysics() {
