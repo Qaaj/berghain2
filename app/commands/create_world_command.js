@@ -8,7 +8,6 @@
 
             lo.g("COMMAND", "Creating World");
 
-            console.log(input.isLeftDown);
 
             initGamePhysics();
             createBackground();
@@ -68,7 +67,7 @@
 
         function createPlayer() {
             // Create the player 
-            var player = game.add.sprite(50, game.world.height - 64 - 96, 'punker')
+            var player = game.add.sprite(50, 50 , 'punker')
 
             // Attach the mediator to the player
             mediators.create(berghain2.PlayerMediator, player);

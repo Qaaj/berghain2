@@ -15,13 +15,16 @@ define([
     "commands/create_world_command",
     "commands/create_hud_command",
     "commands/game_object_created_command",
-    "commands/init_states_command",
     // MEDIATORS
     "mediators/player_mediator",
     "mediators/game_mediator",
-  
-    //INTERFACES
+    // MODELS
+    "models/state_model",
+    // INTERFACES
     "interfaces/input",
+    // STATES,
+    "states/player_ground",
+    "states/player_jump",
     // OTHER
     "util/log",
     "util/config"
@@ -37,13 +40,16 @@ function(
     create_world_command,
     create_hud_command,
     game_object_created_command,
-    init_states_command,
     // MEDIATORS
     player_mediator,
     game_mediator,
-   
-    //INTERFACES
-    input_interface,
+    // MODELS
+    state_model,
+    // INTERFACES
+    input_interface,    
+    // STATES
+    player_ground_state,
+    player_jump_state,
     // OTHER
     log,
     config
@@ -67,6 +73,8 @@ function(
             this.injector.mapClass('lo', berghain2.Log, true);
             this.injector.mapClass('config', berghain2.Config, true);
 
+            // States
+
             // Commands
             // Startup Commands
             this.commands.add("start_application",berghain2.StartApplicationCommand);
@@ -74,11 +82,10 @@ function(
             this.commands.add("create_world",berghain2.CreateWorldCommand);
             this.commands.add("create_hud",berghain2.CreateHudCommand);
             this.commands.add("game_object_created",berghain2.GameObjectCreatedCommand);
-            this.commands.add("init_states",berghain2.InitStatesCommand);
 
             // Model
-            // this.injector.mapClass('game_model', berghain2.GameModel, true);
-            
+            this.injector.mapClass('state_model', berghain2.StateModel, true);
+
             // Mediator
             
 
