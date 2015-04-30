@@ -18,7 +18,7 @@
         colors["ERROR"] = "color:red; background:#dddddd;";
         colors["USER"] = "color:magenta; background:#dddddd;";
         colors["PHYSICS"] = "color:navy; background:#dddddd;";
-        colors["MODEL"] = "color:seagreen; background:#dddddd;";
+        colors["MODEL"] = "color:royalblue; background:#dddddd;";
         
 
 

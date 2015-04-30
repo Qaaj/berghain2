@@ -6,7 +6,7 @@
 
         lo.g("MEDIATOR", "Player mediator instantiated", target);
 
-        console.log(state_model);
+        target.facingRight = true;
 
         // THIS HAS TO HAPPEN SOMEWHERE ELSE
         game.physics.arcade.gravity.y = 2500;
@@ -20,6 +20,13 @@
         // TODO add collisions with floor
 
         var state = state_model.PLAYER_GROUND;
+
+        dispatcher.addEventListener('change_player_state', function(event) {
+
+            state = event.params.data;
+
+            
+        });
 
         dispatcher.addEventListener('game_update', function(event) {
 
