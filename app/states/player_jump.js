@@ -2,15 +2,20 @@
 
 	'use strict';
 
-	var Player_Jump = function(dispatcher,input,lo,config,state_model) {
+	var Player_Jump = function(dispatcher,input,lo,config,state_model,game) {
 
 		this.name = "Player jump state";
 		
 		this.update = function(target){
 			
+			game.physics.arcade.collide(target, window.env, function(){
+                if(target.body.touching.down == true){
+                    dispatcher.dispatch("change_player_state", {data:state_model.PLAYER_GROUND});
+                }
+                return;
+            });
 
-
-			if(target.body.touching.down || target.body.onFloor()){
+			if(target.body.touching.down || target.body.onFloor() || target.body.blocked.down){
 
 				lo.g("PHYSICS","Change state to ground");
 

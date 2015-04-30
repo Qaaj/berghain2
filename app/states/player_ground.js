@@ -2,12 +2,18 @@
 
     'use strict';
 
-    var Player_Ground = function(dispatcher, input, lo, config, state_model) {
+    var Player_Ground = function(dispatcher, input, lo, config, state_model, game) {
 
         this.name = "Player ground state";
 
         this.update = function(target) {
 
+        	game.physics.arcade.collide(target, window.env, function(){
+                if(target.body.touching.down == true){
+                   
+                }
+                return;
+            });
 
 
             if (!target.body.touching.down && !target.body.onFloor()) {
