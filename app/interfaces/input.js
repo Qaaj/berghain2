@@ -23,10 +23,6 @@
         lo.g("USER", "pad1.connected: " + pad1.connected);
 
         game.input.keyboard.onDownCallback = function (e) {
-                //for demonstration, next line prints the keyCode to console
-                console.log(e.keyCode);
-
-                //here comes your stuff, you might check for certain key, or just trigger a function
                 constructor.isAnyButtonPressed = true;
         }
         
