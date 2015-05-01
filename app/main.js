@@ -21,6 +21,8 @@ define([
     "mediators/game_mediator",
     "mediators/health_bar_mediator",
      "mediators/mana_bar_mediator",
+     // VIEWS
+     "views/health_bar_view",
     // MODELS
     "models/state_model",
     "models/player_model",
@@ -52,6 +54,8 @@ function(
     game_mediator,
     health_bar_mediator,
     mana_bar_mediator,
+    //VIEWS
+    health_bar_view,
     // MODELS
     state_model,
     player_model,

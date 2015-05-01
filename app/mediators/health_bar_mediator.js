@@ -9,7 +9,9 @@
         dispatcher.addEventListener('game_update', function (event) {
             
             if (input.goLeft) {
-                 lo.g("MEDIATOR", "Going left", target);                 
+                 lo.g("MEDIATOR", "Going left", target);       
+                 
+                           
             }
                         
         });        
