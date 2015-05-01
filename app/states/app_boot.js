@@ -16,19 +16,12 @@
 
         this.create = function (target) {            
             var text = game.add.bitmapText(100, 50, "carrier_command", "WELCOME TO BERGHAIN II", 34);
-            game.add.bitmapText(100, 100, "carrier_command", "CLICK ON THE TINY GREEN SQUARE TO START", 34);
-
-            //TODO Replace by input inject, COULDN'T USE INPUT INJECT HERE?
-            var higherButton = this.game.add.button(250, 250, "higher", this.clickedHigher, this);
-        }
-
-        this.clickedHigher = function () {
-            game.state.start('Playing'); 
+            game.add.bitmapText(100, 100, "carrier_command", "PUSH ANY KEY TO START", 34);
         }
 
         this.update = function (target) {
-           if (input.goLeft) {
-                console.log("> LEFT PRESSED");
+           if (input.isAnyButtonPressed) {                
+                game.state.start('Playing'); 
             }
         }
 
