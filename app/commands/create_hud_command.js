@@ -17,6 +17,7 @@
             setScreenSettings();
             showIntroText();
             drawHealthBar();
+            drawManaBar();
         }
         
         function setScreenSettings(){
@@ -33,23 +34,6 @@
             // Setting text offset (to center) here text because I can 't do it in the add bitmapText constructor?
             text.x -= (text.width / 2)
         }
-
-        function drawManaBar() {
-            var xPos = 0;
-            var yPos = 0;
-            
-            var fillColor = 0x88d367;
-            var fillAlpha = 100;
-            
-            var strokeColor = 0x332c3d;
-            var strokeWidth = 2;
-            var strokeAlpha = 1;
-
-            var manaBarWidth = 250;
-            var manaBarHeight = 5;
-
-            drawRectangleWithStroke(xPos, yPos, manaBarWidth, manaBarHeight, fillColor, strokeColor, strokeWidth, strokeAlpha);
-        }
         
         function drawHealthBar() {
             var xPos = 0;
@@ -65,7 +49,9 @@
             var healthBarWidth = 250;
             var healthBarHeight = 15;
 
-            drawRectangleWithStroke(xPos, yPos, healthBarWidth, healthBarHeight, fillColor, strokeColor, strokeWidth, strokeAlpha);
+            var healthBar = drawRectangleWithStroke(xPos, yPos, healthBarWidth, healthBarHeight, fillColor, strokeColor, strokeWidth, strokeAlpha);
+            healthBar.x = centerX - (healthBar.width / 2);
+            healthBar.y = screenHeight - 50;
         }
         
         function drawRectangleWithStroke(xPos, yPos, width, height, fillColor, strokeColor, strokeWidth, alpha){
@@ -89,9 +75,27 @@
             graphics.drawRect(0, 0, width, height);
             
             graphics.endFill();
+
+            return graphics;
+        }
+        
+        function drawManaBar() {
+            var xPos = 0;
+            var yPos = 0;
             
-            /*graphics.x = centerX - (graphics.width / 2);
-            graphics.y = screenHeight - 50;*/
+            var fillColor = 0xa8dfda;
+            var fillAlpha = 100;
+            
+            var strokeColor = 0x332c3d;
+            var strokeWidth = 2;
+            var strokeAlpha = 1;
+
+            var manaBarWidth = 250;
+            var manaBarHeight = 8;
+
+            var manaBar = drawRectangleWithStroke(xPos, yPos, manaBarWidth, manaBarHeight, fillColor, strokeColor, strokeWidth, strokeAlpha);
+            manaBar.x = centerX - (manaBar.width / 2);
+            manaBar.y = screenHeight - 30;
         }
     };
 
