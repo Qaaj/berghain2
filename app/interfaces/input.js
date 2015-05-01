@@ -25,7 +25,7 @@
 
 
         dispatcher.addEventListener('game_update', function(event) {
-
+        console.log("update");    
             // UP
             if ( game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) || inputs.up.isDown || pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_UP) || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) < -0.1) {
                 constructor.goUp = true;

@@ -17,13 +17,13 @@
         this.create = function (target) {
             console.log("--- YOU ARE NOW PLAYING ---");
             
-            console.log("11");
-            
             dispatcher.dispatch('create_world');
         }
 
         this.update = function (target) {
-             
+             if(input.goLeft){
+                 console.log("left");
+             }
         }
 
         this.shutdown = function (target) {

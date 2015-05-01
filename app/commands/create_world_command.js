@@ -16,6 +16,7 @@
             createPlayer();
 
             dispatcher.dispatch('create_hud');
+            dispatcher.dispatch('game_update');
         }
 
         function initGamePhysics() {
