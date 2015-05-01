@@ -2,7 +2,7 @@
 
     'use strict';
 
-    berghain2.CreateHudCommand = function (dispatcher, lo, config, game) {
+    berghain2.CreateHudCommand = function (dispatcher, lo, config, game, mediators) {
 
         var screenWidth = 0;
         var centerX = 0;
@@ -52,6 +52,8 @@
             var healthBar = drawRectangleWithStroke(xPos, yPos, healthBarWidth, healthBarHeight, fillColor, strokeColor, strokeWidth, strokeAlpha);
             healthBar.x = centerX - (healthBar.width / 2);
             healthBar.y = screenHeight - 50;
+            
+            mediators.create(berghain2.HealthBarMediator, healthBar);
         }
         
         function drawRectangleWithStroke(xPos, yPos, width, height, fillColor, strokeColor, strokeWidth, alpha){
@@ -96,6 +98,8 @@
             var manaBar = drawRectangleWithStroke(xPos, yPos, manaBarWidth, manaBarHeight, fillColor, strokeColor, strokeWidth, strokeAlpha);
             manaBar.x = centerX - (manaBar.width / 2);
             manaBar.y = screenHeight - 30;
+            
+            mediators.create(berghain2.ManaBarMediator, manaBar);
         }
     };
 

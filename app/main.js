@@ -19,6 +19,8 @@ define([
     // MEDIATORS
     "mediators/player_mediator",
     "mediators/game_mediator",
+    "mediators/health_bar_mediator",
+     "mediators/mana_bar_mediator",
     // MODELS
     "models/state_model",
     "models/player_model",
@@ -48,6 +50,8 @@ function(
     // MEDIATORS
     player_mediator,
     game_mediator,
+    health_bar_mediator,
+    mana_bar_mediator,
     // MODELS
     state_model,
     player_model,

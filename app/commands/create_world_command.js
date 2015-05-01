@@ -16,7 +16,6 @@
             createPlayer();
 
             dispatcher.dispatch('create_hud');
-
         }
 
         function initGamePhysics() {
@@ -64,8 +63,8 @@
 
         function createSky() {
             // Add moon and logo
-            game.add.sprite(100, 100, 'logo')
-            game.add.sprite(window.innerWidth - 200, 50, 'moon')
+            game.add.sprite(100, 100, 'logo');
+            game.add.sprite(window.innerWidth - 200, 50, 'moon');
 
             // Add cloud
             game.add.sprite(0, 0, "cloud");
@@ -73,7 +72,7 @@
 
         function createPlayer() {
             // Create the player 
-            var player = game.add.sprite(50, 50, 'punker')
+            var player = game.add.sprite(50, 50, 'punker');
 
             // Attach the mediator to the player
             mediators.create(berghain2.PlayerMediator, player);
