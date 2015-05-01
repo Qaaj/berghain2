@@ -7,7 +7,7 @@
         this.name = "App playing state";
           
         this.init = function (target) {
-            console.log("> APP PLAYING INIT");
+
         }
 
         this.preload = function (target) {       
@@ -15,15 +15,11 @@
         }
 
         this.create = function (target) {
-            console.log("--- YOU ARE NOW PLAYING ---");
-            
             dispatcher.dispatch('create_world');
         }
 
         this.update = function (target) {
-             if(input.goLeft){
-                 console.log("left");
-             }
+            dispatcher.dispatch('game_update');
         }
 
         this.shutdown = function (target) {

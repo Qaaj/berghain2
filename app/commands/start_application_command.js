@@ -19,8 +19,8 @@
                     dispatcher.dispatch('game_object_created'); // The game object has been created, can now be injected in the game mediator, input interface etc > this triggers the game_object_created_command
                 },
                 update: function() {
-                    console.log("game update disptaching");
-                    dispatcher.dispatch('game_update');
+                    //console.log("game update disptaching");
+                    //dispatcher.dispatch('game_update');
                 }
             }));
             if (config.debug == true) {
