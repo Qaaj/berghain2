@@ -2,10 +2,17 @@
 
     'use strict';
 
-    berghain2.HealthBarMediator = function (target, game, dispatcher, mediators, lo, input, state_model) {
+    berghain2.HealthBarMediator = function (target, game, dispatcher, mediators, lo, input, player_model) {
 
-        lo.g("MEDIATOR", "Health Bar mediator instantiated", target);
+        lo.g("MEDIATOR", "Health Bar mediator instantiated @ " + player_model.health + " HP", target);     
         
+        dispatcher.addEventListener('game_update', function (event) {
+            
+            if (input.goLeft) {
+                 lo.g("MEDIATOR", "Going left", target);                 
+            }
+                        
+        });        
     };
 
 

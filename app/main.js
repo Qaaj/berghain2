@@ -95,7 +95,7 @@ function(
 
             // Model
             this.injector.mapClass('state_model', berghain2.StateModel, true);
-            //this.injector.mapClass('player_model', berghain2.PlayerModel, true);           
+            this.injector.mapClass('player_model', berghain2.PlayerModel, true);           
              
         },
         start: function() {

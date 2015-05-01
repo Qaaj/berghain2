@@ -7,7 +7,7 @@
 		this.PLAYER_JUMP 	= new berghain2.Player_Jump(	dispatcher,input,lo,config,this,game);
 		this.PLAYER_GROUND 	= new berghain2.Player_Ground(	dispatcher,input,lo,config,this,game);
 
-		lo.g("MODEL","States created")
+		lo.g("MODEL","States created");
 	};
 
 	// ContentModel.prototype.clear = function() {
