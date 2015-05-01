@@ -35,30 +35,37 @@
         }
 
         function drawHealthBar() {
+            var fillColor = 0x88d367;
+            var fillAlpha = 100;
+            
             var strokeColor = 0x332c3d;
             var strokeWidth = 2;
+            var strokeAlpha = 1;
 
             var healthBarWidth = 250;
             var healthBarHeight = 15;
 
-            var graphics = game.add.graphics(250, 20);
+            var graphics = game.add.graphics(healthBarWidth, healthBarHeight);
 
-            graphics.lineStyle(strokeWidth, strokeColor, strokeWidth);
+            graphics.lineStyle(strokeWidth, strokeColor, strokeAlpha);
+            graphics.beginFill(fillColor, fillAlpha);
+            
             graphics.moveTo(0, 0);
             graphics.lineTo(healthBarWidth, 0);
 
-            graphics.lineStyle(strokeWidth, strokeColor, strokeWidth);
             graphics.moveTo(healthBarWidth, 0);
             graphics.lineTo(healthBarWidth, healthBarHeight);
 
-            graphics.lineStyle(strokeWidth, strokeColor, strokeWidth);
             graphics.moveTo(healthBarWidth, healthBarHeight);
             graphics.lineTo(0, healthBarHeight);
 
-            graphics.lineStyle(strokeWidth, strokeColor, strokeWidth);
             graphics.moveTo(0, healthBarHeight);
             graphics.lineTo(0, 0);
-
+            
+            graphics.drawRect(0, 0, healthBarWidth, healthBarHeight);
+            
+            graphics.endFill();
+            
             graphics.x = centerX - (graphics.width / 2);
             graphics.y = screenHeight - 50;
         }

@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	var PlayerModel = function() {
+	var PlayerModel = function(dispatcher,input,lo,config,game) {
 
 		this.health;		
 
