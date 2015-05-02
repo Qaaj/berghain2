@@ -12,7 +12,7 @@
             game.load.spritesheet('ground', 'assets/ground.png', 128,64);
             game.load.image('hain', 'assets/hain.png');
             game.load.spritesheet('punker', 'assets/punker.png', 96,96);
-            game.load.spritesheet('fire_bin', 'assets/fire_bin.png', 48,48);
+            game.load.spritesheet('fire_bin', 'assets/fire_bin.png', 24,48);
             game.load.image('moon', 'assets/moon.png');
             game.load.image('logo', 'assets/logo.png');
             game.load.image('cloud', 'assets/cloud.png');

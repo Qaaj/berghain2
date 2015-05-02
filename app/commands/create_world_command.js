@@ -28,9 +28,11 @@
 
         function createEnemies(){
              var bin = game.add.sprite(200, window.innerHeight-64-48, 'fire_bin');
+             bin.name = "Fire Bin 1"
               mediators.create(berghain2.FireBinMediator, bin);
 
                var bin2 = game.add.sprite(window.innerWidth - 400, window.innerHeight-64-48, 'fire_bin');
+               bin2.name = "Fire Bin 2"
               mediators.create(berghain2.FireBinMediator, bin2);
         }
 
@@ -83,6 +85,7 @@
         function createPlayer() {
             // Create the player 
             var player = game.add.sprite(50, 50, 'punker');
+            player.name = "Punker";
 
             // Attach the mediator to the player
             mediators.create(berghain2.PlayerMediator, player);

@@ -2,11 +2,13 @@
 
     'use strict';
 
-    berghain2.PlayerMediator = function (target, game, dispatcher, mediators, lo, input, state_model) {
+    berghain2.PlayerMediator = function (target, game, dispatcher, mediators, lo, input, state_model,physics_model) {
 
         lo.g("MEDIATOR", "Player mediator instantiated", target);
 
-        target.facingRight = true;
+
+        // Add the player variable to our physics model
+        physics_model.player = target;
 
         // THIS HAS TO HAPPEN SOMEWHERE ELSE
         game.physics.arcade.gravity.y = 2500;

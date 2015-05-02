@@ -26,18 +26,19 @@
 
             if (input.goLeft) {
                 target.animations.play('left');
-                target.position.x -= 2;
+                target.body.velocity.x = -200;
             }
             if (input.goUp) {
-                target.body.velocity.y = -1000;
+                if(physics_model.player_jump_allowed) target.body.velocity.y = -1000;
             }
             if (input.goRight) {
                 target.animations.play('right');
-                target.position.x += 2;
+                target.body.velocity.x = 200;
             }
             if (input.goDown) {}
 
             if (!input.goLeft && !input.goRight) {
+                target.body.velocity.x = 0;
                 target.animations.stop();
                 target.frame = 2;
             }
