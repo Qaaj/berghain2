@@ -2,7 +2,7 @@
 
     'use strict';
 
-    berghain2.PlayerMediator = function (target, game, dispatcher, mediators, lo, input, state_model,physics_model, config) {
+    berghain2.PlayerMediator = function (target, game, dispatcher, mediators, lo, input, state_model,physics_model, config,player_model) {
 
         lo.g("MEDIATOR", "Player mediator instantiated", target);
 
@@ -36,6 +36,9 @@
         
         dispatcher.addEventListener('game_update', function (event) {
             physics_state.update(target);
+            if(target.body.y > game.height){
+                player_model.health = 0;
+            }
 
         });
     };
