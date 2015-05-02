@@ -20,7 +20,7 @@
 
                 lo.g("PHYSICS", "Change state to jump");
 
-                dispatcher.dispatch("change_player_state", {data:state_model.PLAYER_JUMP});
+                dispatcher.dispatch("change_player_state", {type:"PHYSICS",state:state_model.PLAYER_JUMP});
 
             }
 

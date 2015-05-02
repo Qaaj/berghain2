@@ -20,17 +20,19 @@
         target.animations.add('left', [30, 31, 32, 33, 34, 35, 36, 37], 10, true);
         target.animations.add('right', [10, 11, 12, 13, 14, 15, 16, 17], 10, true)
         
-        var state = state_model.PLAYER_GROUND;
+        var physics_state = state_model.PLAYER_GROUND;
 
         dispatcher.addEventListener('change_player_state', function (event) {
 
-            state = event.params.data;
+            if(event.params.type == "PHYSICS"){
+                physics_state = event.params.state;
+            }
             
         });
         
         dispatcher.addEventListener('game_update', function (event) {
             
-            state.update(target);
+            physics_state.update(target);
 
         });
     };
