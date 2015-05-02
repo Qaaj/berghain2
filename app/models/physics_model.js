@@ -16,7 +16,7 @@
 		// Helper functions
 
 		this.makeImmovable = function(target){
-			lo.g("PHYSICS","Making object immovable: " + target.name)
+			// lo.g("PHYSICS","Making object immovable: " + target.name)
 			game.physics.enable(target, Phaser.Physics.ARCADE);
 			target.body.immovable = true;
             target.body.allowGravity = false;
