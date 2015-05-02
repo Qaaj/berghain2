@@ -2,7 +2,7 @@
 
     'use strict';
 
-    berghain2.PlayerMediator = function (target, game, dispatcher, mediators, lo, input, state_model,physics_model) {
+    berghain2.PlayerMediator = function (target, game, dispatcher, mediators, lo, input, state_model,physics_model, config) {
 
         lo.g("MEDIATOR", "Player mediator instantiated", target);
 
@@ -15,6 +15,10 @@
         game.physics.enable(target, Phaser.Physics.ARCADE);
 
         target.body.collideWorldBounds = true;
+
+        // Change the dimensions of the body bounding box
+        target.body.setSize(target.body.width - 60, target.body.height,  30, 1);
+
 
 
         target.animations.add('left', [30, 31, 32, 33, 34, 35, 36, 37], 10, true);
@@ -31,7 +35,6 @@
         });
         
         dispatcher.addEventListener('game_update', function (event) {
-            
             physics_state.update(target);
 
         });

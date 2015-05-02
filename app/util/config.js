@@ -8,7 +8,7 @@
         var constructor = function Config() {
 
             // toggle the debug settings
-            this.debug = false;
+            this.debug = true;
             this.skipIntro = true;
            
         };
