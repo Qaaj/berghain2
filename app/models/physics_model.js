@@ -20,6 +20,8 @@
 			game.physics.enable(target, Phaser.Physics.ARCADE);
 			target.body.immovable = true;
             target.body.allowGravity = false;
+            target.body.collideWorldBounds = false;
+
 		}
 
 

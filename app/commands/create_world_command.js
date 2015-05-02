@@ -20,10 +20,16 @@
         }
 
         function initGamePhysics() {
+
+            // Define world bounds
+            game.world.setBounds(0,0,game.width,3000);
+
             //  We're going to be using physics, so enable the Arcade Physics system
             game.physics.startSystem(Phaser.Physics.ARCADE);
             //game.stage.smoothed = false;
-            game.physics.setBoundsToWorld();
+            
+          
+
         }
 
         function createEnemies(){
@@ -63,10 +69,11 @@
             var env = game.add.group();
             env.enableBody = true;
 
-            for (var i = 0; i < 20; i++) {
+            for (var i = 0; i < 15; i++) {
+                if(i != 3){
                 var block = env.create(i * 128, window.innerHeight - 64, 'ground', Math.floor(Math.random() * 4));
-                block.body.immovable = true;
-                block.body.allowGravity = false;
+                physics_model.makeImmovable(block)
+                }
             }
             
             physics_model.environment = env;
