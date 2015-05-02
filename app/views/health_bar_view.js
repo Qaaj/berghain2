@@ -21,6 +21,7 @@
             screenHeight = game.height;
             centerY = screenHeight / 2;
         }
+
         
         function drawHealthBar() {
             var xPos = 0;

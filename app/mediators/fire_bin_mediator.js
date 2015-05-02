@@ -2,7 +2,7 @@
 
     'use strict';
 
-    berghain2.FireBinMediator = function (target, game, dispatcher, mediators,player, lo, input, state_model, physics_model) {
+    berghain2.FireBinMediator = function (target, game, dispatcher, mediators,player, lo, input, state_model, physics_model, player_model) {
 
         lo.g("MEDIATOR", "FireBin mediator instantiated");
 
@@ -17,7 +17,10 @@
         dispatcher.addEventListener('game_update', function (event) {
 
             game.physics.arcade.collide(target, physics_model.player, function(){
-                   lo.g("PHYSICS","Player touching fire")
+                if(physics_model.player.body.touching.down && target.body.touching.up){
+                    player_model.health --;
+                    lo.g("PHYSICS","Player fell on the fire");
+                }
             });
 
         });
