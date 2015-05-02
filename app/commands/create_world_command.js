@@ -18,13 +18,20 @@
 
             createFloor();
             createSky();
-            createEnemies();
 
-                        createPlayer();
+            createNPCs();
+
+            createPlaces();
+
+            createPlayer();
+
+            createEnemies();
 
 
             dispatcher.dispatch('create_hud');
         }
+
+
 
         function initGamePhysics() {
 
@@ -39,6 +46,16 @@
 
         }
 
+        function createNPCs() {
+            var npc = game.add.sprite(600, window.innerHeight - 64 - 96, 'npc');
+            npc.name = "NPC"
+        }
+
+        function createPlaces() {
+            var ubahn = game.add.sprite(800, window.innerHeight - 64 - 192, 'ubahn');
+            ubahn.name = "ubahn"
+        }
+
         function createEnemies() {
             var bin = game.add.sprite(200, window.innerHeight - 64 - 48, 'fire_bin');
             bin.name = "Fire Bin 1"
@@ -48,8 +65,7 @@
             bin2.name = "Fire Bin 2"
             mediators.create(berghain2.FireBinMediator, bin2);
 
-            var npc = game.add.sprite(600, window.innerHeight - 64 - 96, 'npc');
-            bin2.name = "NPC"
+
 
         }
 
