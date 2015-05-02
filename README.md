@@ -142,6 +142,19 @@ Please follow the code formatting used in the files. I use SublimeText with the 
  - Select Javascript Beautify to install
  - CMD + SHIFT + P - "Javascript Beautify" to run in the current file
 
+I also created a TODO.md file. to preview Markdown files, install the "Markdown Preview" package in SublimeText:
+
+- Install Package Control from https://packagecontrol.io/installation
+ - Open SublimeText
+ - CMD + SHIFT + P - "Install Packages"
+ - Select Markdown Preview to install
+ - CMD + SHIFT + P - "Markdown preview"
+
+### SUBLIME shortcuts ###
+
+- Hold down ALT and click and drag to edit multiple lines
+- CMD + P is a global search function to jump to files
+
 
 ### Who do I talk to? ###
 
