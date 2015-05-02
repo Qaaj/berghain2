@@ -18,7 +18,7 @@
             game.load.image('logo', 'assets/logo.png');
             game.load.image('cloud', 'assets/cloud.png');
             game.load.image('street_lamp', 'assets/street_lamp.png');
-            game.load.image('particle_red', 'assets/particle_red.png');
+            game.load.image('ubahn', 'assets/ubahn.png');
 
 
             //HUD

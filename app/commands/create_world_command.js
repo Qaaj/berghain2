@@ -17,12 +17,18 @@
 
             createFloor();
             createSky();
-            createEnemies();
+            createNPCs();
+
+            createPlaces();
 
             createPlayer();
 
+            createEnemies();
+            
             dispatcher.dispatch('create_hud');
         }
+
+
 
         function initGamePhysics() {
             // Define world bounds
@@ -30,6 +36,16 @@
 
             //  We're going to be using physics, so enable the Arcade Physics system
             game.physics.startSystem(Phaser.Physics.ARCADE);
+        }
+
+        function createNPCs() {
+            var npc = game.add.sprite(600, window.innerHeight - 64 - 96, 'npc');
+            npc.name = "NPC"
+        }
+
+        function createPlaces() {
+            var ubahn = game.add.sprite(800, window.innerHeight - 64 - 192, 'ubahn');
+            ubahn.name = "ubahn"
         }
 
         function createEnemies() {
@@ -41,8 +57,7 @@
             bin2.name = "Fire Bin 2"
             mediators.create(berghain2.FireBinMediator, bin2);
 
-            var npc = game.add.sprite(600, window.innerHeight - 64 - 96, 'npc');
-            bin2.name = "NPC"
+
 
         }
 
