@@ -14,6 +14,7 @@
             createFloor();
             createSky();
             createPlayer();
+            createEnemies();
 
             dispatcher.dispatch('create_hud');
         }
@@ -23,6 +24,14 @@
             game.physics.startSystem(Phaser.Physics.ARCADE);
             //game.stage.smoothed = false;
             game.physics.setBoundsToWorld();
+        }
+
+        function createEnemies(){
+             var bin = game.add.sprite(200, window.innerHeight-64-48, 'fire_bin');
+              mediators.create(berghain2.FireBinMediator, bin);
+
+               var bin2 = game.add.sprite(window.innerWidth - 400, window.innerHeight-64-48, 'fire_bin');
+              mediators.create(berghain2.FireBinMediator, bin2);
         }
 
         function createBackground() {

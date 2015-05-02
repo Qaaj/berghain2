@@ -20,7 +20,8 @@ define([
     "mediators/player_mediator",
     "mediators/game_mediator",
     "mediators/health_bar_mediator",
-     "mediators/mana_bar_mediator",
+    "mediators/mana_bar_mediator",
+     "mediators/fire_bin_mediator",
      // VIEWS
      "views/health_bar_view",
     // MODELS
