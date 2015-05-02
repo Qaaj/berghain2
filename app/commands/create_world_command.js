@@ -63,8 +63,8 @@
         }
 
         function createSky() {
-            // Add moon and logo
-            game.add.sprite(100, 100, 'logo');
+            // Add moon 
+           
             game.add.sprite(window.innerWidth - 200, 50, 'moon');
 
             // Add cloud

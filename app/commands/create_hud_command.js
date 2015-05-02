@@ -19,6 +19,7 @@
          
             var healthBar = new berghain2.HealthBarView(game, mediators);
         }
+
         
         function setScreenSettings(){
             screenWidth = game.width;
@@ -32,6 +33,7 @@
             var text = game.add.bitmapText(centerX, 50, "carrier_command", "GET INTO BERGHAIN", 34);
                         
             // Setting text offset (to center) here text because I can 't do it in the add bitmapText constructor?
+            // There's a function you need to re-calculate the text bounds after updating the text > .updateText() could work
             text.x -= (text.width / 2)
         }
     };
