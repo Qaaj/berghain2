@@ -26,6 +26,7 @@ define([
     // MODELS
     "models/state_model",
     "models/player_model",
+    "models/physics_model",
     // INTERFACES
     "interfaces/input",
     // STATES,
@@ -59,6 +60,7 @@ function(
     // MODELS
     state_model,
     player_model,
+    physics_model,
     // INTERFACES
     input_interface,    
     // STATES
@@ -99,7 +101,9 @@ function(
 
             // Model
             this.injector.mapClass('state_model', berghain2.StateModel, true);
-            this.injector.mapClass('player_model', berghain2.PlayerModel, true);           
+            this.injector.mapClass('player_model', berghain2.PlayerModel, true);   
+            this.injector.mapClass('physics_model', berghain2.PhysicsModel, true);           
+        
              
         },
         start: function() {

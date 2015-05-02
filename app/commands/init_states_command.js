@@ -13,7 +13,14 @@
             game.state.add('Boot', bootState);
             game.state.add('Playing', playState);
 
-            game.state.start('Boot'); 
+            if(config.skipIntro) {
+                 game.state.start('Playing'); 
+            }else{
+                game.state.start('Boot'); 
+
+                }
+           
+
         }
 
     };

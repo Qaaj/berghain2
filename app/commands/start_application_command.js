@@ -12,7 +12,7 @@
             // Map the PHASER IO game object to the value 'game' so it's available everywhere we need it
 
             injector.mapValue("game", new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.CANVAS, '', {
-                preload: function() {                
+                preload: function() {
                     dispatcher.dispatch('preload_assets');
                 },
                 create: function() {
@@ -23,6 +23,7 @@
                     //dispatcher.dispatch('game_update');
                 }
             }));
+            
             if (config.debug == true) {
                 lo.g("APPLICATION", "DEBUG MODE ON");
             }

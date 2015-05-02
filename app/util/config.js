@@ -9,6 +9,7 @@
 
             // toggle the debug settings
             this.debug = false;
+            this.skipIntro = true;
            
         };
 

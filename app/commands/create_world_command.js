@@ -2,7 +2,7 @@
 
     'use strict';
 
-    berghain2.CreateWorldCommand = function (dispatcher, mediators, lo, config, game, input) {
+    berghain2.CreateWorldCommand = function (dispatcher, mediators, lo, config, game, input, physics_model) {
 
         this.execute = function (event) {
 
