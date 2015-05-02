@@ -16,6 +16,7 @@
             game.load.image('moon', 'assets/moon.png');
             game.load.image('logo', 'assets/logo.png');
             game.load.image('cloud', 'assets/cloud.png');
+            game.load.image('street_lamp', 'assets/street_lamp.png');
 
             //HUD
             game.load.bitmapFont('carrier_command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');

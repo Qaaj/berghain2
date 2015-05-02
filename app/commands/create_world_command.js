@@ -72,9 +72,14 @@
             for (var i = 0; i < 15; i++) {
                 if(i != 3){
                 var block = env.create(i * 128, window.innerHeight - 64, 'ground', Math.floor(Math.random() * 4));
+                block.name = "Ground Block #" + i;
                 physics_model.makeImmovable(block)
                 }
             }
+
+            var lamp = env.create(330, window.innerHeight - 255, 'street_lamp', Math.floor(Math.random() * 4));
+            physics_model.makeImmovable(lamp)
+            lamp.body.setSize(10, 10,  5, 20);
             
             physics_model.environment = env;
 
