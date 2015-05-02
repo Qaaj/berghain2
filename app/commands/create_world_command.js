@@ -69,6 +69,7 @@
 
             bmd.addToWorld();
 
+
             var y = 0;
             for (var i = 0; i < window.innerHeight; i++) {
                 var c = Phaser.Color.interpolateColor(0x000000, 0x555555, window.innerHeight, i);
@@ -87,12 +88,18 @@
 
             var env = physics_model.environment;
 
+            var numTiles = Math.round(window.innerWidth/128);
 
-            for (var i = 0; i < 25; i++) {
+            for (var i = 0; i < numTiles; i++) {
 
-                var block = env.create(i * 128, window.innerHeight - 64, 'ground', Math.floor(Math.random() * 4));
-                block.name = "Ground Block #" + i;
-                if (i != 3) physics_model.makeImmovable(block);
+               
+                     var block = env.create(i * 128, window.innerHeight - 64, 'ground', Math.floor(Math.random() * 4));
+                    block.name = "Ground Block #" + i;
+
+                if (i != 3) {
+                    physics_model.makeImmovable(block);
+                    console.log(i * 128);
+                 }
 
             }
 

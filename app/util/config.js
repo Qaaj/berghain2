@@ -8,8 +8,8 @@
         var constructor = function Config() {
 
             // toggle the debug settings
-            this.debug = true;
-            this.skipIntro = true;
+            this.debug = false;
+            this.skipIntro = false;
            
         };
 
