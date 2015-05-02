@@ -68,7 +68,7 @@
             game.add.sprite(window.innerWidth - 200, 50, 'moon');
 
             // Add cloud
-            game.add.sprite(0, 0, "cloud");
+            // game.add.sprite(0, 0, "cloud");
         }
 
         function createPlayer() {
