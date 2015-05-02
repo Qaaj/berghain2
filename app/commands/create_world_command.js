@@ -1,13 +1,12 @@
-(function(berghain2) {
+(function (berghain2) {
 
     'use strict';
 
-    berghain2.CreateWorldCommand = function(dispatcher, mediators, lo, config, game, input, physics_model) {
+    berghain2.CreateWorldCommand = function (dispatcher, mediators, lo, config, game, input, physics_model) {
 
-        this.execute = function(event) {
+        this.execute = function (event) {
 
             lo.g("COMMAND", "Creating World");
-
 
             initGamePhysics();
             createBackground();
@@ -18,7 +17,6 @@
 
             createFloor();
             createSky();
-
             createNPCs();
 
             createPlaces();
@@ -26,24 +24,18 @@
             createPlayer();
 
             createEnemies();
-
-
+            
             dispatcher.dispatch('create_hud');
         }
 
 
 
         function initGamePhysics() {
-
             // Define world bounds
             game.world.setBounds(0, 0, game.width, 3000);
 
             //  We're going to be using physics, so enable the Arcade Physics system
             game.physics.startSystem(Phaser.Physics.ARCADE);
-            //game.stage.smoothed = false;
-
-
-
         }
 
         function createNPCs() {

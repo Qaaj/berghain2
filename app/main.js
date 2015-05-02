@@ -16,6 +16,7 @@ define([
     "commands/create_hud_command",
     "commands/game_object_created_command",
     "commands/init_states_command",
+    "commands/show_message_command",
     // MEDIATORS
     "mediators/player_mediator",
     "mediators/game_mediator",
@@ -51,6 +52,7 @@ function(
     create_hud_command,
     game_object_created_command,
     init_states_command,
+    show_message_command,
     // MEDIATORS
     player_mediator,
     game_mediator,
@@ -99,7 +101,8 @@ function(
             this.commands.add("create_hud",berghain2.CreateHudCommand);
             this.commands.add("game_object_created",berghain2.GameObjectCreatedCommand);
             this.commands.add("init_states",berghain2.InitStatesCommand);
-
+    	    this.commands.add("show_message",berghain2.ShowMessageCommand);
+            
             // Model
             this.injector.mapClass('state_model', berghain2.StateModel, true);
             this.injector.mapClass('player_model', berghain2.PlayerModel, true);   

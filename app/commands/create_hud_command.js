@@ -30,18 +30,11 @@
         }
 
         function showIntroText() {
-            var text = game.add.bitmapText(centerX, 50, "carrier_command", "GET INTO BERGHAIN", 34);
-
-
-
-            // Setting text offset (to center) here text because I can 't do it in the add bitmapText constructor?
-            // There's a function you need to re-calculate the text bounds after updating the text > .updateText() could work
-            text.updateText();
-            text.x -= (text.width / 2)
-
-            game.add.tween(text).to({
-                alpha: 0
-            }, 2000, "Linear", true);
+            var params = {  	
+                            text:"GET INTO BERGHAIN"
+                    }
+            
+            dispatcher.dispatch("show_message", params);
         }
     };
 
