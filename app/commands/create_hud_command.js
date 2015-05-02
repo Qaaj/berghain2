@@ -30,11 +30,9 @@
         }
 
         function showIntroText() {
-            var params = {  	
-                            text:"GET INTO BERGHAIN"
-                    }
+            var message = new berghain2.MessageVO(0, "hey", berghain2.MessageVO.MESSAGE_TYPE);
             
-            dispatcher.dispatch("show_message", params);
+            dispatcher.dispatch("show_message", message);
         }
     };
 
