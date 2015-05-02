@@ -30,10 +30,10 @@ define([
     // INTERFACES
     "interfaces/input",
     // STATES,
-    "states/app_boot",
-    "states/app_playing",
-    "states/player_ground",
-    "states/player_jump",
+    "states/app/app_boot",
+    "states/app/app_playing",
+    "states/player/player_ground",
+    "states/player/player_jump",
     // OTHER
     "util/log",
     "util/config"

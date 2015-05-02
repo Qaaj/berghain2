@@ -3,7 +3,10 @@
 	'use strict';
 
 	var PhysicsModel = function(dispatcher,input,lo,config,game) {
+
 		lo.g("MODEL","Physics Model Initiated");
+
+		this.environment = {};
 
 	};
 	

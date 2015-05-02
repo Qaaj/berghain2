@@ -45,6 +45,7 @@
             } else {
                 constructor.goDown = false;
             }
+            
 
             // LEFT
             if (inputs.left.isDown || pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_LEFT) || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) {

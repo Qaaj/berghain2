@@ -46,6 +46,7 @@
         }
 
         function createFloor() {
+            
             // Floor
 
             var env = game.add.group();
@@ -57,7 +58,7 @@
                 block.body.allowGravity = false;
             }
             
-            window.env = env;
+            physics_model.environment = env;
 
         }
 
