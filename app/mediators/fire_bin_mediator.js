@@ -2,7 +2,7 @@
 
     'use strict';
 
-    berghain2.FireBinMediator = function (target, game, dispatcher, mediators,player, lo, input, state_model, physics_model, player_model) {
+    berghain2.FireBinMediator = function (target, game, dispatcher, mediators,player, lo, input, state_model, physics_model, player_model, config) {
 
         lo.g("MEDIATOR", "FireBin mediator instantiated");
 
@@ -25,6 +25,12 @@
                     lo.g("PHYSICS","Player fell on the fire");
                 }
             });
+
+        });
+
+         dispatcher.addEventListener('game_render', function (event) {
+           
+            if(config.debug) game.debug.body(target);
 
         });
     };

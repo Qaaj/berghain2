@@ -40,6 +40,13 @@
                 player_model.health = 0;
             }
 
+
+        });
+
+        dispatcher.addEventListener('game_render', function (event) {
+           
+            if(config.debug) game.debug.body(target);
+
         });
     };
 

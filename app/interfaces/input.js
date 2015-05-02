@@ -9,7 +9,9 @@
         constructor.goRight = false;
         constructor.goUp = false;
         constructor.goDown = false;
+
         constructor.isAnyButtonPressed = false;
+        constructor.actionButton = false;
 
         // Cursor keys
         var inputs = game.input.keyboard.createCursorKeys();
@@ -32,8 +34,15 @@
 
         dispatcher.addEventListener('game_update', function (event) {
             
+            // ACTIVATE ITEM
+            if(inputs.up.isDown){
+                constructor.actionButton = true;
+            }else{
+                constructor.actionButton = false;
+            }
+
             // UP
-            if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) || inputs.up.isDown || pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_UP) || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) < -0.1) {
+            if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) || pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_UP) || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) < -0.1) {
                 constructor.goUp = true;
             } else {
                 constructor.goUp = false;

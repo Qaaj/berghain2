@@ -26,6 +26,10 @@
 
         }
 
+        this.render = function(target){
+            dispatcher.dispatch('game_render');
+        }
+
     };
 
     berghain2.Playing = Playing;
