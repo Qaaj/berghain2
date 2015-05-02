@@ -13,12 +13,15 @@
 
         physics_model.makeImmovable(target);
 
+        target.body.setSize(target.body.width , target.body.height , 1, 15);
+
 
         dispatcher.addEventListener('game_update', function (event) {
 
             game.physics.arcade.collide(target, physics_model.player, function(){
                 if(physics_model.player.body.touching.down && target.body.touching.up){
-                    player_model.health --;
+                    player_model.health -= 2;
+                    dispatcher.dispatch("change_player_state", {type:"PHYSICS",state:state_model.PLAYER_GROUND});
                     lo.g("PHYSICS","Player fell on the fire");
                 }
             });

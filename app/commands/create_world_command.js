@@ -1,20 +1,27 @@
-(function (berghain2) {
+(function(berghain2) {
 
     'use strict';
 
-    berghain2.CreateWorldCommand = function (dispatcher, mediators, lo, config, game, input, physics_model) {
+    berghain2.CreateWorldCommand = function(dispatcher, mediators, lo, config, game, input, physics_model) {
 
-        this.execute = function (event) {
+        this.execute = function(event) {
 
             lo.g("COMMAND", "Creating World");
 
 
             initGamePhysics();
             createBackground();
+
+            var env = game.add.group();
+            env.enableBody = true;
+            physics_model.environment = env;
+
             createFloor();
             createSky();
-            createPlayer();
             createEnemies();
+
+                        createPlayer();
+
 
             dispatcher.dispatch('create_hud');
         }
@@ -22,24 +29,28 @@
         function initGamePhysics() {
 
             // Define world bounds
-            game.world.setBounds(0,0,game.width,3000);
+            game.world.setBounds(0, 0, game.width, 3000);
 
             //  We're going to be using physics, so enable the Arcade Physics system
             game.physics.startSystem(Phaser.Physics.ARCADE);
             //game.stage.smoothed = false;
-            
-          
+
+
 
         }
 
-        function createEnemies(){
-             var bin = game.add.sprite(200, window.innerHeight-64-48, 'fire_bin');
-             bin.name = "Fire Bin 1"
-              mediators.create(berghain2.FireBinMediator, bin);
+        function createEnemies() {
+            var bin = game.add.sprite(200, window.innerHeight - 64 - 48, 'fire_bin');
+            bin.name = "Fire Bin 1"
+            mediators.create(berghain2.FireBinMediator, bin);
 
-               var bin2 = game.add.sprite(window.innerWidth - 400, window.innerHeight-64-48, 'fire_bin');
-               bin2.name = "Fire Bin 2"
-              mediators.create(berghain2.FireBinMediator, bin2);
+            var bin2 = game.add.sprite(window.innerWidth - 400, window.innerHeight - 64 - 48, 'fire_bin');
+            bin2.name = "Fire Bin 2"
+            mediators.create(berghain2.FireBinMediator, bin2);
+
+            var npc = game.add.sprite(600, window.innerHeight - 64 - 96, 'npc');
+            bin2.name = "NPC"
+
         }
 
         function createBackground() {
@@ -52,7 +63,7 @@
 
             var y = 0;
             for (var i = 0; i < window.innerHeight; i++) {
-                var c = Phaser.Color.interpolateColor(0x000000, 0x444444, window.innerHeight, i);
+                var c = Phaser.Color.interpolateColor(0x000000, 0x555555, window.innerHeight, i);
 
                 // console.log(Phaser.Color.getWebRGB(c));
 
@@ -63,26 +74,31 @@
         }
 
         function createFloor() {
-            
+
             // Floor
 
-            var env = game.add.group();
-            env.enableBody = true;
+            var env = physics_model.environment;
 
-            for (var i = 0; i < 15; i++) {
-                if(i != 3){
+
+            for (var i = 0; i < 25; i++) {
+
                 var block = env.create(i * 128, window.innerHeight - 64, 'ground', Math.floor(Math.random() * 4));
-                physics_model.makeImmovable(block)
-                }
+                block.name = "Ground Block #" + i;
+                if (i != 3) physics_model.makeImmovable(block);
+
             }
-            
-            physics_model.environment = env;
+
+            var lamp = env.create(330, window.innerHeight - 255, 'street_lamp', Math.floor(Math.random() * 4));
+            physics_model.makeImmovable(lamp)
+            lamp.body.setSize(10, 10, 15, 20);
+
+
 
         }
 
         function createSky() {
             // Add moon 
-           
+
             game.add.sprite(window.innerWidth - 200, 50, 'moon');
 
             // Add cloud
