@@ -9,7 +9,7 @@
 		this.MEDIUM = { id: 2, name: "medium", code: "M", fontSize: 15 };
 		this.LARGE = { id: 3, name: "large", code: "L", fontSize: 20 };
 		
-		this.LOCK_ON_PLAYER = { id: 50, name: "lockOnPlayer", code: "P", fontSize: 15 };
+		this.LOCK_ON_PLAYER = { id: 50, name: "lockOnPlayer", code: "P", fontSize: 8 };
 	};
 
 })(window.berghain2 = window.berghain2 || {});

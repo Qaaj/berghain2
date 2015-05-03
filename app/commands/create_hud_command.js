@@ -2,7 +2,7 @@
 
     'use strict';
 
-    berghain2.CreateHudCommand = function(dispatcher, lo, config, game, mediators, message_type) {
+    berghain2.CreateHudCommand = function(dispatcher, lo, config, game, mediators, message_type, message_model) {
 
         var screenWidth = 0;
         var centerX = 0;
@@ -28,10 +28,10 @@
         }
 
         function showIntroText() {
-            var message = { text: "!!!", type: message_type.LOCK_ON_PLAYER};
             
+            var message = { text: "Wow", type: message_type.LOCK_ON_PLAYER};
             dispatcher.dispatch("show_message", message);
-            
+             
             var message = { text: "welcome to berghain II ", type: message_type.SMALL};
             
             dispatcher.dispatch("show_message", message);
@@ -43,6 +43,9 @@
             var message = { text: "get some cigarettes", type: message_type.LARGE};
             
             dispatcher.dispatch("show_message", message);
+            
+            /*var message = { text: "I need some cigs...", type: message_type.LOCK_ON_PLAYER};
+            message_model.addMessage(message);*/
         }
     };
 

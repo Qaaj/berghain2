@@ -20,9 +20,13 @@
         this.execute = function (event) {
             lo.g("COMMAND", "Show message: " + event.params.type);
 
+            decideWhichMessageToShow(event.params);
+        }
+        
+        function decideWhichMessageToShow(message){
             // TODO Move message type lock_on_player to it's own command
-            if (event.params.type != message_type.LOCK_ON_PLAYER) {
-                 message_model.addMessage(event.params);
+            if (message.type != message_type.LOCK_ON_PLAYER) {
+                 message_model.addMessage(message);
                  
     	       // Show regular title message
                 if (!message_model.isTweening) {  
@@ -31,7 +35,7 @@
 
             } else {
                 // Show locked on player message
-                createMessageThatLocksOnPlayerPosition(event.params);
+                createMessageThatLocksOnPlayerPosition(message);
             }
         }
 
