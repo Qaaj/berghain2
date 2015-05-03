@@ -2,7 +2,7 @@
 
     'use strict';
 
-    berghain2.ShowMessageCommand = function (lo, config, game, message_model) {
+    berghain2.ShowMessageCommand = function (lo, config, game, player_model, message_model, message_type, mediators) {
 
         var screenWidth = 0;
         var centerX = 0;
@@ -31,7 +31,7 @@
 
             setCurrentMessage();
             createMessageTween();
-            StartTween();
+            
         }
 
         function setCurrentMessage() {
@@ -40,21 +40,28 @@
 
         function createMessageTween() {
             setScreenSettings();
-            
+
             lo.g("COMMAND", "CREATE TWEEN AT FONT SIZE " + currentMessage.type.fontSize);
 
-            var text = game.add.bitmapText(centerX, 50, font, currentMessage.text, currentMessage.type.fontSize);
-            
-            // Setting text offset (to center) here text because I can 't do it in the add bitmapText constructor?
-            // There's a function you need to re-calculate the text bounds after updating the text > .updateText() could work
-            text.updateText();
-            text.x -= (text.width / 2)
+            var text;
 
-            currentTextTween = game.add.tween(text).to({
-                alpha: 0
-            }, 2000, "Linear");
+            if (currentMessage.type != message_type.LOCK_ON_PLAYER) {
+                text = game.add.bitmapText(centerX, 50, font, currentMessage.text, currentMessage.type.fontSize);
+                text.updateText();
+                text.x -= (text.width / 2);
 
-            currentTextTween.onComplete.add(onTextTweenCompleted, this);
+                currentTextTween = game.add.tween(text).to({
+                    alpha: 0
+                }, 2000, "Linear");
+                
+                currentTextTween.onComplete.add(onTextTweenCompleted, this);
+                
+                StartTween();
+            } else {
+                // LOCK ON PLAYER MESSAGE
+                var text = new berghain2.MessageView(game, currentMessage);
+                mediators.create(berghain2.MessageMediator, text);
+            }
         }
 
         function setScreenSettings() {
@@ -78,8 +85,8 @@
                 showMessage();
             }
         }
-        
-        function removeMessageAndEventListener(){
+
+        function removeMessageAndEventListener() {
             message_model.removeLastMessageFromQue();
             currentTextTween.onComplete.remove(onTextTweenCompleted);
         }

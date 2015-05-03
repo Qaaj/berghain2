@@ -19,8 +19,6 @@
         // Change the dimensions of the body bounding box
         target.body.setSize(target.body.width - 60, target.body.height,  30, 1);
 
-
-
         target.animations.add('left', [30, 31, 32, 33, 34, 35, 36, 37], 10, true);
         target.animations.add('right', [10, 11, 12, 13, 14, 15, 16, 17], 10, true)
         
@@ -36,6 +34,10 @@
         
         dispatcher.addEventListener('game_update', function (event) {
             physics_state.update(target);
+            
+            player_model.xPosition = target.body.x;
+            player_model.yPosition = target.body.y;
+            
             if(target.body.y > game.height){
                 player_model.health = 0;
             }
