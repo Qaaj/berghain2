@@ -30,7 +30,15 @@
         }
 
         function showIntroText() {
-            var message = new berghain2.MessageVO(0, "hey", berghain2.MessageVO.MESSAGE_TYPE);
+            var message = { text: "Hallo", type: "big"};
+            
+            dispatcher.dispatch("show_message", message);
+            
+            var message = { text: "Dit", type: "big"};
+            
+            dispatcher.dispatch("show_message", message);
+            
+            var message = { text: "werkt", type: "big"};
             
             dispatcher.dispatch("show_message", message);
         }

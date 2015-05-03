@@ -2,7 +2,7 @@
 
     'use strict';
 
-    berghain2.ShowMessageCommand = function(lo, config, game) {
+    berghain2.ShowMessageCommand = function(lo, config, game, message_model) {
 
         var screenWidth = 0;
         var centerX = 0;
@@ -13,15 +13,37 @@
         var font = "carrier_command";
         var fontSize = 34;
     	
-        var text = "";
+        var currentMessage;
+        var currentTextTween;
         
         this.execute = function(event) {
             lo.g("COMMAND", "Show message: " + event.params.text 	);
 
-            text = event.params.text;
+            currentMessage = event.params;
             
+            message_model.addMessage(currentMessage);
+
+            if (!message_model.isTweening){
+                createMessageTween();
+                StartTween();
+            }
+        }
+        
+        function createMessageTween(){
             setScreenSettings();
-            showText(text);
+            
+            var text = game.add.bitmapText(centerX, 50, font, currentMessage.text, fontSize);
+            
+            // Setting text offset (to center) here text because I can 't do it in the add bitmapText constructor?
+            // There's a function you need to re-calculate the text bounds after updating the text > .updateText() could work
+            text.updateText();
+            text.x -= (text.width / 2)
+
+            currentTextTween = game.add.tween(text).to({
+                alpha: 0
+            }, 2000, "Linear");
+            
+            currentTextTween.onComplete.add(onTextTweenCompleted, this);
         }
 
         function setScreenSettings() {
@@ -32,17 +54,25 @@
             centerY = screenHeight / 2;
         }
 
-        function showText(text) {
-            var text = game.add.bitmapText(centerX, 50, font, text, fontSize);
+        function StartTween() {
+            message_model.isTweening = true;
+            currentTextTween.start();
+        }
+        
+        function onTextTweenCompleted(tween){
+            lo.g("COMMAND", "Show message tween completed");
             
-            // Setting text offset (to center) here text because I can 't do it in the add bitmapText constructor?
-            // There's a function you need to re-calculate the text bounds after updating the text > .updateText() could work
-            text.updateText();
-            text.x -= (text.width / 2)
-
-            game.add.tween(text).to({
-                alpha: 0
-            }, 2000, "Linear", true);
+           message_model.isTweening = false;
+            
+            message_model.removeLastMessageFromQue();
+            currentTextTween.onComplete.remove(onTextTweenCompleted);
+            
+            
+            if(message_model.messages.length > 0){
+                currentMessage = message_model.messages[0];
+                createMessageTween();
+                StartTween();
+            }
         }
     };
 
