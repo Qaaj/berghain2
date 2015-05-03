@@ -15,11 +15,6 @@
         }
 
         this.create = function (target) {            
-            /*var welcome_text = game.add.bitmapText(game.width/2, 50, "carrier_command", "WELCOME TO", 34);
-            welcome_text.updateText();
-            welcome_text.x -= (welcome_text.width / 2)*/
-
-           
             var logo = game.add.sprite(game.width/2, game.height/2 - 150, 'logo');
             logo.x -= (logo.width/2);
 

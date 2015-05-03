@@ -36,16 +36,13 @@
             
             dispatcher.dispatch("show_message", message);
             
-            var message = { text: "chapter I ", type: message_type.MEDIUM};
+            message = { text: "chapter I ", type: message_type.MEDIUM};
             
             dispatcher.dispatch("show_message", message);
             
-            var message = { text: "get some cigarettes", type: message_type.LARGE};
+            message = { text: "get some cigarettes", type: message_type.LARGE};
             
             dispatcher.dispatch("show_message", message);
-            
-            /*var message = { text: "I need some cigs...", type: message_type.LOCK_ON_PLAYER};
-            message_model.addMessage(message);*/
         }
     };
 
