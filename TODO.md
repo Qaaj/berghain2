@@ -13,3 +13,4 @@
  - Player damage needs to move from firebin to command
  - Add raycastings (http://gamemechanicexplorer.com/#raycasting-1)
  - Create backside of the main character 
+ - mediators.create(berghain2.HealthBarMediator, healthBar); needs to move out of healthbarview. best remove inject mediators as well.

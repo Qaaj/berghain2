@@ -5,6 +5,9 @@
 	var PlayerModel = function(dispatcher,input,lo,config,game) {
 		lo.g("MODEL","Player Model Initiated");
 		 
+		 this.xPosition = 0;
+		 this.yPosition = 0;
+		 
 		 this.health = 100;
 		 this.mana = 5;
 
