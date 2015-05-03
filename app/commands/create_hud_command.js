@@ -30,15 +30,15 @@
         }
 
         function showIntroText() {
-            var message = { text: "Hallo", type: "big"};
+            var message = { text: "welcome to berghain II", type: "large"};
             
             dispatcher.dispatch("show_message", message);
             
-            var message = { text: "Dit", type: "big"};
+            var message = { text: "chapter I ", type: "medium"};
             
             dispatcher.dispatch("show_message", message);
             
-            var message = { text: "werkt", type: "big"};
+            var message = { text: "get some cigarettes", type: "small"};
             
             dispatcher.dispatch("show_message", message);
         }

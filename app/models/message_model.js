@@ -9,12 +9,12 @@
 		 this.messages = [];
 		 this.isTweening = false;
 		 
-		 this.addMessage = function(message){
+		 this.addMessage = function(messageObj){
 			lo.g("MODEL","Adding message to que");
 			
 			var messageID = this.messages.length;
 			
-			var message = new berghain2.MessageVO(messageID, message.text, berghain2.MessageVO.MESSAGE_TYPE);
+			var message = new berghain2.MessageVO(messageID, messageObj.text, messageID);
 			
 			this.currentMessage = message;
 			this.messages.push(message);

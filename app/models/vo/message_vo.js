@@ -5,8 +5,7 @@
 	
 								 
 	var MessageVO = function(id, text, MESSAGE_TYPE) {
-		//lo.g("MODEL","Message Model Initiated");
-		console.log("> NEW MESSAGE VO CREATED");
+		console.log("> NEW MESSAGE TYPE " + MESSAGE_TYPE + " CREATED");
 		
 		this.MESSAGE_TYPE = {
 			 				SMALL : 1, 
@@ -23,7 +22,7 @@
 							  //var myCode = MESSAGE_TYPE.properties[mySize].code; // myCode == "M"  
 							}
 		
-		console.log(this.MESSAGE_TYPE.LARGE);		
+		 //console.log(this.MESSAGE_TYPE.LARGE);		
 							
 		 this.id = id;
 		 this.text = text;
