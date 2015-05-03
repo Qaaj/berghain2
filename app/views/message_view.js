@@ -9,26 +9,33 @@
 
         var screenHeight = 0;
         var centerY = 0;
- 
+
         var text;
- 
+        var currentTextTween;
+
         create();
- 
-        function create() {            
-            text = game.add.bitmapText(message.x, message.y, "carrier_command", "" + message.text, message.type.fontSize);
+
+        function create() {
+            text = game.add.bitmapText(0, 0, "carrier_command", "" + message.text, message.type.fontSize);
             //text.anchor.x = 0.5;
             text.updateText();
+
+            currentTextTween = game.add.tween(text).to({
+                alpha: 0
+            }, 2000, "Linear");
+    	       
+            currentTextTween.onComplete.add(onTextTweenCompleted, this);
             
-            var currentTextTween = game.add.tween(text).to({
-                    alpha: 0
-                }, 2000, "Linear");
-                
             currentTextTween.start();
         }
- 
-       this.updatePosition = function (x, y) {
-            text.x = x - (text.width/2);
+
+        this.updatePosition = function (x, y) {
+            text.x = x;
             text.y = y - 15;
+        }
+        
+        function onTextTweenCompleted(tween){
+            console.log("> TWEEN COMPLETED");
         }
     };
 

@@ -13,55 +13,55 @@
         var font = "carrier_command";
         var fontSize = 34;
 
-        var currentMessage;
+        var text;
+       
         var currentTextTween;
 
         this.execute = function (event) {
             lo.g("COMMAND", "Show message: " + event.params.type);
 
-            message_model.addMessage(event.params);
+            // TODO Move message type lock_on_player to it's own command
+            if (event.params.type != message_type.LOCK_ON_PLAYER) {
+                 message_model.addMessage(event.params);
+                 
+    	       // Show regular title message
+                if (!message_model.isTweening) {  
+                    showMessage();
+                }
 
-            if (!message_model.isTweening) {
-                showMessage();
-            }
-        }
-
-        function showMessage() {
-            message_model.isTweening = true;
-
-            setCurrentMessage();
-            createMessageTween();
-            
-        }
-
-        function setCurrentMessage() {
-            currentMessage = message_model.messages[0];
-        }
-
-        function createMessageTween() {
-            setScreenSettings();
-
-            lo.g("COMMAND", "CREATE TWEEN AT FONT SIZE " + currentMessage.type.fontSize);
-
-            var text;
-
-            if (currentMessage.type != message_type.LOCK_ON_PLAYER) {
-                text = game.add.bitmapText(centerX, 50, font, currentMessage.text, currentMessage.type.fontSize);
-                text.updateText();
-                text.x -= (text.width / 2);
-
-                currentTextTween = game.add.tween(text).to({
-                    alpha: 0
-                }, 2000, "Linear");
-                
-                currentTextTween.onComplete.add(onTextTweenCompleted, this);
-                
-                StartTween();
             } else {
-                // LOCK ON PLAYER MESSAGE
-                var text = new berghain2.MessageView(game, currentMessage);
-                mediators.create(berghain2.MessageMediator, text);
+                // Show locked on player message
+                createMessageThatLocksOnPlayerPosition(event.params);
             }
+        }
+
+        function showMessage() {  
+            message_model.isTweening = true;
+            
+            setScreenSettings();
+            createTitleMessage();
+        }
+
+        function createTitleMessage() {
+            var currentMessage = message_model.messages[0];
+            
+            text = game.add.bitmapText(centerX, 50, font, currentMessage.text, currentMessage.type.fontSize);
+            text.updateText();
+            text.x -= (text.width / 2);
+
+            currentTextTween = game.add.tween(text).to({
+                alpha: 0
+            }, 2000, "Linear");
+
+            currentTextTween.onComplete.add(onTextTweenCompleted, this);
+
+            StartTween();
+        }
+
+        function createMessageThatLocksOnPlayerPosition(message) {
+            // LOCK ON PLAYER MESSAGE
+            var text = new berghain2.MessageView(game, message);
+            mediators.create(berghain2.MessageMediator, text);
         }
 
         function setScreenSettings() {
