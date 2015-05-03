@@ -32,6 +32,8 @@ define([
     "models/message_model",
     //VO
     "models/vo/message_vo",
+    // ENUMS
+    "models/enums/message_type",
     // INTERFACES
     "interfaces/input",
     // STATES,
@@ -70,6 +72,7 @@ function(
     message_model,
     //VO
     message_vo,
+    message_type,
     // INTERFACES
     input_interface,    
     // STATES
@@ -115,6 +118,7 @@ function(
             this.injector.mapClass('physics_model', berghain2.PhysicsModel, true);           
             this.injector.mapClass('message_model', berghain2.MessageModel, true);
             this.injector.mapClass('message_vo', berghain2.MessageVO, true);
+            this.injector.mapClass('message_type', berghain2.MessageType, true);
         },
         start: function() {
 

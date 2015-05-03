@@ -17,7 +17,7 @@
         var currentTextTween;
 
         this.execute = function (event) {
-            lo.g("COMMAND", "Show message: " + event.params.text);
+            lo.g("COMMAND", "Show message: " + event.params.type);
 
             message_model.addMessage(event.params);
 
@@ -40,8 +40,10 @@
 
         function createMessageTween() {
             setScreenSettings();
+            
+            lo.g("COMMAND", "CREATE TWEEN AT FONT SIZE " + currentMessage.type.fontSize);
 
-            var text = game.add.bitmapText(centerX, 50, font, currentMessage.text, fontSize);
+            var text = game.add.bitmapText(centerX, 50, font, currentMessage.text, currentMessage.type.fontSize);
             
             // Setting text offset (to center) here text because I can 't do it in the add bitmapText constructor?
             // There's a function you need to re-calculate the text bounds after updating the text > .updateText() could work
@@ -56,7 +58,6 @@
         }
 
         function setScreenSettings() {
-            console.log("MMM");
             screenWidth = game.width;
             centerX = screenWidth / 2;
 
@@ -65,14 +66,10 @@
         }
 
         function StartTween() {
-            console.log("started tweening");
-
             currentTextTween.start();
         }
 
         function onTextTweenCompleted(tween) {
-            lo.g("COMMAND", "Show message tween completed");
-
             message_model.isTweening = false;
 
             removeMessageAndEventListener();
