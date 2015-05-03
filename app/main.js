@@ -31,7 +31,7 @@ define([
     "models/state_model",
     "models/player_model",
     "models/physics_model",
-    "models/message_model",
+    "models/message_que_model",
     //VO
     "models/vo/message_vo",
     // ENUMS
@@ -73,7 +73,7 @@ function(
     state_model,
     player_model,
     physics_model,
-    message_model,
+    message_que_model,
     //VO
     message_vo,
     message_type,
@@ -120,7 +120,7 @@ function(
             this.injector.mapClass('state_model', berghain2.StateModel, true);
             this.injector.mapClass('player_model', berghain2.PlayerModel, true);   
             this.injector.mapClass('physics_model', berghain2.PhysicsModel, true);           
-            this.injector.mapClass('message_model', berghain2.MessageModel, true);
+            this.injector.mapClass('message_model', berghain2.MessageQueModel, true);
             this.injector.mapClass('message_vo', berghain2.MessageVO, true);
             this.injector.mapClass('message_type', berghain2.MessageType, true);
         },

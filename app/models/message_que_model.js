@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	var MessageModel = function(dispatcher,input,lo,config,game) {
+	var MessageQueModel = function(dispatcher,input,lo,config,game) {
 		lo.g("MODEL","Message Model Initiated");
 		 
 		 this.currentMessage;// = new berghain2.MessageVO(0, "Standard Message", berghain2.MessageVO.MESSAGE_TYPE		);
@@ -41,6 +41,6 @@
 		}
 	};
 	
-	berghain2.MessageModel = MessageModel;
+	berghain2.MessageQueModel = MessageQueModel;
 
 })(window.berghain2 = window.berghain2 || {});
