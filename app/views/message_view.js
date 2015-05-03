@@ -21,8 +21,8 @@
             text.updateText();
 
             currentTextTween = game.add.tween(text).to({
-                alpha: 0
-            }, 2000, "Linear");
+                alpha: 0,
+            }, 4000, "Linear");
     	       
             currentTextTween.onComplete.add(onTextTweenCompleted, this);
             
