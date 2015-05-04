@@ -3,6 +3,7 @@
 	'use strict';
 
 	var MessageQueModel = function(dispatcher,input,lo,config,game) {
+		
 		lo.g("MODEL","Message Model Initiated");
 		 
 		 this.currentMessage;// = new berghain2.MessageVO(0, "Standard Message", berghain2.MessageVO.MESSAGE_TYPE		);

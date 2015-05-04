@@ -17,6 +17,7 @@ define([
     "commands/game_object_created_command",
     "commands/init_states_command",
     "commands/show_message_command",
+    "commands/create_buildings_command",
     // MEDIATORS
     "mediators/player_mediator",
     "mediators/game_mediator",
@@ -32,6 +33,7 @@ define([
     "models/player_model",
     "models/physics_model",
     "models/message_que_model",
+    "models/game_model",
     //VO
     "models/vo/message_vo",
     // ENUMS
@@ -60,6 +62,7 @@ function(
     game_object_created_command,
     init_states_command,
     show_message_command,
+    create_buildings_command,
     // MEDIATORS
     player_mediator,
     game_mediator,
@@ -74,6 +77,7 @@ function(
     player_model,
     physics_model,
     message_que_model,
+    game_model,
     //VO
     message_vo,
     message_type,
@@ -105,7 +109,10 @@ function(
 
             // Misc class
             this.injector.mapClass('lo', berghain2.Log, true);
-            this.injector.mapClass('config', berghain2.Config, true);            
+            this.injector.mapClass('config', berghain2.Config, true);  
+
+             // ENUM Class
+            this.injector.mapClass('message_type', berghain2.MessageType, true);          
             
             // Commands
             this.commands.add("start_application",berghain2.StartApplicationCommand);
@@ -115,14 +122,16 @@ function(
             this.commands.add("game_object_created",berghain2.GameObjectCreatedCommand);
             this.commands.add("init_states",berghain2.InitStatesCommand);
     	    this.commands.add("show_message",berghain2.ShowMessageCommand);
+            this.commands.add("create_buildings",berghain2.CreateBuildingsCommand);
             
             // Model
             this.injector.mapClass('state_model', berghain2.StateModel, true);
             this.injector.mapClass('player_model', berghain2.PlayerModel, true);   
             this.injector.mapClass('physics_model', berghain2.PhysicsModel, true);           
             this.injector.mapClass('message_model', berghain2.MessageQueModel, true);
-            this.injector.mapClass('message_vo', berghain2.MessageVO, true);
-            this.injector.mapClass('message_type', berghain2.MessageType, true);
+            this.injector.mapClass('game_model', berghain2.GameModel, true);
+
+           
         },
         start: function() {
 

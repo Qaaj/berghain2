@@ -11,6 +11,8 @@
             initGamePhysics();
             createBackground();
 
+            createBuildings();
+
             var env = game.add.group();
             env.enableBody = true;
             physics_model.environment = env;
@@ -34,6 +36,10 @@
 
             //  We're going to be using physics, so enable the Arcade Physics system
             game.physics.startSystem(Phaser.Physics.ARCADE);
+        }
+
+        function createBuildings(){
+            dispatcher.dispatch("create_buildings");
         }
 
         function createNPCs() {

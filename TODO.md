@@ -17,3 +17,4 @@
  - mediators.create(berghain2.HealthBarMediator, healthBar); needs to move out of healthbarview. best remove inject mediators as well.
  - Random generation of backgrounds
  - Day/Night cycle
+ - Mapping of MessageType / MessageVO removen uit main.js
