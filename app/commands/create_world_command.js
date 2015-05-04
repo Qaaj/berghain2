@@ -98,7 +98,6 @@
 
                 if (i != 3) {
                     physics_model.makeImmovable(block);
-                    console.log(i * 128);
                  }
 
             }

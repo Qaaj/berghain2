@@ -13,3 +13,4 @@
  - Player damage needs to move from firebin to command
  - Add raycastings (http://gamemechanicexplorer.com/#raycasting-1)
  - Create backside of the main character 
+ - Death animation
