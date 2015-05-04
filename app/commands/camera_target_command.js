@@ -3,7 +3,7 @@
 
     berghain2.CameraTargetCommand = function(camera_model,lo) {
         this.execute = function(event) {
-            lo.g("COMMAND", "Camera Target Initted", event.params);
+            lo.g("COMMAND", "Camera Target Initiated", event.params);
             camera_model.cameraTarget = event.params.target;
         }
     };

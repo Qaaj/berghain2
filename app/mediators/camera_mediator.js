@@ -7,7 +7,7 @@
         dispatcher.addEventListener('game_update', function (event) {
             if(typeof(camera_model.cameraTarget != 'undefined'))
             {
-                lo.g("USER", "PLAYER POS ", camera_model.cameraTarget.xPosition);
+                // lo.g("USER", "PLAYER POS ", camera_model.cameraTarget.xPosition);
                 game.camera.x = camera_model.cameraTarget.xPosition - (game.width / 2.0);
             }
         });
