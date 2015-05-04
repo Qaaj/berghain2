@@ -2,7 +2,7 @@
 
     'use strict';
 
-    berghain2.CreateWorldCommand = function (dispatcher, mediators, lo, config, game, input, physics_model) {
+    berghain2.CreateWorldCommand = function (dispatcher, mediators, lo, config, game, input, physics_model, player_model) {
 
         this.execute = function (event) {
 
@@ -27,8 +27,6 @@
             
             dispatcher.dispatch('create_hud');
         }
-
-
 
         function initGamePhysics() {
             // Define world bounds
@@ -56,9 +54,6 @@
             var bin2 = game.add.sprite(window.innerWidth - 400, window.innerHeight - 64 - 48, 'fire_bin');
             bin2.name = "Fire Bin 2"
             mediators.create(berghain2.FireBinMediator, bin2);
-
-
-
         }
 
         function createBackground() {
@@ -121,7 +116,7 @@
 
         function createPlayer() {
             // Create the player 
-            var player = game.add.sprite(50, 50, 'punker');
+            var player = game.add.sprite(player_model.xPosition, player_model.yPosition, 'punker');
             player.name = "Punker";
 
             // Attach the mediator to the player

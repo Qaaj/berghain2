@@ -23,12 +23,19 @@ define([
     "mediators/health_bar_mediator",
     "mediators/mana_bar_mediator",
      "mediators/fire_bin_mediator",
+     "mediators/message_mediator",
      // VIEWS
      "views/health_bar_view",
+     "views/message_view",
     // MODELS
     "models/state_model",
     "models/player_model",
     "models/physics_model",
+    "models/message_que_model",
+    //VO
+    "models/vo/message_vo",
+    // ENUMS
+    "models/enums/message_type",
     // INTERFACES
     "interfaces/input",
     // STATES,
@@ -58,12 +65,18 @@ function(
     game_mediator,
     health_bar_mediator,
     mana_bar_mediator,
+    message_mediator,
     //VIEWS
     health_bar_view,
+    message_view,
     // MODELS
     state_model,
     player_model,
     physics_model,
+    message_que_model,
+    //VO
+    message_vo,
+    message_type,
     // INTERFACES
     input_interface,    
     // STATES
@@ -107,8 +120,9 @@ function(
             this.injector.mapClass('state_model', berghain2.StateModel, true);
             this.injector.mapClass('player_model', berghain2.PlayerModel, true);   
             this.injector.mapClass('physics_model', berghain2.PhysicsModel, true);           
-        
-             
+            this.injector.mapClass('message_model', berghain2.MessageQueModel, true);
+            this.injector.mapClass('message_vo', berghain2.MessageVO, true);
+            this.injector.mapClass('message_type', berghain2.MessageType, true);
         },
         start: function() {
 
