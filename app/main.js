@@ -17,6 +17,7 @@ define([
     "commands/game_object_created_command",
     "commands/init_states_command",
     "commands/show_message_command",
+    "commands/camera_target_command",
     // MEDIATORS
     "mediators/player_mediator",
     "mediators/game_mediator",
@@ -24,12 +25,14 @@ define([
     "mediators/mana_bar_mediator",
      "mediators/fire_bin_mediator",
      "mediators/message_mediator",
+     "mediators/camera_mediator",
      // VIEWS
      "views/health_bar_view",
      "views/message_view",
     // MODELS
     "models/state_model",
     "models/player_model",
+    "models/camera_model",
     "models/physics_model",
     "models/message_que_model",
     //VO
@@ -60,18 +63,21 @@ function(
     game_object_created_command,
     init_states_command,
     show_message_command,
+    camera_target_command,
     // MEDIATORS
     player_mediator,
     game_mediator,
     health_bar_mediator,
     mana_bar_mediator,
     message_mediator,
+    camera_mediator,
     //VIEWS
     health_bar_view,
     message_view,
     // MODELS
     state_model,
     player_model,
+    camera_model,
     physics_model,
     message_que_model,
     //VO
@@ -115,6 +121,7 @@ function(
             this.commands.add("game_object_created",berghain2.GameObjectCreatedCommand);
             this.commands.add("init_states",berghain2.InitStatesCommand);
     	    this.commands.add("show_message",berghain2.ShowMessageCommand);
+            this.commands.add("camera_target", berghain2.CameraTargetCommand);
             
             // Model
             this.injector.mapClass('state_model', berghain2.StateModel, true);
@@ -123,6 +130,7 @@ function(
             this.injector.mapClass('message_model', berghain2.MessageQueModel, true);
             this.injector.mapClass('message_vo', berghain2.MessageVO, true);
             this.injector.mapClass('message_type', berghain2.MessageType, true);
+            this.injector.mapClass('camera_model', berghain2.CameraModel, true);
         },
         start: function() {
 
