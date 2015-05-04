@@ -6,7 +6,6 @@
 
         lo.g("MEDIATOR", "Player mediator instantiated", target);
 
-
         // Add the player variable to our physics model
         physics_model.player = target;
 
@@ -24,12 +23,13 @@
 
         var physics_state = state_model.PLAYER_GROUND;
 
-        dispatcher.addEventListener('change_player_state', function(event) {
 
-            if (event.params.type == "PHYSICS") {
+        dispatcher.dispatch('camera_target', {'target':player_model});
+
+        dispatcher.addEventListener('change_player_state', function (event) {
+            if(event.params.type == "PHYSICS"){
                 physics_state = event.params.state;
             }
-
         });
 
         dispatcher.addEventListener('game_update', function(event) {
@@ -41,8 +41,6 @@
             if (target.body.y > game.height) {
                 player_model.health = 0;
             }
-
-
         });
 
         dispatcher.addEventListener('game_render', function(event) {

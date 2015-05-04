@@ -17,6 +17,9 @@
             env.enableBody = true;
             physics_model.environment = env;
 
+            createWorld();
+            createCamera();
+
             createFloor();
             createSky();
             createNPCs();
@@ -30,10 +33,18 @@
             dispatcher.dispatch('create_hud');
         }
 
-        function initGamePhysics() {
-            // Define world bounds
-            game.world.setBounds(0, 0, game.width, 3000);
+        function createWorld()
+        {
+            //game.world.setBounds(0, 0, game.width, 3000);
+            game.world.setBounds(0, 0, 5000, 3000);
+        }
 
+        function createCamera() {
+            // Define world bounds
+            mediators.create(berghain2.CameraMediator, game.camera);
+        }
+
+        function initGamePhysics() {
             //  We're going to be using physics, so enable the Arcade Physics system
             game.physics.startSystem(Phaser.Physics.ARCADE);
         }
