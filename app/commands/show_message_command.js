@@ -56,7 +56,7 @@
 
             currentTextTween = game.add.tween(text).to({
                 alpha: 0
-            }, 2000, "Linear");
+            }, 500, "Linear",true,2000);
 
             currentTextTween.onComplete.add(onTextTweenCompleted, this);
 
