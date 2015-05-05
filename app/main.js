@@ -151,12 +151,9 @@ function(
             this.injector.mapClass('game_model', berghain2.GameModel, true);
             this.injector.mapClass('camera_model', berghain2.CameraModel, true);
         },
-        start: function() {
+        start: function() {            
 
-            var randomSeed = Math.floor(Math.random() * 1000000);
-            var generator = seedrandom(randomSeed);
-
-            this.dispatcher.dispatch('start_application',{seed:randomSeed,randomGen:generator});
+            this.dispatcher.dispatch('start_application',{generator:seedrandom});
 
         }
     });

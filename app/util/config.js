@@ -10,6 +10,7 @@
             // toggle the debug settings
             this.debug = false;
             this.skipIntro = true;
+            this.seed = "SEEDS ARE BADASS"; //Math.floor(Math.random() * 1000000);
            
         };
 

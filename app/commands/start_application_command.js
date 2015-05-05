@@ -6,8 +6,14 @@
 
         this.execute = function(event) {
 
-            // Initialise the random class with the seed generator
-            rnd.setSeed(event.params.randomGen);
+            // create seed generator
+            var generator = event.params.generator;
+            // choose the seed we will use
+            var randomSeed = config.seed; 
+            // initialise the seed generator
+            var seedGen = generator(randomSeed);
+            // set the seed generator in our random class
+            rnd.setSeed(seedGen);
 
             lo.g("APPLICATION", "Application Starting with seed: " +  event.params.seed);
 
