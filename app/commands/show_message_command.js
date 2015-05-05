@@ -2,7 +2,7 @@
 
     'use strict';
 
-    berghain2.ShowMessageCommand = function (lo, config, game, player_model, message_model, message_type, mediators) {
+    berghain2.ShowMessageCommand = function (lo, config, game, player_model, message_model, message_type, mediators, player_notification_model) {
 
         var screenWidth = 0;
         var centerX = 0;
@@ -14,41 +14,34 @@
         var fontSize = 34;
 
         var text;
-       
+
         var currentTextTween;
 
         this.execute = function (event) {
-            lo.g("COMMAND", "Show message: " + event.params.type);
+            lo.g("COMMAND", "Show message: " + event.params.messageType.fontSize);
 
             decideWhichMessageToShow(event.params);
         }
-        
-        function decideWhichMessageToShow(message){
-            // TODO Move message type lock_on_player to it's own command
-            if (message.type != message_type.LOCK_ON_PLAYER) {
-                 message_model.addMessage(message);
+
+        function decideWhichMessageToShow(message) {
+            message_model.addMessage(message);
                  
     	       // Show regular title message
-                if (!message_model.isTweening) {  
-                    showMessage();
-                }
-
-            } else {
-                // Show locked on player message
-                createMessageThatLocksOnPlayerPosition(message);
+            if (!message_model.isTweening) {
+                showMessage();
             }
         }
 
-        function showMessage() {  
+        function showMessage() {
             message_model.isTweening = true;
-            
+
             setScreenSettings();
             createTitleMessage();
         }
 
         function createTitleMessage() {
             var currentMessage = message_model.messages[0];
-            
+
             text = game.add.bitmapText(centerX, 50, font, currentMessage.text, currentMessage.type.fontSize);
             text.updateText();
             text.x -= (text.width / 2);
@@ -60,12 +53,6 @@
             currentTextTween.onComplete.add(onTextTweenCompleted, this);
 
             StartTween();
-        }
-
-        function createMessageThatLocksOnPlayerPosition(message) {
-            // LOCK ON PLAYER MESSAGE
-            var text = new berghain2.MessageView(game, message);
-            mediators.create(berghain2.MessageMediator, text);
         }
 
         function setScreenSettings() {

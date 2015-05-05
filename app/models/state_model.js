@@ -2,10 +2,10 @@
 
 	'use strict';
 
-	var StateModel = function(dispatcher,input,lo,config,game,physics_model) {
+	var StateModel = function(dispatcher,input,lo,config,game,physics_model, message_type) {
 
 		this.PLAYER_JUMP 	= new berghain2.Player_Jump(	dispatcher,input,lo,config,this,game,physics_model);
-		this.PLAYER_GROUND 	= new berghain2.Player_Ground(	dispatcher,input,lo,config,this,game,physics_model);
+		this.PLAYER_GROUND 	= new berghain2.Player_Ground(	dispatcher,input,lo,config,this,game,physics_model, message_type);
 
 		lo.g("MODEL","States created");
 	};

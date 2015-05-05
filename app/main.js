@@ -17,21 +17,23 @@ define([
     "commands/game_object_created_command",
     "commands/init_states_command",
     "commands/show_message_command",
+    "commands/show_player_notification_command",
     // MEDIATORS
     "mediators/player_mediator",
     "mediators/game_mediator",
     "mediators/health_bar_mediator",
     "mediators/mana_bar_mediator",
      "mediators/fire_bin_mediator",
-     "mediators/message_mediator",
-     // VIEWS
-     "views/health_bar_view",
-     "views/message_view",
+    "mediators/message_mediator",
+    // VIEWS
+    "views/health_bar_view",
+    "views/message_view",
     // MODELS
     "models/state_model",
     "models/player_model",
     "models/physics_model",
     "models/message_que_model",
+    "models/player_notification_model",
     //VO
     "models/vo/message_vo",
     // ENUMS
@@ -60,6 +62,7 @@ function(
     game_object_created_command,
     init_states_command,
     show_message_command,
+    show_player_notification_command,
     // MEDIATORS
     player_mediator,
     game_mediator,
@@ -74,6 +77,7 @@ function(
     player_model,
     physics_model,
     message_que_model,
+    player_notification_model,
     //VO
     message_vo,
     message_type,
@@ -115,6 +119,8 @@ function(
             this.commands.add("game_object_created",berghain2.GameObjectCreatedCommand);
             this.commands.add("init_states",berghain2.InitStatesCommand);
     	    this.commands.add("show_message",berghain2.ShowMessageCommand);
+            this.commands.add("show_player_notification",berghain2.ShowPlayerNotificationCommand);
+            this.commands.add("player_notification_tween_completed",berghain2.ShowPlayerNotificationCommand);
             
             // Model
             this.injector.mapClass('state_model', berghain2.StateModel, true);
@@ -123,6 +129,7 @@ function(
             this.injector.mapClass('message_model', berghain2.MessageQueModel, true);
             this.injector.mapClass('message_vo', berghain2.MessageVO, true);
             this.injector.mapClass('message_type', berghain2.MessageType, true);
+            this.injector.mapClass('player_notification_model', berghain2.PlayerNotificationModel, true);
         },
         start: function() {
 

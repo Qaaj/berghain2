@@ -4,6 +4,8 @@
 
     berghain2.CreateWorldCommand = function (dispatcher, mediators, lo, config, game, input, physics_model, player_model) {
 
+        var interactableGroup;
+        
         this.execute = function (event) {
 
             lo.g("COMMAND", "Creating World");
@@ -11,10 +13,17 @@
             initGamePhysics();
             createBackground();
 
+            // CREATE BACKGROUND COLISSION GROUP
             var env = game.add.group();
             env.enableBody = true;
             physics_model.environment = env;
 
+            // CREATE INTERACTABLE GROUP
+            interactableGroup = game.add.group();
+            interactableGroup.enableBody = true;
+            //physics_model.makeImmovable(interactableGroup);
+            physics_model.interactable = interactableGroup;            
+            
             createFloor();
             createSky();
             createNPCs();
@@ -38,21 +47,23 @@
 
         function createNPCs() {
             var npc = game.add.sprite(600, window.innerHeight - 64 - 96, 'npc');
-            npc.name = "NPC"
+            npc.name = "NPC";
         }
 
         function createPlaces() {
-            var ubahn = game.add.sprite(800, window.innerHeight - 64 - 192, 'ubahn');
-            ubahn.name = "ubahn"
+            var ubahn = interactableGroup.create(800, window.innerHeight - 64 - 192, 'ubahn');
+            ubahn.name = "ubahn";            
+            ubahn.body.immovable = true;
+            ubahn.body.allowGravity = false;
         }
 
         function createEnemies() {
             var bin = game.add.sprite(200, window.innerHeight - 64 - 48, 'fire_bin');
-            bin.name = "Fire Bin 1"
+            bin.name = "Fire Bin 1";
             mediators.create(berghain2.FireBinMediator, bin);
 
             var bin2 = game.add.sprite(window.innerWidth - 400, window.innerHeight - 64 - 48, 'fire_bin');
-            bin2.name = "Fire Bin 2"
+            bin2.name = "Fire Bin 2";
             mediators.create(berghain2.FireBinMediator, bin2);
         }
 

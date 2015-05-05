@@ -9,7 +9,8 @@
 		// Variables
 		this.environment = {};
 		this.player = {};
-
+		this.interactable = {};
+		
 		// Player physics
 		this.player_jump_allowed = true;
 
@@ -21,11 +22,7 @@
 			target.body.immovable = true;
             target.body.allowGravity = false;
             target.body.collideWorldBounds = false;
-
 		}
-
-
-
 	};
 	
 	berghain2.PhysicsModel = PhysicsModel;

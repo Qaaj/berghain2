@@ -37,6 +37,8 @@
         function onTextTweenCompleted(tween){
             currentTextTween.onComplete.remove(onTextTweenCompleted, this);
             
+            dispatcher.dispatch("player_notification_tween_completed");
+            
             console.log("> TWEEN COMPLETED");
         }
     };

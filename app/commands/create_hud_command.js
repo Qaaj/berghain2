@@ -17,6 +17,7 @@
             showIntroText();
 
             var healthBar = new berghain2.HealthBarView(game, mediators);
+            
         }
 
         function setScreenSettings() {
@@ -29,18 +30,18 @@
 
         function showIntroText() {
             
-            var message = { text: "Wow", type: message_type.LOCK_ON_PLAYER};
-            dispatcher.dispatch("show_message", message);
+            /*var message = { text: "Wow", messageType: message_type.LOCK_ON_PLAYER};
+            dispatcher.dispatch("show_player_notification", message);*/
              
-            var message = { text: "welcome to berghain II ", type: message_type.SMALL};
+            var message = { text: "welcome to berghain II ", messageType: message_type.SMALL};
             
             dispatcher.dispatch("show_message", message);
             
-            message = { text: "chapter I ", type: message_type.MEDIUM};
+            message = { text: "chapter I ", messageType: message_type.MEDIUM};
             
             dispatcher.dispatch("show_message", message);
             
-            message = { text: "get some cigarettes", type: message_type.LARGE};
+            message = { text: "get some cigarettes", messageType: message_type.LARGE};
             
             dispatcher.dispatch("show_message", message);
         }
