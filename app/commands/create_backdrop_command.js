@@ -75,9 +75,8 @@
                    
 
 
-                    var r = rnd.getRandom();
-                    if (r == 100) {
-                    	 console.log("LAMP");
+                    
+                    if (rnd.getRandom() == 50) {
                         var lamp = physics_model.environment.create(params.lastX - 100  - Math.random() * 100, window.innerHeight - 255, 'street_lamp', Math.floor(Math.random() * 4));
                         physics_model.makeImmovable(lamp)
                         
@@ -86,14 +85,16 @@
 
                     i++;
 
-                     console.log("NEW LOOP");
 
                     // END CREATION LOOP
 
                 }
 
+                // Bring the environment back to top
+
                 game.world.bringToTop(physics_model.environment);
 
+                // Bring the items like the shrubbery in front of the environment
                 for (var i = 0; i < params.bringToTop.length; i++) {
          			var sprite = params.bringToTop[i];
          			game.world.bringToTop(sprite);
@@ -105,7 +106,6 @@
 
         this.createShrubbery = function(params) {
 
-        	console.log("SHRUB");
             params.lastItem = "shrubbery";
 
             var shrubbery = game.add.sprite(params.lastX + params.lastWidth, window.innerHeight - 64 - 134, 'shrubbery', Math.floor(Math.random() * 4));
@@ -119,7 +119,6 @@
         }
 
         this.createBuilding = function(params) {
-        	console.log("BUILDING");
             var props = {};
             props.w = 150 + Math.random() * 300;
             props.h = 300 + Math.random() * 300;
@@ -138,7 +137,6 @@
 
 
         this.createFence = function(params) {
-        	console.log("FENCE");
             params.lastItem = "fence";
             var fence = game.add.sprite(params.lastX + params.lastWidth, window.innerHeight - 64 - 126, 'fence');
 
