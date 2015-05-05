@@ -17,14 +17,16 @@
 
             var fillAlpha = 1;
             
-            var strokeColor = 0x4f4531 - 100;
+            var strokeColor = 0;
             var strokeWidth = 0;
             var strokeAlpha = 1;
 
             var width = props.w;
             var height = props.h;
 
-            var houdse = drawRectangleWithStroke(xPos, yPos, width, height, fillColor, strokeColor, strokeWidth, strokeAlpha);
+            var house = drawRectangleWithStroke(xPos, yPos, width, height, fillColor, strokeColor, strokeWidth, fillAlpha);
+            var shading = drawRectangleWithStroke(xPos, yPos, width, 10, 0x000000, strokeColor, strokeWidth, 0.1);
+            var shading = drawRectangleWithStroke(xPos , yPos + 10, 10, height-10, 0x000000, strokeColor, strokeWidth, 0.2);
         
         function drawRectangleWithStroke(xPos, yPos, width, height, fillColor, strokeColor, strokeWidth, alpha){
 
