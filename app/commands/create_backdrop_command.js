@@ -23,7 +23,8 @@
                     lastWidth: 0,
                     spacing: 0,
                     lastItem: "fence",
-                    bringToTop : []
+                    bringToTop : [],
+                    lastHeight: 0
                 }
 
                 while (params.lastX < 5000) { // 5000 PX is level width right now
@@ -114,22 +115,31 @@
 
             params.lastX = shrubbery.x;
             params.lastWidth = shrubbery.width;
-            params.spacing = 0;
+            params.spacing = 1;
             return params;
         }
 
         this.createBuilding = function(params) {
             var props = {};
             props.w = 150 + Math.random() * 300;
-            props.h = 300 + Math.random() * 300;
+            props.h = 150 + Math.random() * 500;
+
             props.x = params.spacing + params.lastX + params.lastWidth;
             props.y = game.height - physics_model.ground_height - props.h;
 
             params.lastX = props.x;
             params.lastWidth = props.w;
-            params.spacing = 100;
+          
+            
 
-            var building = new berghain2.BuildingView(game, lo, props, rnd);
+            var building = new berghain2.BuildingView(game, lo, props, rnd, params);
+             	// spacing for the next building or not?
+           	if(rnd.getRandom() == 250){
+           		params.spacing = 100;
+           	}else{
+           		params.spacing = 0;
+           	}
+           	params.lastHeight = props.h;
             params.lastItem = "building";
 
             return params;
@@ -142,7 +152,7 @@
 
             params.lastX = fence.x;
             params.lastWidth = fence.width;
-            params.spacing = 0;
+            params.spacing = 1;
             return params;
         }
 
