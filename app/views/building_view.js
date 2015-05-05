@@ -2,7 +2,7 @@
 
 	'use strict';
 
-    var BuildingView = function(game,lo, props) {
+    var BuildingView = function(game,lo, props,rnd) {
         
         lo.g("VIEW","CREATING BUILDING VIEW");
         
@@ -26,7 +26,24 @@
 
             var house = drawRectangleWithStroke(xPos, yPos, width, height, fillColor, strokeColor, strokeWidth, fillAlpha);
             var shading = drawRectangleWithStroke(xPos, yPos, width, 10, 0x000000, strokeColor, strokeWidth, 0.1);
-            var shading = drawRectangleWithStroke(xPos , yPos + 10, 10, height-10, 0x000000, strokeColor, strokeWidth, 0.2);
+            var shading2 = drawRectangleWithStroke(xPos , yPos + 10, 10, height-10, 0x000000, strokeColor, strokeWidth, 0.2);
+
+
+            var r = Math.random(); // position the door
+            var doorOpening = drawRectangleWithStroke(xPos+ 20 + r * (width - 120) , yPos + height - 80  , 60, 80, 0x000000, strokeColor, strokeWidth, 0.4);
+
+             // IS the door open ?
+            if(rnd.getRandom() == 100) // YES
+            { 
+                var doorshading = drawRectangleWithStroke(xPos+ 4 + 20 + r * (width - 120) , yPos + 4 + height - 80  , 52, 76, 0x000000, strokeColor, strokeWidth, 0.5);
+            }
+            else // NO
+            {   
+                console.log("closed door")
+                var door = drawRectangleWithStroke(xPos+ 4 + 20 + r * (width - 120) , yPos + 4 + height - 80  , 52, 76, 0x3a3232, strokeColor, strokeWidth, 1);  
+            }
+            
+
 
             //TODO add code for random doors/windows
         

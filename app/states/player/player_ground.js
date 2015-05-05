@@ -23,6 +23,7 @@
                 dispatcher.dispatch("change_player_state", {type:"PHYSICS",state:state_model.PLAYER_JUMP});
 
             }
+            
             var speed = 200;
 
             if(input.sprint) speed = 1000;

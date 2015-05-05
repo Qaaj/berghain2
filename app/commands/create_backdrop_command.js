@@ -129,7 +129,7 @@
             params.lastWidth = props.w;
             params.spacing = 100;
 
-            var building = new berghain2.BuildingView(game, lo, props);
+            var building = new berghain2.BuildingView(game, lo, props, rnd);
             params.lastItem = "building";
 
             return params;
