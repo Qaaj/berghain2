@@ -17,9 +17,14 @@
             game.load.image('moon', 'assets/moon.png');
             game.load.image('logo', 'assets/logo.png');
             game.load.image('cloud', 'assets/cloud.png');
+
+
             game.load.image('street_lamp', 'assets/street_lamp.png');
             game.load.image('ubahn', 'assets/ubahn.png');
             game.load.image('fence', 'assets/fence.png');
+
+            game.load.spritesheet('shrubbery', 'assets/shrubbery.png', 144,144);
+
 
 
 

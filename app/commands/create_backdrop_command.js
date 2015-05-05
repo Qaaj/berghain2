@@ -19,7 +19,7 @@
                 lo.g("VIEW", "Creating NEUKOLLN Buildings");
 
                 // 5000 PX is level width right now
-                var lastItem = "fence";
+                var lastItem = "shrubbery";
 
                 var i = 0;
 
@@ -51,9 +51,7 @@
                             lastWidth = fence.width;
                             spacing = 0;
                         }
-                    }else
-
-                     if (lastItem == "building") { // When the last item was a building, there's a small chance that the next item will be a fence
+                    }else if (lastItem == "building") { // When the last item was a building, there's a small chance that the next item will be a fence
                         if (rand == 200) { // 20% chance to make a fence
                            lastItem = "fence";
                             var fence = game.add.sprite(lastX + lastWidth, window.innerHeight - 64 - 126, 'fence');
@@ -61,7 +59,14 @@
                             lastX = fence.x;
                             lastWidth = fence.width;
                             spacing = 0;
-                        } else { // 80% chance of another building
+                        } else if(rand == 250){ // 25% chance of shrubbery
+                        	lastItem = "shrubbery";
+                            var shrubbery = game.add.sprite(lastX + lastWidth, window.innerHeight - 64 - 134, 'shrubbery',Math.floor(Math.random() * 4));
+
+                            lastX = shrubbery.x;
+                            lastWidth = shrubbery.width;
+                            spacing = 0;
+                        }else{ // 80% chance of another building
                         	
                         	var rand2 = rnd.getRandom();
                         	var props = {};
@@ -85,6 +90,31 @@
                             lastItem = "building";
 
                         }
+                    } else if (lastItem == "shrubbery"){
+
+                    	if (rand == 250) { // 25% chance to STOP the shrubbery
+                            var props = {};
+                            props.w = 150 + Math.random() * 300;
+                            props.h = 300 + Math.random() * 300;
+                            props.x = spacing + lastX + lastWidth;
+                            props.y = game.height - physics_model.ground_height - props.h;
+
+                            lastX = props.x;
+                            lastWidth = props.w;
+                            spacing = 200;
+
+                            var building = new berghain2.BuildingView(game, lo, props);
+                            lastItem = "building";
+                        } else { // 75% chance to continue the shrubbery
+                        	lastItem = "shrubbery";
+
+                            var shrubbery = game.add.sprite(lastX + lastWidth, window.innerHeight - 64 - 134, 'shrubbery',Math.floor(Math.random() * 4));
+
+                            lastX = shrubbery.x;
+                            lastWidth = shrubbery.width;
+                            spacing = 0;
+                        }
+
                     }
 
 

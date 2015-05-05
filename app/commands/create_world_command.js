@@ -12,20 +12,26 @@
              
             initGamePhysics();
 
+
+
             createWorld();
 
+           
             createBackground();
-
-            createBackdrop();
-
-            var env = game.add.group();
+              var env = game.add.group();
             env.enableBody = true;
             physics_model.environment = env;
+
+            createFloor();
+            
+            createBackdrop();
+
+           
 
             
             createCamera();
 
-            createFloor();
+           
             createSky();
             createNPCs();
 
@@ -64,7 +70,7 @@
         }
 
         function createPlaces() {
-            var ubahn = game.add.sprite(800, window.innerHeight - 64 - 192, 'ubahn');
+            var ubahn = game.add.sprite(window.innerWidth - 200, window.innerHeight - 64 - 192, 'ubahn');
             ubahn.name = "ubahn"
         }
 
