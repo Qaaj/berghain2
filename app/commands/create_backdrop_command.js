@@ -121,8 +121,8 @@
 
         this.createBuilding = function(params) {
             var props = {};
-            props.w = 150 + Math.random() * 300;
-            props.h = 150 + Math.random() * 500;
+            props.w = 150 + rnd.random() * 300;
+            props.h = 150 + rnd.random() * 500;
 
             props.x = params.spacing + params.lastX + params.lastWidth;
             props.y = game.height - physics_model.ground_height - props.h;

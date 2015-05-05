@@ -2,12 +2,14 @@
 
     'use strict';
 
-    berghain2.StartApplicationCommand = function(dispatcher, injector, lo, config) {
+    berghain2.StartApplicationCommand = function(dispatcher, injector, lo, config, rnd) {
 
         this.execute = function(event) {
 
+            // Initialise the random class with the seed generator
+            rnd.setSeed(event.params.randomGen);
 
-            lo.g("APPLICATION", "Application Starting");
+            lo.g("APPLICATION", "Application Starting with seed: " +  event.params.seed);
 
             // Map the PHASER IO game object to the value 'game' so it's available everywhere we need it
 
