@@ -6,16 +6,9 @@
 
         this.execute = function(event) {
 
-            // create seed generator
-            var generator = event.params.generator;
-            // choose the seed we will use
-            var randomSeed = config.seed; 
-            // initialise the seed generator
-            var seedGen = generator(randomSeed);
-            // set the seed generator in our random class
-            rnd.setSeed(seedGen);
+            var seed = this.setupSeedGenerator(event);
 
-            lo.g("APPLICATION", "Application Starting with seed: " +  event.params.seed);
+            lo.g("APPLICATION", "Application Starting with seed: " + seed);
 
             // Map the PHASER IO game object to the value 'game' so it's available everywhere we need it
 
@@ -31,12 +24,29 @@
                     //dispatcher.dispatch('game_update');
                 }
             }));
-            
+
             if (config.debug == true) {
                 lo.g("APPLICATION", "DEBUG MODE ON");
             }
 
         };
+
+        this.setupSeedGenerator = function(event) {
+            // create seed generator
+            var generator = event.params.generator;
+            // choose the seed we will use
+            var seed = Math.floor(Math.random() * 1000000);
+            if (!config.useRandomSeed) {
+                seed = config.seed;
+            }
+            // initialise the seed generator
+            var seedGen = generator(seed);
+            // set the seed generator in our random class
+            rnd.setSeed(seedGen);
+
+            return seed;
+
+        }
 
     };
 
