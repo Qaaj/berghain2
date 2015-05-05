@@ -14,6 +14,9 @@
 		// Player physics
 		this.player_jump_allowed = true;
 
+		// Helper variables
+		this.ground_height = 0;
+
 		// Helper functions
 
 		this.makeImmovable = function(target){

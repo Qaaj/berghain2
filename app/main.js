@@ -18,6 +18,8 @@ define([
     "commands/init_states_command",
     "commands/show_message_command",
     "commands/show_player_notification_command",
+    "commands/create_backdrop_command",
+    "commands/camera_target_command",
     // MEDIATORS
     "mediators/player_mediator",
     "mediators/game_mediator",
@@ -25,15 +27,19 @@ define([
     "mediators/mana_bar_mediator",
      "mediators/fire_bin_mediator",
     "mediators/message_mediator",
+    "mediators/camera_mediator",
     // VIEWS
     "views/health_bar_view",
-    "views/message_view",
+     "views/message_view",
+     "views/building_view",
     // MODELS
     "models/state_model",
     "models/player_model",
+    "models/camera_model",
     "models/physics_model",
     "models/message_que_model",
     "models/player_notification_model",
+    "models/game_model",
     //VO
     "models/vo/message_vo",
     // ENUMS
@@ -47,7 +53,8 @@ define([
     "states/player/player_jump",
     // OTHER
     "util/log",
-    "util/config"
+    "util/config",
+    "util/random"
 ], 
 
 function(
@@ -63,21 +70,27 @@ function(
     init_states_command,
     show_message_command,
     show_player_notification_command,
+    create_backdrop_command,
+    camera_target_command,
     // MEDIATORS
     player_mediator,
     game_mediator,
     health_bar_mediator,
     mana_bar_mediator,
     message_mediator,
+    camera_mediator,
     //VIEWS
     health_bar_view,
     message_view,
+    building_view,
     // MODELS
     state_model,
     player_model,
+    camera_model,
     physics_model,
     message_que_model,
     player_notification_model,
+    game_model,
     //VO
     message_vo,
     message_type,
@@ -90,7 +103,8 @@ function(
     player_jump_state,
     // OTHER
     log,
-    config
+    config,
+    random
     ) 
 {
 
@@ -109,7 +123,11 @@ function(
 
             // Misc class
             this.injector.mapClass('lo', berghain2.Log, true);
-            this.injector.mapClass('config', berghain2.Config, true);            
+            this.injector.mapClass('config', berghain2.Config, true);  
+            this.injector.mapClass('rnd', berghain2.Random, true);  
+
+             // ENUM Class
+            this.injector.mapClass('message_type', berghain2.MessageType, true);          
             
             // Commands
             this.commands.add("start_application",berghain2.StartApplicationCommand);
@@ -121,6 +139,10 @@ function(
     	    this.commands.add("show_message",berghain2.ShowMessageCommand);
             this.commands.add("show_player_notification",berghain2.ShowPlayerNotificationCommand);
             this.commands.add("player_notification_tween_completed",berghain2.ShowPlayerNotificationCommand);
+            this.commands.add("create_backdrop",berghain2.CreateBackdropCommand);
+            this.commands.add("camera_target", berghain2.CameraTargetCommand);
+
+
             
             // Model
             this.injector.mapClass('state_model', berghain2.StateModel, true);
@@ -128,8 +150,9 @@ function(
             this.injector.mapClass('physics_model', berghain2.PhysicsModel, true);           
             this.injector.mapClass('message_model', berghain2.MessageQueModel, true);
             this.injector.mapClass('message_vo', berghain2.MessageVO, true);
-            this.injector.mapClass('message_type', berghain2.MessageType, true);
             this.injector.mapClass('player_notification_model', berghain2.PlayerNotificationModel, true);
+            this.injector.mapClass('game_model', berghain2.GameModel, true);
+            this.injector.mapClass('camera_model', berghain2.CameraModel, true);
         },
         start: function() {
 

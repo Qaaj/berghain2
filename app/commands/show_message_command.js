@@ -45,6 +45,7 @@
             text = game.add.bitmapText(centerX, 50, font, currentMessage.text, currentMessage.type.fontSize);
             text.updateText();
             text.x -= (text.width / 2);
+            text.fixedToCamera = true;
 
             currentTextTween = game.add.tween(text).to({
                 alpha: 0

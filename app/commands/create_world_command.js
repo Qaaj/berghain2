@@ -10,10 +10,17 @@
 
             lo.g("COMMAND", "Creating World");
 
+             physics_model.ground_height = 64;
+             
             initGamePhysics();
+
+            createWorld();
+
             createBackground();
 
             // CREATE BACKGROUND COLISSION GROUP
+            createBackdrop();
+
             var env = game.add.group();
             env.enableBody = true;
             physics_model.environment = env;
@@ -23,7 +30,10 @@
             interactableGroup.enableBody = true;
             //physics_model.makeImmovable(interactableGroup);
             physics_model.interactable = interactableGroup;            
+           
             
+            createCamera();
+
             createFloor();
             createSky();
             createNPCs();
@@ -37,17 +47,29 @@
             dispatcher.dispatch('create_hud');
         }
 
-        function initGamePhysics() {
-            // Define world bounds
-            game.world.setBounds(0, 0, game.width, 3000);
+        function createWorld()
+        {
+            //game.world.setBounds(0, 0, game.width, 3000);
+            game.world.setBounds(0, 0, 5120, 3000);
+        }
 
+        function createCamera() {
+            // Define world bounds
+            mediators.create(berghain2.CameraMediator, game.camera);
+        }
+
+        function initGamePhysics() {
             //  We're going to be using physics, so enable the Arcade Physics system
             game.physics.startSystem(Phaser.Physics.ARCADE);
         }
 
+        function createBackdrop(){
+            dispatcher.dispatch("create_backdrop");
+        }
+
         function createNPCs() {
-            var npc = game.add.sprite(600, window.innerHeight - 64 - 96, 'npc');
-            npc.name = "NPC";
+            var npc = game.add.sprite(window.innerWidth - 370, window.innerHeight - 64 - 96, 'npc');
+            npc.name = "NPC"
         }
 
         function createPlaces() {
@@ -61,9 +83,10 @@
             var bin = game.add.sprite(200, window.innerHeight - 64 - 48, 'fire_bin');
             bin.name = "Fire Bin 1";
             mediators.create(berghain2.FireBinMediator, bin);
+          
 
-            var bin2 = game.add.sprite(window.innerWidth - 400, window.innerHeight - 64 - 48, 'fire_bin');
-            bin2.name = "Fire Bin 2";
+            var bin2 = game.add.sprite(window.innerWidth - 400, window.innerHeight - physics_model.ground_height - 48, 'fire_bin');
+            bin2.name = "Fire Bin 2"
             mediators.create(berghain2.FireBinMediator, bin2);
         }
 
@@ -71,7 +94,8 @@
             // Background
             game.stage.backgroundColor = 0x333333;
 
-            var bmd = game.add.bitmapData(window.innerWidth, window.innerHeight);
+
+            var bmd = game.add.bitmapData(game.world.bounds.width, window.innerHeight);
 
             bmd.addToWorld();
 
@@ -82,7 +106,7 @@
 
                 // console.log(Phaser.Color.getWebRGB(c));
 
-                bmd.rect(0, y, window.innerWidth, y + 2, Phaser.Color.getWebRGB(c));
+                bmd.rect(0, y, game.world.bounds.width, y + 2, Phaser.Color.getWebRGB(c));
 
                 y += 2;
             }
@@ -94,17 +118,19 @@
 
             var env = physics_model.environment;
 
-            var numTiles = Math.round(window.innerWidth/128);
+            var numTiles = 40; //Math.round(window.innerWidth/128);
+
+
 
             for (var i = 0; i < numTiles; i++) {
 
                
-                     var block = env.create(i * 128, window.innerHeight - 64, 'ground', Math.floor(Math.random() * 4));
+                    var block = env.create(i * 128, window.innerHeight - physics_model.ground_height, 'ground', Math.floor(Math.random() * 4));
                     block.name = "Ground Block #" + i;
 
-                if (i != 3) {
                     physics_model.makeImmovable(block);
-                 }
+
+
 
             }
 

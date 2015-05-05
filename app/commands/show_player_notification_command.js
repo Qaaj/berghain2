@@ -2,7 +2,7 @@
 
     'use strict';
 
-    berghain2.ShowPlayerNotificationCommand = function (lo, config, game, player_model, message_type, mediators, player_notification_model) {
+    berghain2.ShowPlayerNotificationCommand = function (lo, config, game, player_model, message_type, mediators, player_notification_model, dispatcher) {
 
         var screenWidth = 0;
         var centerX = 0;
@@ -19,36 +19,37 @@
         var currentMessage;
 
         this.execute = function (event) {
-            lo.g("COMMAND", "Show message: " + event.params);
+            lo.g("COMMAND", "Show player notification: ");
 
             if (event.params) {
                 currentMessage = event.params;
                 
-                lo.g("COMMAND", "Show message: " + event.params.fontSize);
+                lo.g("COMMAND", "Current player notification: " + event.params.text);
                 
                 player_notification_model.addMessage(currentMessage);
             }
 
-            if (!player_notification_model.isTweening) {
-                player_notification_model.isTweening = true;
-                
-                currentMessage = player_notification_model.messages[0];
-
-                showMessage();
+            if (!player_notification_model.isTweening) {                
+                if ( player_notification_model.messages[0] != null ){
+                    player_notification_model.isTweening = true;
+                    
+                    currentMessage = player_notification_model.messages[0];
+                    showMessage(currentMessage);   
+                }
             }
         }
 
         function showMessage() {         
             // Show locked on player message
             setScreenSettings();
-            createMessageThatLocksOnPlayerPosition();
+            createMessageThatLocksOnPlayerPosition(currentMessage);
         }
 
-        function createMessageThatLocksOnPlayerPosition(message) {
-            lo.g("COMMAND", "MESSAGE === " + message);
+        function createMessageThatLocksOnPlayerPosition(currentMessage) {
+            lo.g("COMMAND", "MESSAGE === " + currentMessage);
             
             // LOCK ON PLAYER MESSAGE
-            var text = new berghain2.MessageView(game, message);
+            var text = new berghain2.MessageView(game, currentMessage, dispatcher, player_notification_model);
             mediators.create(berghain2.MessageMediator, text);
         }
 
@@ -62,23 +63,7 @@
 
         function StartTween() {
             currentTextTween.start();
-        }
-
-        function onTextTweenCompleted(tween) {
-            player_notification_model.isTweening = false;
-
-            removeMessageAndEventListener();
-
-            if (player_notification_model.messages.length > 0) {
-                showMessage();
-            }
-        }
-
-        function removeMessageAndEventListener() {
-            player_notification_model.removeLastMessageFromQue();
-            currentTextTween.onComplete.remove(onTextTweenCompleted);
-        }
-         
+        }         
     };
 
 })(window.berghain2 = window.berghain2 || {});

@@ -19,6 +19,8 @@
             game.load.image('cloud', 'assets/cloud.png');
             game.load.image('street_lamp', 'assets/street_lamp.png');
             game.load.image('ubahn', 'assets/ubahn.png');
+            game.load.image('fence', 'assets/fence.png');
+
 
 
             //HUD

@@ -2,7 +2,7 @@
 
     'use strict';
 
-    var MessageView = function (game, message, dispatcher) {
+    var MessageView = function (game, message, dispatcher, player_notification_model) {
 
         var screenWidth = 0;
         var centerX = 0;
@@ -35,11 +35,13 @@
         }
         
         function onTextTweenCompleted(tween){
+            player_notification_model.isTweening = false;
+            
+            player_notification_model.removeLastMessageFromQue();
+            
             currentTextTween.onComplete.remove(onTextTweenCompleted, this);
-            
-            dispatcher.dispatch("player_notification_tween_completed");
-            
-            console.log("> TWEEN COMPLETED");
+
+            dispatcher.dispatch("player_notification_tween_completed");          
         }
     };
 
