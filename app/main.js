@@ -9,6 +9,7 @@ define([
     // LIBS
     "lib/soma.min",
     "lib/phaser.min",
+    "lib/seedrandom.min",
     // COMMANDS
     "commands/start_application_command",
     "commands/preload_assets_command",
@@ -59,6 +60,7 @@ function(
     // LIBS
     Soma,
     phaser,
+    seedrandom,
     // COMMANDS
     start_application_command,
     preload_assets_command,
@@ -117,10 +119,14 @@ function(
         },
         init: function() {
 
+           
+
             // Misc class
             this.injector.mapClass('lo', berghain2.Log, true);
             this.injector.mapClass('config', berghain2.Config, true);  
             this.injector.mapClass('rnd', berghain2.Random, true);  
+
+
 
              // ENUM Class
             this.injector.mapClass('message_type', berghain2.MessageType, true);          
@@ -145,9 +151,10 @@ function(
             this.injector.mapClass('game_model', berghain2.GameModel, true);
             this.injector.mapClass('camera_model', berghain2.CameraModel, true);
         },
-        start: function() {
+        start: function() {            
 
-            this.dispatcher.dispatch('start_application');
+            this.dispatcher.dispatch('start_application',{generator:seedrandom});
+
         }
     });
 

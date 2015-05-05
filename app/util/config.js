@@ -10,6 +10,9 @@
             // toggle the debug settings
             this.debug = false;
             this.skipIntro = true;
+
+            this.useRandomSeed = false;
+            this.seed = 567813; 
            
         };
 
