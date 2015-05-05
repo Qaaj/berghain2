@@ -37,7 +37,6 @@
         function onTextTweenCompleted(tween){
             currentTextTween.onComplete.remove(onTextTweenCompleted, this);
             
-            console.log("> TWEEN COMPLETED");
         }
     };
 

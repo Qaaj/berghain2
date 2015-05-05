@@ -17,7 +17,7 @@ define([
     "commands/game_object_created_command",
     "commands/init_states_command",
     "commands/show_message_command",
-    "commands/create_buildings_command",
+    "commands/create_backdrop_command",
     "commands/camera_target_command",
     // MEDIATORS
     "mediators/player_mediator",
@@ -51,7 +51,8 @@ define([
     "states/player/player_jump",
     // OTHER
     "util/log",
-    "util/config"
+    "util/config",
+    "util/random"
 ], 
 
 function(
@@ -66,7 +67,7 @@ function(
     game_object_created_command,
     init_states_command,
     show_message_command,
-    create_buildings_command,
+    create_backdrop_command,
     camera_target_command,
     // MEDIATORS
     player_mediator,
@@ -98,7 +99,8 @@ function(
     player_jump_state,
     // OTHER
     log,
-    config
+    config,
+    random
     ) 
 {
 
@@ -118,6 +120,7 @@ function(
             // Misc class
             this.injector.mapClass('lo', berghain2.Log, true);
             this.injector.mapClass('config', berghain2.Config, true);  
+            this.injector.mapClass('rnd', berghain2.Random, true);  
 
              // ENUM Class
             this.injector.mapClass('message_type', berghain2.MessageType, true);          
@@ -130,7 +133,7 @@ function(
             this.commands.add("game_object_created",berghain2.GameObjectCreatedCommand);
             this.commands.add("init_states",berghain2.InitStatesCommand);
     	    this.commands.add("show_message",berghain2.ShowMessageCommand);
-            this.commands.add("create_buildings",berghain2.CreateBuildingsCommand);
+            this.commands.add("create_backdrop",berghain2.CreateBackdropCommand);
             this.commands.add("camera_target", berghain2.CameraTargetCommand);
 
             

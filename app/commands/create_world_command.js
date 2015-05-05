@@ -16,7 +16,7 @@
 
             createBackground();
 
-            createBuildings();
+            createBackdrop();
 
             var env = game.add.group();
             env.enableBody = true;
@@ -54,12 +54,12 @@
             game.physics.startSystem(Phaser.Physics.ARCADE);
         }
 
-        function createBuildings(){
-            dispatcher.dispatch("create_buildings");
+        function createBackdrop(){
+            dispatcher.dispatch("create_backdrop");
         }
 
         function createNPCs() {
-            var npc = game.add.sprite(600, window.innerHeight - 64 - 96, 'npc');
+            var npc = game.add.sprite(window.innerWidth - 370, window.innerHeight - 64 - 96, 'npc');
             npc.name = "NPC"
         }
 
@@ -69,9 +69,7 @@
         }
 
         function createEnemies() {
-            var bin = game.add.sprite(200, window.innerHeight - physics_model.ground_height - 48, 'fire_bin');
-            bin.name = "Fire Bin 1"
-            mediators.create(berghain2.FireBinMediator, bin);
+           
 
             var bin2 = game.add.sprite(window.innerWidth - 400, window.innerHeight - physics_model.ground_height - 48, 'fire_bin');
             bin2.name = "Fire Bin 2"
@@ -82,7 +80,6 @@
             // Background
             game.stage.backgroundColor = 0x333333;
 
-            console.log(game.width);
 
             var bmd = game.add.bitmapData(game.world.bounds.width, window.innerHeight);
 
