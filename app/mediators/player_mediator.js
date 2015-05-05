@@ -24,7 +24,7 @@
         var physics_state = state_model.PLAYER_GROUND;
 
 
-        dispatcher.dispatch('camera_target', {'target':player_model});
+        dispatcher.dispatch('camera_target', {'target':target});
 
         dispatcher.addEventListener('change_player_state', function (event) {
             if(event.params.type == "PHYSICS"){
