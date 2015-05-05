@@ -10,6 +10,8 @@
 
             // Backdrop can consist of BUILDINGS / FENCE / PARK / GRASS + TREES
 
+            
+
             if (game_model.level == "NEUKOLLN") {
 
                 lo.g("VIEW", "Creating NEUKOLLN Buildings");
@@ -20,7 +22,8 @@
                     lastX: 0,
                     lastWidth: 0,
                     spacing: 0,
-                    lastItem: "fence"
+                    lastItem: "fence",
+                    bringToTop : []
                 }
 
                 while (params.lastX < 5000) { // 5000 PX is level width right now
@@ -69,28 +72,45 @@
                             break;
                     }
 
+                   
+
 
                     var r = rnd.getRandom();
                     if (r == 100) {
+                    	 console.log("LAMP");
                         var lamp = physics_model.environment.create(params.lastX - 100  - Math.random() * 100, window.innerHeight - 255, 'street_lamp', Math.floor(Math.random() * 4));
                         physics_model.makeImmovable(lamp)
+                        
                         lamp.body.setSize(10, 10, 15, 20);
                     }
 
                     i++;
 
+                     console.log("NEW LOOP");
+
                     // END CREATION LOOP
 
                 }
+
+                game.world.bringToTop(physics_model.environment);
+
+                for (var i = 0; i < params.bringToTop.length; i++) {
+         			var sprite = params.bringToTop[i];
+         			game.world.bringToTop(sprite);
+            	}
 
             }
 
         }
 
         this.createShrubbery = function(params) {
+
+        	console.log("SHRUB");
             params.lastItem = "shrubbery";
 
             var shrubbery = game.add.sprite(params.lastX + params.lastWidth, window.innerHeight - 64 - 134, 'shrubbery', Math.floor(Math.random() * 4));
+
+            params.bringToTop.push(shrubbery);
 
             params.lastX = shrubbery.x;
             params.lastWidth = shrubbery.width;
@@ -99,6 +119,7 @@
         }
 
         this.createBuilding = function(params) {
+        	console.log("BUILDING");
             var props = {};
             props.w = 150 + Math.random() * 300;
             props.h = 300 + Math.random() * 300;
@@ -117,6 +138,7 @@
 
 
         this.createFence = function(params) {
+        	console.log("FENCE");
             params.lastItem = "fence";
             var fence = game.add.sprite(params.lastX + params.lastWidth, window.innerHeight - 64 - 126, 'fence');
 
