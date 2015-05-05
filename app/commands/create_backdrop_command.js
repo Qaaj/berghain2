@@ -29,7 +29,8 @@
 
 
                     if (lastItem == "fence") { // When the last item was a fence, there's a bigger chance that the next item will be a fence
-                        if (rand == 100) { // STOP the fence
+                        
+                        if (rand == 250) { // 25% chance to STOP the fence
                             var props = {};
                             props.w = 150 + Math.random() * 300;
                             props.h = 300 + Math.random() * 300;
@@ -42,7 +43,7 @@
 
                             var building = new berghain2.BuildingView(game, lo, props);
                             lastItem = "building";
-                        } else { // continue the fence
+                        } else { // 75% chance to continue the fence
                         	lastItem = "fence";
                             var fence = game.add.sprite(lastX + lastWidth, window.innerHeight - 64 - 126, 'fence');
 
@@ -53,15 +54,16 @@
                     }else
 
                      if (lastItem == "building") { // When the last item was a building, there's a small chance that the next item will be a fence
-                        if (rand == 100) { // make a fence
+                        if (rand == 200) { // 20% chance to make a fence
                            lastItem = "fence";
                             var fence = game.add.sprite(lastX + lastWidth, window.innerHeight - 64 - 126, 'fence');
 
                             lastX = fence.x;
                             lastWidth = fence.width;
                             spacing = 0;
-                        } else { // continue the fence
+                        } else { // 80% chance of another building
                         	
+                        	var rand2 = rnd.getRandom();
                         	var props = {};
                             props.w = 150 + Math.random() * 300;
                             props.h = 300 + Math.random() * 300;
@@ -70,9 +72,17 @@
 
                             lastX = props.x;
                             lastWidth = props.w;
-                            spacing = 100 + Math.random() * 200;
+
+                            // Are the buildings spaced from eachother?
+
+                            if(rand2 == 200){
+                            	spacing = 0; // 20% chance buildings are next to each other
+                            }else{
+                            	spacing = 100 + Math.random() * 200;
+                            }
 
                             var building = new berghain2.BuildingView(game, lo, props);
+                            lastItem = "building";
 
                         }
                     }
