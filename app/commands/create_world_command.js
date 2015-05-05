@@ -126,9 +126,7 @@
 
             }
 
-            var lamp = env.create(330, window.innerHeight - 255, 'street_lamp', Math.floor(Math.random() * 4));
-            physics_model.makeImmovable(lamp)
-            lamp.body.setSize(10, 10, 15, 20);
+           
 
 
 

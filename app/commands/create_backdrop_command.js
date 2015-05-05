@@ -27,6 +27,14 @@
 
                     var rand = rnd.getRandom();
 
+                    var r = rnd.getRandom();
+
+                    if(r == 100){
+                    	 var lamp = physics_model.environment.create(lastX + Math.random() *100, window.innerHeight - 255, 'street_lamp', Math.floor(Math.random() * 4));
+            			physics_model.makeImmovable(lamp)
+            			lamp.body.setSize(10, 10, 15, 20);
+                    }
+
 
                     if (lastItem == "fence") { // When the last item was a fence, there's a bigger chance that the next item will be a fence
                         
