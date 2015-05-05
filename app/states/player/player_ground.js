@@ -23,17 +23,20 @@
                 dispatcher.dispatch("change_player_state", {type:"PHYSICS",state:state_model.PLAYER_JUMP});
 
             }
+            var speed = 200;
 
+            if(input.sprint) speed = 1000;
+        
             if (input.goLeft) {
                 target.animations.play('left');
-                target.body.velocity.x = -200;
+                target.body.velocity.x = -1 * speed;
             }
             if (input.goUp) {
                 if(physics_model.player_jump_allowed) target.body.velocity.y = -1000;
             }
             if (input.goRight) {
                 target.animations.play('right');
-                target.body.velocity.x = 200;
+                target.body.velocity.x = 1 * speed;
             }
             if (input.goDown) {}
 

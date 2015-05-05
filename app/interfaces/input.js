@@ -9,6 +9,7 @@
         constructor.goRight = false;
         constructor.goUp = false;
         constructor.goDown = false;
+        constructor.sprint = false;
 
         constructor.isAnyButtonPressed = false;
         constructor.actionButton = false;
@@ -54,6 +55,13 @@
             } else {
                 constructor.goDown = false;
             }
+
+            if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)) {
+                constructor.sprint = true;
+            } else {
+                constructor.sprint = false;
+            }
+
             
 
             // LEFT

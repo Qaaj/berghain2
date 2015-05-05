@@ -27,6 +27,8 @@
             var house = drawRectangleWithStroke(xPos, yPos, width, height, fillColor, strokeColor, strokeWidth, fillAlpha);
             var shading = drawRectangleWithStroke(xPos, yPos, width, 10, 0x000000, strokeColor, strokeWidth, 0.1);
             var shading = drawRectangleWithStroke(xPos , yPos + 10, 10, height-10, 0x000000, strokeColor, strokeWidth, 0.2);
+
+            //TODO add code for random doors/windows
         
         function drawRectangleWithStroke(xPos, yPos, width, height, fillColor, strokeColor, strokeWidth, alpha){
 
