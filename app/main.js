@@ -30,6 +30,7 @@ define([
      // VIEWS
      "views/health_bar_view",
      "views/message_view",
+     "views/building_view",
     // MODELS
     "models/state_model",
     "models/player_model",
@@ -77,6 +78,7 @@ function(
     //VIEWS
     health_bar_view,
     message_view,
+    building_view,
     // MODELS
     state_model,
     player_model,

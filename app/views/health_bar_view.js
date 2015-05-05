@@ -40,6 +40,9 @@
             var healthBar = drawRectangleWithStroke(xPos, yPos, healthBarWidth, healthBarHeight, fillColor, strokeColor, strokeWidth, strokeAlpha);
             healthBar.x = centerX - (healthBar.width / 2);
             healthBar.y = screenHeight - 50;
+
+            // Make healthbar fixed to cam
+            healthBar.fixedToCamera = true;
             
             mediators.create(berghain2.HealthBarMediator, healthBar);
         }
@@ -86,6 +89,9 @@
             var manaBar = drawRectangleWithStroke(xPos, yPos, manaBarWidth, manaBarHeight, fillColor, strokeColor, strokeWidth, strokeAlpha);
             manaBar.x = centerX - (manaBar.width / 2);
             manaBar.y = screenHeight - 30;
+
+            // Make healthbar fixed to camera
+            manaBar.fixedToCamera = true;
             
             mediators.create(berghain2.ManaBarMediator, manaBar);
         }

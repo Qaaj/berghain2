@@ -8,7 +8,12 @@
 
             lo.g("COMMAND", "Creating World");
 
+             physics_model.ground_height = 64;
+             
             initGamePhysics();
+
+            createWorld();
+
             createBackground();
 
             createBuildings();
@@ -17,7 +22,7 @@
             env.enableBody = true;
             physics_model.environment = env;
 
-            createWorld();
+            
             createCamera();
 
             createFloor();
@@ -36,7 +41,7 @@
         function createWorld()
         {
             //game.world.setBounds(0, 0, game.width, 3000);
-            game.world.setBounds(0, 0, 5000, 3000);
+            game.world.setBounds(0, 0, 5120, 3000);
         }
 
         function createCamera() {
@@ -64,11 +69,11 @@
         }
 
         function createEnemies() {
-            var bin = game.add.sprite(200, window.innerHeight - 64 - 48, 'fire_bin');
+            var bin = game.add.sprite(200, window.innerHeight - physics_model.ground_height - 48, 'fire_bin');
             bin.name = "Fire Bin 1"
             mediators.create(berghain2.FireBinMediator, bin);
 
-            var bin2 = game.add.sprite(window.innerWidth - 400, window.innerHeight - 64 - 48, 'fire_bin');
+            var bin2 = game.add.sprite(window.innerWidth - 400, window.innerHeight - physics_model.ground_height - 48, 'fire_bin');
             bin2.name = "Fire Bin 2"
             mediators.create(berghain2.FireBinMediator, bin2);
         }
@@ -77,7 +82,9 @@
             // Background
             game.stage.backgroundColor = 0x333333;
 
-            var bmd = game.add.bitmapData(window.innerWidth, window.innerHeight);
+            console.log(game.width);
+
+            var bmd = game.add.bitmapData(game.world.bounds.width, window.innerHeight);
 
             bmd.addToWorld();
 
@@ -88,7 +95,7 @@
 
                 // console.log(Phaser.Color.getWebRGB(c));
 
-                bmd.rect(0, y, window.innerWidth, y + 2, Phaser.Color.getWebRGB(c));
+                bmd.rect(0, y, game.world.bounds.width, y + 2, Phaser.Color.getWebRGB(c));
 
                 y += 2;
             }
@@ -100,17 +107,19 @@
 
             var env = physics_model.environment;
 
-            var numTiles = Math.round(window.innerWidth/128);
+            var numTiles = 40; //Math.round(window.innerWidth/128);
+
+
 
             for (var i = 0; i < numTiles; i++) {
 
                
-                     var block = env.create(i * 128, window.innerHeight - 64, 'ground', Math.floor(Math.random() * 4));
+                    var block = env.create(i * 128, window.innerHeight - physics_model.ground_height, 'ground', Math.floor(Math.random() * 4));
                     block.name = "Ground Block #" + i;
 
-                if (i != 3) {
                     physics_model.makeImmovable(block);
-                 }
+
+
 
             }
 
