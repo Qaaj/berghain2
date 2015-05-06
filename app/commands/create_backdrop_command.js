@@ -132,7 +132,7 @@
           
             
 
-            var building = new berghain2.BuildingView(game, lo, props, rnd, params);
+            var building = new berghain2.BuildingView(game, lo, props, rnd, params, dispatcher);
              	// spacing for the next building or not?
            	if(rnd.getRandom() == 250){
            		params.spacing = 100;

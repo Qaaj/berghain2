@@ -19,7 +19,9 @@
         target.body.setSize(target.body.width - 60, target.body.height, 30, 1);
 
         target.animations.add('left', [30, 31, 32, 33, 34, 35, 36, 37], 10, true);
-        target.animations.add('right', [10, 11, 12, 13, 14, 15, 16, 17], 10, true)
+        target.animations.add('right', [10, 11, 12, 13, 14, 15, 16, 17], 10, true);
+        target.animations.add('walk_down', [40, 41, 42, 43, 44, 45, 46, 47], 10, false);
+        target.animations.add('go_inside', [40, 41], 10, false);
 
         var physics_state = state_model.PLAYER_GROUND;
 
@@ -31,6 +33,9 @@
                 physics_state = event.params.state;
             }
         });
+
+
+       
 
         dispatcher.addEventListener('game_update', function(event) {
             physics_state.update(target);

@@ -12,11 +12,8 @@
              
             initGamePhysics();
 
-
-
             createWorld();
-
-           
+        
             createBackground();
 
             var env = game.add.group();
@@ -26,15 +23,11 @@
             createFloor();
 
             createBackdrop();
-
-            
-           
-
-            
+  
             createCamera();
-
            
             createSky();
+
             createNPCs();
 
             createPlaces();

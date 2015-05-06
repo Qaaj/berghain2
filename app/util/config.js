@@ -12,7 +12,7 @@
             this.skipIntro = true;
 
             this.useRandomSeed = false;
-            this.seed = 567813; 
+            this.seed = 451182; 
            
         };
 

@@ -15,8 +15,10 @@
 
 		// Helper variables
 		this.ground_height = 0;
+		this.openDoors = [];
 
 		// Helper functions
+		var that = this;
 
 		this.makeImmovable = function(target){
 			// lo.g("PHYSICS","Making object immovable: " + target.name)
@@ -26,6 +28,11 @@
             target.body.collideWorldBounds = false;
 
 		}
+
+		dispatcher.addEventListener('register_open_door', function (event) {
+            that.openDoors.push(event.params);
+        });
+       
 
 
 

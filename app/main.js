@@ -50,6 +50,7 @@ define([
     "states/app/app_playing",
     "states/player/player_ground",
     "states/player/player_jump",
+    "states/player/player_zombie",
     // OTHER
     "util/log",
     "util/config",
@@ -99,6 +100,7 @@ function(
     app_playing,
     player_ground_state,
     player_jump_state,
+    player_zombie_state,
     // OTHER
     log,
     config,
