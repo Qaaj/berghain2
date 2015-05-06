@@ -13,44 +13,29 @@
         var font = "carrier_command";
         var fontSize = 34;
 
-        var text;
-
-        var currentTextTween;
-        var currentMessage;
-
         this.execute = function (event) {
             lo.g("COMMAND", "Show player notification: ");
 
             if (event.params) {
-                currentMessage = event.params;
-                
-                lo.g("COMMAND", "Current player notification: " + event.params.text);
-                
+                var currentMessage = event.params;
                 player_notification_model.addMessage(currentMessage);
             }
 
-            if (!player_notification_model.isTweening) {                
-                if ( player_notification_model.messages[0] != null ){
+            if (!player_notification_model.isTweening) {
+                var notif = player_notification_model.getNextPlayerNotificationInQue();
+
+                if (typeof notif !== "undefined") {
                     player_notification_model.isTweening = true;
-                    
-                    currentMessage = player_notification_model.messages[0];
-                    showMessage(currentMessage);   
+
+                    currentMessage = notif;
+                    showMessage(currentMessage);
                 }
             }
         }
 
-        function showMessage() {         
-            // Show locked on player message
+        function showMessage(currentMessage) {         
             setScreenSettings();
             createMessageThatLocksOnPlayerPosition(currentMessage);
-        }
-
-        function createMessageThatLocksOnPlayerPosition(currentMessage) {
-            lo.g("COMMAND", "MESSAGE === " + currentMessage);
-            
-            // LOCK ON PLAYER MESSAGE
-            var text = new berghain2.MessageView(game, currentMessage, dispatcher, player_notification_model);
-            mediators.create(berghain2.MessageMediator, text);
         }
 
         function setScreenSettings() {
@@ -61,9 +46,10 @@
             centerY = screenHeight / 2;
         }
 
-        function StartTween() {
-            currentTextTween.start();
-        }         
+        function createMessageThatLocksOnPlayerPosition(currentMessage) {
+            var text = new berghain2.MessageView(game, currentMessage, dispatcher, player_notification_model);
+            mediators.create(berghain2.MessageMediator, text);
+        }
     };
 
 })(window.berghain2 = window.berghain2 || {});

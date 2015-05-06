@@ -30,21 +30,21 @@
 
         function showIntroText() {
             
-            var message = { text: "Wow", messageType: message_type.LOCK_ON_PLAYER};
+            var message = {uid:1, text: "Wow", messageType: message_type.LOCK_ON_PLAYER};
             dispatcher.dispatch("show_player_notification", message);
              
-             var message = { text: "Wow", messageType: message_type.LOCK_ON_PLAYER};
+             var message = {uid:1, text: "Wow", messageType: message_type.LOCK_ON_PLAYER};
             dispatcher.dispatch("show_player_notification", message);
             
-            var message = { text: "welcome to berghain II ", messageType: message_type.SMALL};
+            var message = {uid:3, text: "welcome to berghain II ", messageType: message_type.SMALL};
             
             dispatcher.dispatch("show_message", message);
             
-            message = { text: "chapter I ", messageType: message_type.MEDIUM};
+            message = {uid:4, text: "chapter I ", messageType: message_type.MEDIUM};
             
             dispatcher.dispatch("show_message", message);
             
-            message = { text: "get some cigarettes", messageType: message_type.LARGE};
+            message = {uid:5, text: "get some cigarettes", messageType: message_type.LARGE};
             
             dispatcher.dispatch("show_message", message);
         }

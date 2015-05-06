@@ -5,56 +5,54 @@
 	var PlayerNotificationModel = function (dispatcher, input, lo, config, game) {
 		lo.g("MODEL", "Player Notification Model instantiated");
 
-		this.currentMessage;// = new berghain2.MessageVO(0, "Standard Message", berghain2.MessageVO.MESSAGE_TYPE		);
+		this.currentMessage;
 		this.messagesIndexesDictionary = {};
-		this.messages = [];
 		this.isTweening = false;
-		 
+
 		this.addMessage = function (messageObj) {
 			lo.g("MODEL", "Received player notification: " + messageObj.text);
 
-			var messageID = messageObj.id;
+			var messageID = messageObj.uid;//Object.keys(this.messagesIndexesDictionary).length;
 
-			if (this.messagesIndexesDictionary[messageID] == null){
+			if (typeof this.messagesIndexesDictionary[messageID] !== undefined) {
 				var message = new berghain2.MessageVO(messageID, messageObj.text, messageObj.messageType);
-				
+
 				lo.g("MODEL", "Adding player notification to que with text " + messageObj.text + " & type fontsize " + messageObj.messageType.fontSize);
 				
-				this.messagesIndexesDictionary[messageID] = messageObj;
+				this.messagesIndexesDictionary[messageID] = message;
 				this.currentMessage = message;
-				this.messages.push(message);
-
-				lo.g("MODEL", "" + this.messages.length + " player notifications in que");
+				
+				//lo.g("MODEL", "" + this.messages.length + " player notifications in que");
 			}
 		}
- 
+
 		this.removeMessage = function (message) {
-			lo.g("MODEL", "Removing player notification from que: " + message.text);
+			lo.g("MODEL", "Removing player notification from que: " + message.id);
 
 			var messageID = message.id;
-			this.messagesIndexesDictionary[messageID] = null;
+			delete this.messagesIndexesDictionary[messageID];
 
-			lo.g("MODEL", "Message was nulled: " + this.messagesIndexesDictionary[messageID]);
-
-			this.setCurrentMessageToNextMessageInQue();
-		}
-		
-		this.removeLastMessageFromQue = function () {
-			lo.g("MODEL", "Removing last player notification from que");
-
-			var message = this.messages[0]
-			this.messages.splice(0, 1);
-			this.messagesIndexesDictionary[message.id] = null;
-			
-			lo.g("MODEL", "" + this.messages.length + " player notifications in que");
+			this.currentMessage = this.setCurrentMessageToNextMessageInQue();
 		}
 
 		this.setCurrentMessageToNextMessageInQue = function () {
-			if (this.message != null) {
-				this.currentMessage = this.messsages[0];
-			} else {
-				this.currentMessage = null;
+			this.currentMessage = this.getNextPlayerNotificationInQue();
+		}
+
+		this.getNextPlayerNotificationInQue = function () {
+			var id = Object.keys(this.messagesIndexesDictionary).length;
+			var nextMessageId = id;
+			
+			for (var key in this.messagesIndexesDictionary) {
+				if (this.messagesIndexesDictionary.hasOwnProperty(key)) {
+					if ( key < nextMessageId ){
+						nextMessageId = key;
+					}
+				}
 			}
+			
+			var message = this.messagesIndexesDictionary[key];
+			return message;
 		}
 	};
 

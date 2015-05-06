@@ -37,7 +37,7 @@
         function onTextTweenCompleted(tween){
             player_notification_model.isTweening = false;
             
-            player_notification_model.removeLastMessageFromQue();
+            player_notification_model.removeMessage(message);
             
             currentTextTween.onComplete.remove(onTextTweenCompleted, this);
 

@@ -23,7 +23,7 @@
                         inFrontOfDoor = true;
                         lo.g("PHYSICS", "PLAYER IN FRONT OF DOOR");
                         
-                        var message = { id: 1, text: "Too dark man", messageType: message_type.LOCK_ON_PLAYER };
+                        var message = {uid: 0, text: "Too dark man", messageType: message_type.LOCK_ON_PLAYER };
                         dispatcher.dispatch("show_player_notification", message);
                     }
                     if (object.type == "UBAHN") {
