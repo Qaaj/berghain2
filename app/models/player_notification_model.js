@@ -27,7 +27,7 @@
 				lo.g("MODEL", "" + this.messages.length + " player notifications in que");
 			}
 		}
-
+ 
 		this.removeMessage = function (message) {
 			lo.g("MODEL", "Removing player notification from que: " + message.text);
 
@@ -42,11 +42,11 @@
 		this.removeLastMessageFromQue = function () {
 			lo.g("MODEL", "Removing last player notification from que");
 
+			var message = this.messages[0]
 			this.messages.splice(0, 1);
-
+			this.messagesIndexesDictionary[message.id] = null;
+			
 			lo.g("MODEL", "" + this.messages.length + " player notifications in que");
-
-			this.setCurrentMessageToNextMessageInQue();
 		}
 
 		this.setCurrentMessageToNextMessageInQue = function () {

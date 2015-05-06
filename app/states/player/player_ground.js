@@ -2,7 +2,7 @@
 
     'use strict';
 
-    var Player_Ground = function (dispatcher, input, lo, config, state_model, game, physics_model) {
+    var Player_Ground = function (dispatcher, input, lo, config, state_model, game, physics_model, message_type) {
 
         this.name = "Player ground state";
 
@@ -18,14 +18,19 @@
                 var xpos = target.x + target.body.width;
 
                 if (xpos > object.x + 5 && xpos < object.x + object.width - 5) {
+ 
                     if (object.type == "DOOR") {
                         inFrontOfDoor = true;
                         lo.g("PHYSICS", "PLAYER IN FRONT OF DOOR");
+                        
+                        var message = { id: 1, text: "Too dark man", messageType: message_type.LOCK_ON_PLAYER };
+                        dispatcher.dispatch("show_player_notification", message);
                     }
                     if (object.type == "UBAHN") {
                         inFrontOfUbahn = true;
                         lo.g("PHYSICS", "PLAYER IN FRONT OF UBAHN");
                     }
+   
                 }
 
             }
@@ -36,16 +41,6 @@
                 }
                 return;
             });
-
-            game.physics.arcade.overlap(target, physics_model.interactable, function () {
-                if (target.body.touching.down == true) {
-                    var message = { id: 1, text: "Too dark man", messageType: message_type.LOCK_ON_PLAYER };
-                    dispatcher.dispatch("show_player_notification", message);
-                }
-                return;
-            });
-
-
 
             if (!target.body.touching.down && !target.body.onFloor()) {
 

@@ -47,7 +47,7 @@
         if (rnd.getRandom() == 250) // YES
         {
             // Register with the game as an open door
-            dispatcher.dispatch("register_open_door",{x:xPos + 20 + r * (width - 120),width:52});
+            dispatcher.dispatch("register_interactable_background_object",{type:"DOOR",x:xPos + 20 + r * (width - 120),width:52});
             // Draw the shading
             var doorshading = drawRectangleWithStroke(xPos + 4 + 20 + r * (width - 120), yPos + 4 + height - 80, 52, 76, 0x000000, strokeColor, strokeWidth, 0.5);
         } else // NO

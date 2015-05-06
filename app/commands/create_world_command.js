@@ -84,10 +84,9 @@
         }
 
         function createPlaces() {
-            var ubahn = interactableGroup.create(800, window.innerHeight - 64 - 192, 'ubahn');
+           var ubahn = game.add.sprite(window.innerWidth - 200, window.innerHeight - 64 - 192, 'ubahn');
+            dispatcher.dispatch("register_interactable_background_object",{type:"UBAHN",x:ubahn.x + 20,width:ubahn.width - 100});
             ubahn.name = "ubahn";
-            ubahn.body.immovable = true;
-            ubahn.body.allowGravity = false;
         }
 
         function createEnemies() {
@@ -95,9 +94,8 @@
             bin.name = "Fire Bin 1";
             mediators.create(berghain2.FireBinMediator, bin);
 
-
             var bin2 = game.add.sprite(window.innerWidth - 400, window.innerHeight - physics_model.ground_height - 48, 'fire_bin');
-            bin2.name = "Fire Bin 2"
+            bin2.name = "Fire Bin 2";
             mediators.create(berghain2.FireBinMediator, bin2);
         }
 
@@ -131,8 +129,6 @@
 
             var numTiles = 40; //Math.round(window.innerWidth/128);
 
-
-
             for (var i = 0; i < numTiles; i++) {
 
 
@@ -140,14 +136,7 @@
                 block.name = "Ground Block #" + i;
 
                 physics_model.makeImmovable(block);
-
-
-
             }
-
-
-
-
 
         }
 
