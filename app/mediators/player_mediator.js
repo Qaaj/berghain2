@@ -29,25 +29,18 @@
 
         var physics_state = state_model.PLAYER_GROUND;
 
-
         dispatcher.dispatch('camera_target', {
             'target': target
         });
 
-        dispatcher.addEventListener('change_player_state', function(event) {
-            if (!isRekt) {
-                if (event.params.type == "PHYSICS") {
+        var handleChangePlayerState = function(event){
+            if (event.params.type == "PHYSICS") {
                     physics_state = event.params.state;
                 }
-            }
-        });
+        }
 
-
-
-
-        dispatcher.addEventListener('game_update', function(event) {
-            if (!isRekt) {
-                physics_state.update(target);
+        var handleGameUpdate = function(event){
+            physics_state.update(target);
 
                 player_model.xPosition = target.body.x;
                 player_model.yPosition = target.body.y;
@@ -55,21 +48,21 @@
                 if (target.body.y > game.height) {
                     player_model.health = 0;
                 }
-            }
-        });
+        }
 
-        dispatcher.addEventListener('game_render', function(event) {
+        var handleGameRender = function(event){
+            if (config.debug) game.debug.body(target);
+        }
 
-            if (config.debug && !isRekt) game.debug.body(target);
-
-        });
+        dispatcher.addEventListener('change_player_state', handleChangePlayerState);
+        dispatcher.addEventListener('game_update', handleGameUpdate);
+        dispatcher.addEventListener('game_render', handleGameRender);
 
         var destroy = function() {
             console.log("player mediator is rekt");
-            isRekt = true;
-            dispatcher.removeEventListener('change_player_state');
-            dispatcher.removeEventListener('game_update');
-            dispatcher.removeEventListener('game_render');
+            dispatcher.removeEventListener('change_player_state',handleChangePlayerState);
+            dispatcher.removeEventListener('game_update',handleGameUpdate);
+            dispatcher.removeEventListener('game_render',handleGameRender);
         }
 
         target.events.onDestroy.add(destroy, this);
