@@ -65,15 +65,8 @@
 
 
                 if (inFrontOfDoor) {
-                    // MOVE THIS TO A COMMAND
-                    target.animations.play('go_inside');
-                    target.alpha = 1;
-                    game.add.tween(target).to( { alpha: 0 }, 500, Phaser.Easing.Linear.None, true,250).onComplete.add(function(){ console.log("DISPATCH BUILDING LEVEL") });
-                    dispatcher.dispatch("change_player_state", {
-                        type: "PHYSICS",
-                        state: state_model.PLAYER_ZOMBIE
-                    });
-
+                    dispatcher.dispatch("player_enter_building",{target:target});
+                    
                 } else {
                     target.frame = 40;
 

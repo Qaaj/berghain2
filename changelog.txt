@@ -10,7 +10,7 @@ Jaaq Jorissen (10):
       README.md edited online with Bitbucket
       README.md edited online with Bitbucket
 
-Janj (53):
+Janj (55):
       first commit - check it out boys
       have a look at how mediators work, and soma.js in general
       Merge branch 'master' of https://bitbucket.org/mordhau/berghain2
@@ -64,12 +64,16 @@ Janj (53):
       merge done
       cleaned up seed generator code
       changed text tweening props
+      Merge branch 'master' of https://bitbucket.org/mordhau/berghain2
+      added Zombie state, animation for when player can add building too
 
-Mathieu (4):
+Mathieu (6):
       #1 - Follow camera : Camera follows player centered, should look at screen bounds
       #1 Additional commit
       cam updates
       camera updates
+      Resolves #1
+      Merge branch 'master' of https://bitbucket.org/mordhau/berghain2
 
 WWWillems (47):
       Updated README.md to include details about installing Package Manager first

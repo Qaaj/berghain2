@@ -20,6 +20,7 @@ define([
     "commands/show_message_command",
     "commands/create_backdrop_command",
     "commands/camera_target_command",
+    "commands/player_enter_building_command",
     // MEDIATORS
     "mediators/player_mediator",
     "mediators/game_mediator",
@@ -72,6 +73,7 @@ function(
     show_message_command,
     create_backdrop_command,
     camera_target_command,
+    player_enter_building_command,
     // MEDIATORS
     player_mediator,
     game_mediator,
@@ -143,6 +145,7 @@ function(
     	    this.commands.add("show_message",berghain2.ShowMessageCommand);
             this.commands.add("create_backdrop",berghain2.CreateBackdropCommand);
             this.commands.add("camera_target", berghain2.CameraTargetCommand);
+            this.commands.add("player_enter_building",berghain2.PlayerEnterBuildingCommand);
 
             
             // Model
