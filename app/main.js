@@ -42,6 +42,7 @@ define([
     "models/message_que_model",
     "models/player_notification_model",
     "models/game_model",
+    "models/text_model",
     //VO
     "models/vo/message_vo",
     // ENUMS
@@ -96,6 +97,7 @@ function(
     message_que_model,
     player_notification_model,
     game_model,
+    text_model,
     //VO
     message_vo,
     message_type,
@@ -164,6 +166,7 @@ function(
             this.injector.mapClass('player_notification_model', berghain2.PlayerNotificationModel, true);
             this.injector.mapClass('game_model', berghain2.GameModel, true);
             this.injector.mapClass('camera_model', berghain2.CameraModel, true);
+            this.injector.mapClass('text_model', berghain2.TextModel, true);
         },
         start: function() {            
 

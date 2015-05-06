@@ -9,9 +9,12 @@
 		this.messagesIndexesDictionary = {};
 		this.isTweening = false;
 
-		this.addMessage = function (messageObj) {
-			lo.g("MODEL", "Received player notification: " + messageObj.text);
+		var messages =  '{ "employees" : [' +
+'{ "firstName":"John" , "lastName":"Doe" },' +
+'{ "firstName":"Anna" , "lastName":"Smith" },' +
+'{ "firstName":"Peter" , "lastName":"Jones" } ]}';
 
+		this.addMessage = function (messageObj) {
 			var messageID = messageObj.uid;//Object.keys(this.messagesIndexesDictionary).length;
 
 			if (typeof this.messagesIndexesDictionary[messageID] !== undefined) {
@@ -21,8 +24,6 @@
 				
 				this.messagesIndexesDictionary[messageID] = message;
 				this.currentMessage = message;
-				
-				//lo.g("MODEL", "" + this.messages.length + " player notifications in que");
 			}
 		}
 

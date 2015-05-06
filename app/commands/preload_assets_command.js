@@ -8,6 +8,11 @@
 
             lo.g("COMMAND", "Loading Assets");
 
+            game.load.json("text", "/assets/localization/languages.json");
+            
+            //HUD
+            game.load.bitmapFont('carrier_command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
+            
             //GAME
             game.load.spritesheet('ground', 'assets/ground.png', 128,64);
             game.load.image('hain', 'assets/hain.png');
@@ -24,12 +29,6 @@
             game.load.image('fence', 'assets/fence.png');
 
             game.load.spritesheet('shrubbery', 'assets/shrubbery.png', 144,144);
-
-
-
-
-            //HUD
-            game.load.bitmapFont('carrier_command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
         }
 
     };

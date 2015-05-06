@@ -19,17 +19,12 @@
 			
 			this.currentMessage = message;
 			this.messages.push(message);
-			
-			lo.g("MODEL","" + this.messages.length + " messages in que");
 		}
 		
 		this.removeLastMessageFromQue = function(){
 			lo.g("MODEL","Removing last message from que");
 			
-			this.messages.splice(0, 1);
-			
-			lo.g("MODEL","" + this.messages.length + " messages in que");
-			
+			this.messages.splice(0, 1);			
 			this.setCurrentMessageToNextMessageInQue();
 		}
 		

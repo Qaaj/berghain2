@@ -21,14 +21,14 @@
  
                     if (object.type == "DOOR") {
                         inFrontOfDoor = true;
-                        lo.g("PHYSICS", "PLAYER IN FRONT OF DOOR");
                         
                         var message = {uid: 0, text: "Too dark man", messageType: message_type.LOCK_ON_PLAYER };
                         dispatcher.dispatch("show_player_notification", message);
                     }
                     if (object.type == "UBAHN") {
                         inFrontOfUbahn = true;
-                        lo.g("PHYSICS", "PLAYER IN FRONT OF UBAHN");
+                        var message = {uid: 9, text: "Too deep", messageType: message_type.LOCK_ON_PLAYER };
+                        dispatcher.dispatch("show_player_notification", message);
                     }
    
                 }

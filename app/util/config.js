@@ -9,15 +9,13 @@
 
             // toggle the debug settings
             this.debug = false;
-            this.skipIntro = true;
+            this.skipIntro = false;
 
             this.useRandomSeed = false;
             this.seed = 451182; 
-           
+            
+            this.locale = "en";           
         };
-
-
-
 
         return constructor;
 
