@@ -66,6 +66,7 @@
 
         function createPlaces() {
             var ubahn = game.add.sprite(window.innerWidth - 200, window.innerHeight - 64 - 192, 'ubahn');
+            dispatcher.dispatch("register_interactable_background_object",{type:"UBAHN",x:ubahn.x + 20,width:ubahn.width - 100});
             ubahn.name = "ubahn"
         }
 

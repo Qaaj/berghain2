@@ -15,7 +15,7 @@
 
 		// Helper variables
 		this.ground_height = 0;
-		this.openDoors = [];
+		this.interactable_background_objects = [];
 
 		// Helper functions
 		var that = this;
@@ -29,8 +29,8 @@
 
 		}
 
-		dispatcher.addEventListener('register_open_door', function (event) {
-            that.openDoors.push(event.params);
+		dispatcher.addEventListener('register_interactable_background_object', function (event) {
+            that.interactable_background_objects.push(event.params);
         });
        
 

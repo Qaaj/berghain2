@@ -9,16 +9,23 @@
         this.update = function(target) {
 
             var inFrontOfDoor = false;
+            var inFrontOfUbahn = false;
 
 
-            for (var i = 0; i < physics_model.openDoors.length; i++) {
+            for (var i = 0; i < physics_model.interactable_background_objects.length; i++) {
 
-                var door = physics_model.openDoors[i];
+                var object = physics_model.interactable_background_objects[i];
                 var xpos = target.x + target.body.width;
 
-                if (xpos > door.x + 5 && xpos < door.x + door.width - 5) {
-                    inFrontOfDoor = true;
-                    lo.g("PHYSICS", "PLAYER IN FRONT OF DOOR");
+                if (xpos > object.x + 5 && xpos < object.x + object.width - 5) {
+                    if(object.type == "DOOR"){
+                        inFrontOfDoor = true;
+                        lo.g("PHYSICS", "PLAYER IN FRONT OF DOOR");
+                    }
+                    if(object.type == "UBAHN"){
+                        inFrontOfUbahn = true;
+                        lo.g("PHYSICS", "PLAYER IN FRONT OF UBAHN");
+                    }      
                 }
 
             }
