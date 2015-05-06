@@ -9,6 +9,7 @@ define([
     // LIBS
     "lib/soma.min",
     "lib/phaser.min",
+    "lib/seedrandom.min",
     // COMMANDS
     "commands/start_application_command",
     "commands/preload_assets_command",
@@ -20,6 +21,7 @@ define([
     "commands/show_player_notification_command",
     "commands/create_backdrop_command",
     "commands/camera_target_command",
+    "commands/player_enter_building_command",
     // MEDIATORS
     "mediators/player_mediator",
     "mediators/game_mediator",
@@ -51,6 +53,7 @@ define([
     "states/app/app_playing",
     "states/player/player_ground",
     "states/player/player_jump",
+    "states/player/player_zombie",
     // OTHER
     "util/log",
     "util/config",
@@ -61,6 +64,7 @@ function(
     // LIBS
     Soma,
     phaser,
+    seedrandom,
     // COMMANDS
     start_application_command,
     preload_assets_command,
@@ -72,6 +76,7 @@ function(
     show_player_notification_command,
     create_backdrop_command,
     camera_target_command,
+    player_enter_building_command,
     // MEDIATORS
     player_mediator,
     game_mediator,
@@ -101,6 +106,7 @@ function(
     app_playing,
     player_ground_state,
     player_jump_state,
+    player_zombie_state,
     // OTHER
     log,
     config,
@@ -121,10 +127,14 @@ function(
         },
         init: function() {
 
+           
+
             // Misc class
             this.injector.mapClass('lo', berghain2.Log, true);
             this.injector.mapClass('config', berghain2.Config, true);  
             this.injector.mapClass('rnd', berghain2.Random, true);  
+
+
 
              // ENUM Class
             this.injector.mapClass('message_type', berghain2.MessageType, true);          
@@ -141,6 +151,7 @@ function(
             this.commands.add("player_notification_tween_completed",berghain2.ShowPlayerNotificationCommand);
             this.commands.add("create_backdrop",berghain2.CreateBackdropCommand);
             this.commands.add("camera_target", berghain2.CameraTargetCommand);
+            this.commands.add("player_enter_building",berghain2.PlayerEnterBuildingCommand);
 
 
             
@@ -154,9 +165,10 @@ function(
             this.injector.mapClass('game_model', berghain2.GameModel, true);
             this.injector.mapClass('camera_model', berghain2.CameraModel, true);
         },
-        start: function() {
+        start: function() {            
 
-            this.dispatcher.dispatch('start_application');
+            this.dispatcher.dispatch('start_application',{generator:seedrandom});
+
         }
     });
 

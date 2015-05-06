@@ -1,0 +1,126 @@
+Jaaq Jorissen (10):
+      README.md edited online with Bitbucket
+      README.md edited online with Bitbucket
+      README.md edited online with Bitbucket
+      README.md edited online with Bitbucket
+      README.md edited online with Bitbucket
+      README.md edited online with Bitbucket
+      README.md edited online with Bitbucket
+      README.md edited online with Bitbucket
+      README.md edited online with Bitbucket
+      README.md edited online with Bitbucket
+
+Janj (55):
+      first commit - check it out boys
+      have a look at how mediators work, and soma.js in general
+      Merge branch 'master' of https://bitbucket.org/mordhau/berghain2
+      WE HAVE VISUAL - added preload and create world command, and ground spritesheet
+      added more art and renamed classes
+      added game mediator and input interface
+      added basic physics (in the wrong places though, needs refactoring) and animations (ditto, needs to be abstracted from player)
+      added ground state
+      added state changing
+      PLAYER JUMP ANIM STATE BOY
+      fixed infinite jump
+      added collison check with environment (floor). Env is stored in window variable, lol - should be stored in physicsmodel or something
+      added physics model. removed log function in healtbar mediator. Created 'skipIntro' variable in the config file to skip the bootscreen
+      updated physics model, organised the states folder
+      added logo at startup. Created TODO.md file
+      Merge branch 'master' of https://bitbucket.org/mordhau/berghain2
+      added FTP details. removed cloud. Added logo centered to intro screen
+      added burning bins
+      imlemented body physics for positioning. added collision with firebin
+      changed state to physics state. Also going to add an animation state - seperation of different types of states
+      changed bounding box size for player body
+      HEALTH BAR UPATES AND PLAYER CAN DIE BOOYAH
+      added phaser cheatsheet in help folder. changed world bounds so player can fall to his death
+      player health to 0 when falling off screen
+      added streetlamp and collision with street lamp
+      added bouncer NPC
+      added ubahn weeE
+      added debug mode / render function in the states
+      merge done
+      new ubahn graphic and added todo
+      tile fix
+      new todo and removed trace
+      merge done, more todos
+      refactored main, added createbuildings command and created game model
+      removed logs
+      merge fix
+      added random background buildings - needs randomness
+      added random class. added fence assets. created basic random world generation
+      fixed message to camera, tweaked parameters of level generation
+      added shrubbery
+      lamps are also random now
+      building shading
+      refactored backdrop generation
+      added changelog. fixed lamp hiding behind buildings
+      removed logs
+      added HOLD DOWN SHIFT FOR SPRINTING
+      added open and closed doors
+      fixed shading
+      ADDED SEED GENERATOR BOYOO
+      refactored seed code
+      merge done
+      cleaned up seed generator code
+      changed text tweening props
+      Merge branch 'master' of https://bitbucket.org/mordhau/berghain2
+      added Zombie state, animation for when player can add building too
+
+Mathieu (6):
+      #1 - Follow camera : Camera follows player centered, should look at screen bounds
+      #1 Additional commit
+      cam updates
+      camera updates
+      Resolves #1
+      Merge branch 'master' of https://bitbucket.org/mordhau/berghain2
+
+WWWillems (47):
+      Updated README.md to include details about installing Package Manager first
+      Fixed README.md formatting bitbucket
+      Updated .gitignore file to exclude my Sublime Text project
+      Added a cloud png asset. Preloading the asset & adding it to the stage. Refactored create_world_command to be more readable.
+      Added BitmapFont to assets/fonts. Added create_hud_command to show setup heads up display.
+      Preloading bitmap font & showing some first text on stage.
+      Added intro text to center of screen
+      experimenting around
+      Merge branch 'master' of https://bitbucket.org/mordhau/berghain2 into feature/game_state
+      Added init_states_command. Added app_boot.js for testing.
+      First state change worked. Change some 'namespaces' to berghain2.
+      Merge branch 'feature/game_state'
+      Updated info for starting the game
+      Removed create_world call
+      Added playerModel
+      cleanup
+      reeanabled for push
+      Trying to fix update method
+      Fixed input controls
+      Fixed bootscreen press any key to start.
+      Housekeeping
+      Fixed player-floor collision
+      Drawing healthbar with stroke & color settings in create_hud_command. Needs filling & mediator.
+      Drawing HUD fill. Needs real player_model values injected.
+      Housekeeping
+      Added drawing of manaBar in create_hud_command
+      Added health_ & mana_bar_mediator
+      Added player_model injection with health & mana int
+      Put Health & ManaBar drawing into their own view
+      Added todo item :p
+      Merge branch 'master' of https://bitbucket.org/mordhau/berghain2
+      Housekeeping. Added some items to TODO.md
+      Housekeeping
+      Merge branch 'feature/messages'
+      Merge commit messages command & u bahn graphic
+      Showing message via MessageVO. Type enum needs some work
+      First message que working
+      Housekeeping.
+      Added improvised enum models/enums/message_type.js for message type
+      Added first locked-on player message. Needs refactoring & inheritance
+      Made a message_view. Not sure about mediator yet. show_message_command now makes a diference between regular messages & lock on player messages. Needs its own command later.
+      Housekeeping. Corner cases need to be checked/added. Player notifs need model as well.
+      Renamed message_model to message_que_model. Cleaned up VO a bit
+      merge commit feature/message_model
+      Cleaned up intro screen layout a bit
+      Housekeeping
+      Housekeeping.
+

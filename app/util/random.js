@@ -1,4 +1,7 @@
+
+
 (function(berghain2) {
+
 
     'use strict';
 
@@ -10,6 +13,8 @@
         var constructor = function Random() {
 
             this.randomList = [];
+            this.seed;
+
 
             // DOUBLE THE AMOUNT?
 
@@ -40,9 +45,16 @@
                 }
             };
 
+            this.setSeed = function(seed){
+                this.seed = seed;
+            }
+
+            this.random = function(){
+                return this.seed();
+            }
 
             this.getRandom = function() {
-                var result = Math.floor(Math.random() * 1000);
+                var result = Math.floor(this.seed() * 1000);
                 return this.randomList[result];
             }
 
@@ -58,4 +70,6 @@
     berghain2.Random = Random;
 
 
+
 })(window.berghain2 = window.berghain2 || {});
+

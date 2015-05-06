@@ -22,16 +22,20 @@
                 dispatcher.dispatch("change_player_state", {type:"PHYSICS",state:state_model.PLAYER_GROUND});
 			}
 
+            var speed = 180;
+
+            if(input.sprint) speed = 1000;
+
 			if (input.goLeft) {
                 target.frame = 27;
-                target.body.velocity.x = -180;
+                target.body.velocity.x = -1 * speed;
             }
             if (input.goUp) {
                 // target.body.velocity.y = -300;
             }
             if (input.goRight) {
                 target.frame = 22;
-                target.body.velocity.x = 180;
+                target.body.velocity.x = speed;
             }
             if (input.goDown) {}
 

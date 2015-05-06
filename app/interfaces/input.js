@@ -9,6 +9,7 @@
         constructor.goRight = false;
         constructor.goUp = false;
         constructor.goDown = false;
+        constructor.sprint = false;
 
         constructor.isAnyButtonPressed = false;
         constructor.actionButton = false;
@@ -41,7 +42,7 @@
                 constructor.actionButton = false;
             }
 
-            // UP
+            // JUMP
             if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) || pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_UP) || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) < -0.1) {
                 constructor.goUp = true;
             } else {
@@ -54,6 +55,13 @@
             } else {
                 constructor.goDown = false;
             }
+
+            if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)) {
+                constructor.sprint = true;
+            } else {
+                constructor.sprint = false;
+            }
+
             
 
             // LEFT

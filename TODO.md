@@ -12,9 +12,9 @@
  - Cheat/debug shortcuts
  - Player damage needs to move from firebin to command
  - Add raycastings (http://gamemechanicexplorer.com/#raycasting-1)
- - Create backside of the main character 
+ - DONE Create backside of the main character 
  - Death animation
  - mediators.create(berghain2.HealthBarMediator, healthBar); needs to move out of healthbarview. best remove inject mediators as well.
- - Random generation of backgrounds
+ - DONE Random generation of backgrounds
  - Day/Night cycle
- - Mapping of MessageType / MessageVO removen uit main.js
+ 
