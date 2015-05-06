@@ -14,6 +14,9 @@
 
             this.randomList = [];
             this.seed;
+            this.generator;
+
+            this.seedGen;
 
 
             // DOUBLE THE AMOUNT?
@@ -45,16 +48,22 @@
                 }
             };
 
-            this.setSeed = function(seed){
+            this.setSeed = function(seed,generator){
                 this.seed = seed;
+                this.generator = generator;
+                this.seedGen = generator(seed);
+            }
+
+            this.resetSeedGenerator = function(){
+                this.seedGen = this.generator(this.seed);
             }
 
             this.random = function(){
-                return this.seed();
+                return this.seedGen();
             }
 
             this.getRandom = function() {
-                var result = Math.floor(this.seed() * 1000);
+                var result = Math.floor(this.seedGen() * 1000);
                 return this.randomList[result];
             }
 

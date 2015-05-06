@@ -49,6 +49,7 @@ define([
     // STATES,
     "states/app/app_boot",
     "states/app/app_playing",
+    "states/app/app_in_building",
     "states/player/player_ground",
     "states/player/player_jump",
     "states/player/player_zombie",
@@ -100,6 +101,7 @@ function(
     // STATES
     app_boot,
     app_playing,
+    app_in_building,
     player_ground_state,
     player_jump_state,
     player_zombie_state,

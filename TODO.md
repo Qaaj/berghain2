@@ -1,5 +1,5 @@
 ## TODO's
-
+ - Remove initialisation of the models from the INIT function of our game playing state
  - Create pause screens (Check out Phaser's system first)
  - Every object needs a .destroy() function
  - Using Tilemaps for level design -  [Download](http://www.mapeditor.org/download.html) and  [Tutorial](http://gamedevelopment.tutsplus.com/tutorials/introduction-to-tiled-map-editor--gamedev-2838)

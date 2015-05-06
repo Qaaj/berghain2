@@ -9,6 +9,10 @@
         // Add the player variable to our physics model
         physics_model.player = target;
 
+        var isRekt = false;
+
+
+
         // THIS HAS TO HAPPEN SOMEWHERE ELSE
         game.physics.arcade.gravity.y = 2500;
         game.physics.enable(target, Phaser.Physics.ARCADE);
@@ -26,33 +30,49 @@
         var physics_state = state_model.PLAYER_GROUND;
 
 
-        dispatcher.dispatch('camera_target', {'target':target});
+        dispatcher.dispatch('camera_target', {
+            'target': target
+        });
 
-        dispatcher.addEventListener('change_player_state', function (event) {
-            if(event.params.type == "PHYSICS"){
-                physics_state = event.params.state;
+        dispatcher.addEventListener('change_player_state', function(event) {
+            if (!isRekt) {
+                if (event.params.type == "PHYSICS") {
+                    physics_state = event.params.state;
+                }
             }
         });
 
 
-       
+
 
         dispatcher.addEventListener('game_update', function(event) {
-            physics_state.update(target);
+            if (!isRekt) {
+                physics_state.update(target);
 
-            player_model.xPosition = target.body.x;
-            player_model.yPosition = target.body.y;
+                player_model.xPosition = target.body.x;
+                player_model.yPosition = target.body.y;
 
-            if (target.body.y > game.height) {
-                player_model.health = 0;
+                if (target.body.y > game.height) {
+                    player_model.health = 0;
+                }
             }
         });
 
         dispatcher.addEventListener('game_render', function(event) {
 
-            if (config.debug) game.debug.body(target);
+            if (config.debug && !isRekt) game.debug.body(target);
 
         });
+
+        var destroy = function() {
+            console.log("player mediator is rekt");
+            isRekt = true;
+            dispatcher.removeEventListener('change_player_state');
+            dispatcher.removeEventListener('game_update');
+            dispatcher.removeEventListener('game_render');
+        }
+
+        target.events.onDestroy.add(destroy, this);
     };
 
 

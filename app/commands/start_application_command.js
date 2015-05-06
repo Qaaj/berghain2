@@ -10,7 +10,6 @@
 
             lo.g("APPLICATION", "Application Starting with seed: " + seed);
 
-            // Map the PHASER IO game object to the value 'game' so it's available everywhere we need it
 
             injector.mapValue("game", new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.CANVAS, '', {
                 preload: function() {
@@ -39,10 +38,9 @@
             if (!config.useRandomSeed) {
                 seed = config.seed;
             }
-            // initialise the seed generator
-            var seedGen = generator(seed);
+           
             // set the seed generator in our random class
-            rnd.setSeed(seedGen);
+            rnd.setSeed(seed,generator);
 
             return seed;
 

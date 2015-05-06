@@ -2,9 +2,11 @@
 
     'use strict';
 
-    berghain2.CreateWorldCommand = function (dispatcher, mediators, lo, config, game, input, physics_model, player_model) {
+    berghain2.CreateWorldCommand = function (dispatcher, mediators, lo, config, game, input, physics_model, player_model, rnd) {
 
         this.execute = function (event) {
+
+            rnd.resetSeedGenerator();
 
             lo.g("COMMAND", "Creating World");
 
