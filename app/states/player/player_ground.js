@@ -31,12 +31,7 @@
             }
 
 
-            game.physics.arcade.collide(target, physics_model.environment, function() {
-                if (target.body.touching.down == true) {
-
-                }
-                return;
-            });
+            game.physics.arcade.collide(target, physics_model.environment);
 
 
             if (!target.body.touching.down && !target.body.onFloor()) {

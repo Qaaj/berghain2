@@ -2,7 +2,7 @@
 
     'use strict';
 
-    berghain2.CreateWorldCommand = function (dispatcher, mediators, lo, config, game, input, physics_model, player_model, rnd) {
+    berghain2.CreateWorldCommand = function (dispatcher, mediators, lo, config, game, input, physics_model, player_model, rnd, camera_model) {
 
         this.execute = function (event) {
 
@@ -50,6 +50,7 @@
         function createCamera() {
             // Define world bounds
             mediators.create(berghain2.CameraMediator, game.camera);
+           
         }
 
         function initGamePhysics() {
