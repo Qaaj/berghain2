@@ -10,10 +10,12 @@
             var bootState = new berghain2.Boot(game, input);
             var playState = new berghain2.Playing(dispatcher, input, lo, config, game, physics_model);
             var buildingState = new berghain2.InBuilding(game, input);
+            var ubahnState = new berghain2.InUbahn(game, input);
 
             game.state.add('Boot', bootState);
             game.state.add('Playing', playState);
             game.state.add('InBuilding', buildingState)
+            game.state.add('InUbahn', ubahnState)
 
             if (config.skipIntro) {
                 game.state.start('Playing');

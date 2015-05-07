@@ -8,27 +8,28 @@
 
         this.update = function(target) {
 
-            var inFrontOfDoor = false;
-            var inFrontOfUbahn = false;
+            var inFrontOfObject = false;
+            var interaction_object = {};
 
 
             for (var i = 0; i < physics_model.interactable_background_objects.length; i++) {
 
-                var object = physics_model.interactable_background_objects[i];
+                var obj = physics_model.interactable_background_objects[i];
                 var xpos = target.x + target.body.width;
 
-                if (xpos > object.x + 5 && xpos < object.x + object.width - 5) {
-                    if(object.type == "DOOR"){
-                        inFrontOfDoor = true;
+                if (xpos > obj.x + 5 && xpos < obj.x + obj.width - 5) {
+                    inFrontOfObject = true;
+                    interaction_object = obj;
+                    if(interaction_object.type == "DOOR"){
                         lo.g("PHYSICS", "PLAYER IN FRONT OF DOOR");
                     }
-                    if(object.type == "UBAHN"){
-                        inFrontOfUbahn = true;
+                    if(interaction_object.type == "UBAHN"){
                         lo.g("PHYSICS", "PLAYER IN FRONT OF UBAHN");
                     }      
                 }
 
             }
+
 
             game.physics.arcade.collide(target, physics_model.environment, function() {
                 if (target.body.touching.down == true) {
@@ -67,12 +68,14 @@
 
             if (input.goDown) {}
 
+
+
             if (input.actionButton && !(input.goRight || input.goLeft)) {
                 target.body.velocity.x = 0;
 
 
-                if (inFrontOfDoor) {
-                    dispatcher.dispatch("player_enter_building",{target:target});
+                if (inFrontOfObject) {
+                    dispatcher.dispatch("player_interact_with_backdrop",{target:target,object:interaction_object});
                     
                 } else {
                     target.frame = 40;

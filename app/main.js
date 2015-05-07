@@ -20,7 +20,7 @@ define([
     "commands/show_message_command",
     "commands/create_backdrop_command",
     "commands/camera_target_command",
-    "commands/player_enter_building_command",
+    "commands/player_interact_with_backdrop",
     // MEDIATORS
     "mediators/player_mediator",
     "mediators/game_mediator",
@@ -50,6 +50,7 @@ define([
     "states/app/app_boot",
     "states/app/app_playing",
     "states/app/app_in_building",
+    "states/app/app_in_ubahn",
     "states/player/player_ground",
     "states/player/player_jump",
     "states/player/player_zombie",
@@ -74,7 +75,7 @@ function(
     show_message_command,
     create_backdrop_command,
     camera_target_command,
-    player_enter_building_command,
+    player_interact_with_backdrop,
     // MEDIATORS
     player_mediator,
     game_mediator,
@@ -102,6 +103,7 @@ function(
     app_boot,
     app_playing,
     app_in_building,
+    app_in_ubahn,
     player_ground_state,
     player_jump_state,
     player_zombie_state,
@@ -147,7 +149,7 @@ function(
     	    this.commands.add("show_message",berghain2.ShowMessageCommand);
             this.commands.add("create_backdrop",berghain2.CreateBackdropCommand);
             this.commands.add("camera_target", berghain2.CameraTargetCommand);
-            this.commands.add("player_enter_building",berghain2.PlayerEnterBuildingCommand);
+            this.commands.add("player_interact_with_backdrop",berghain2.PlayerInteractWithBackdropCommand);
 
             
             // Model

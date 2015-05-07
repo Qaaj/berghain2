@@ -17,4 +17,6 @@
  - mediators.create(berghain2.HealthBarMediator, healthBar); needs to move out of healthbarview. best remove inject mediators as well.
  - DONE Random generation of backgrounds
  - Day/Night cycle
+ - Add  a clock
+ - Camera position has to be saved in cameramodel
  
