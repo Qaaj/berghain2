@@ -64,7 +64,9 @@
 
         function createNPCs() {
             var npc = game.add.sprite(window.innerWidth - 370, window.innerHeight - 64 - 96, 'npc');
+            mediators.create(berghain2.NPCMediator, npc);
             npc.name = "NPC"
+            npc.frame = Math.floor(Math.random()*4);
         }
 
         function createPlaces() {
@@ -76,7 +78,7 @@
         function createEnemies() {
            
 
-            var bin2 = game.add.sprite(window.innerWidth - 400, window.innerHeight - physics_model.ground_height - 48, 'fire_bin');
+            var bin2 = game.add.sprite(window.innerWidth - 500, window.innerHeight - physics_model.ground_height - 48, 'fire_bin');
             bin2.name = "Fire Bin 2"
             mediators.create(berghain2.FireBinMediator, bin2);
         }

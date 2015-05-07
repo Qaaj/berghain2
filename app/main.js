@@ -29,6 +29,7 @@ define([
      "mediators/fire_bin_mediator",
      "mediators/message_mediator",
      "mediators/camera_mediator",
+     "mediators/npc_mediator",
      // VIEWS
      "views/health_bar_view",
      "views/message_view",
@@ -83,6 +84,7 @@ function(
     mana_bar_mediator,
     message_mediator,
     camera_mediator,
+    npc_mediator,
     //VIEWS
     health_bar_view,
     message_view,

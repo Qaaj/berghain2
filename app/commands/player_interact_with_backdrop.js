@@ -2,7 +2,7 @@
 
     'use strict';
 
-    berghain2.PlayerInteractWithBackdropCommand = function(dispatcher, lo, config, game, input, state_model) {
+    berghain2.PlayerInteractWithBackdropCommand = function(dispatcher, lo, config, game, input, state_model, message_type, message_model) {
 
         this.execute = function(event) {
 
@@ -11,7 +11,7 @@
             var type = event.params.object.type;
 
             if (type == "DOOR") {
-                
+
                 target.animations.play('go_inside');
                 target.alpha = 1;
                 game.add.tween(target).to({
@@ -59,7 +59,39 @@
                     type: "PHYSICS",
                     state: state_model.PLAYER_ZOMBIE
                 });
+            } else if (type == "NPC") {
+
+                target.animations.stop();
+                target.frame = 40
+
+                dispatcher.dispatch("change_player_state", {
+                    type: "PHYSICS",
+                    state: state_model.PLAYER_ZOMBIE
+                });
+
+                var msg = {
+                    text: "'What's up?'",
+                    type: message_type.LOCK_ON_PLAYER
+                };
+
+                dispatcher.dispatch("show_message", msg);
+
+               
             }
+
+            setTimeout(function(){
+                 msg = {
+                    text: "'...'",
+                    type: message_type.LARGE
+                };
+
+                dispatcher.dispatch("show_message", msg);
+                
+                 dispatcher.dispatch("change_player_state", {
+                    type: "PHYSICS",
+                    state: state_model.PLAYER_GROUND
+                });
+            },1000);
 
 
 

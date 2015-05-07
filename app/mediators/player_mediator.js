@@ -9,10 +9,6 @@
         // Add the player variable to our physics model
         physics_model.player = target;
 
-        var isRekt = false;
-
-
-
         // THIS HAS TO HAPPEN SOMEWHERE ELSE
         game.physics.arcade.gravity.y = 2500;
         game.physics.enable(target, Phaser.Physics.ARCADE);

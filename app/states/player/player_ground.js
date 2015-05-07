@@ -45,6 +45,9 @@
                     if (interaction_object.type == "UBAHN") {
                         lo.g("PHYSICS", "PLAYER IN FRONT OF UBAHN");
                     }
+                    if (interaction_object.type == "NPC") {
+                        lo.g("PHYSICS", "PLAYER IN FRONT OF NPC");
+                    }
                 }
 
             }

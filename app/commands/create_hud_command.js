@@ -29,8 +29,8 @@
 
         function showIntroText() {
             
-            var message = { text: "Wow", type: message_type.LOCK_ON_PLAYER};
-            dispatcher.dispatch("show_message", message);
+           // var message = { text: "Wow", type: message_type.LOCK_ON_PLAYER};
+           // dispatcher.dispatch("show_message", message);
              
             var message = { text: "welcome to berghain II ", type: message_type.SMALL};
             

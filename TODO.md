@@ -18,5 +18,8 @@
  - DONE Random generation of backgrounds
  - Day/Night cycle
  - Add  a clock
- - Camera position has to be saved in cameramodel
+ - DONE Camera position has to be saved in cameramodel
+
+ - Add timeout for player messages in the Event
+ - Possible to give a target instead of player_locked? A la camera?
  

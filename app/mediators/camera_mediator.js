@@ -11,8 +11,8 @@
         game.camera.x = camera_model.cameraX;
         game.camera.y = camera_model.cameraY;
 
-        dispatcher.addEventListener('game_update', function (event) {
-            if(typeof(camera_model.cameraTarget != 'undefined'))
+        var update = function(event){
+               if(typeof(camera_model.cameraTarget != 'undefined'))
             {
                 var leftBorder = game.camera.x  + self.bufferWidth;
                 var rightBorder = game.camera.x  + (game.width-self.bufferWidth);
@@ -38,7 +38,10 @@
 
             camera_model.cameraX = game.camera.x;
             camera_model.cameraY = game.camera.y;
-        });
+        }
+
+        dispatcher.addEventListener('game_update', update);
+
 
     };
 
