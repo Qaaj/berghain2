@@ -64,9 +64,8 @@
 
         function createNPCs() {
             var npc = game.add.sprite(window.innerWidth - 370, window.innerHeight - 64 - 96, 'npc');
+            console.log(npc.name);
             mediators.create(berghain2.NPCMediator, npc);
-            npc.name = "NPC"
-            npc.frame = Math.floor(Math.random()*4);
         }
 
         function createPlaces() {

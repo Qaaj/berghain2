@@ -61,6 +61,8 @@
                 });
             } else if (type == "NPC") {
 
+
+
                 target.animations.stop();
                 target.frame = 40
 
@@ -76,22 +78,34 @@
 
                 dispatcher.dispatch("show_message", msg);
 
-               
+
             }
 
-            setTimeout(function(){
-                 msg = {
-                    text: "'...'",
-                    type: message_type.LARGE
+            setTimeout(function() {
+
+                var txt = "...";
+
+                if (event.params.object.npc.target.name == "cop") {
+                    txt = "Keep your distance";
+                    console.log(event.params.object.npc);
+                    event.params.object.npc.doAction("Keep your distance");
+
+                }
+                if (event.params.object.npc.target.name == "smoker") txt = "...";
+                if (event.params.object.npc.target.name == "weirdo") txt = "burp";
+
+                msg = {
+                    text: '"' + txt + '"',
+                    type: message_type.MEDIUM
                 };
 
                 dispatcher.dispatch("show_message", msg);
-                
-                 dispatcher.dispatch("change_player_state", {
+
+                dispatcher.dispatch("change_player_state", {
                     type: "PHYSICS",
                     state: state_model.PLAYER_GROUND
                 });
-            },1000);
+            }, 1000);
 
 
 

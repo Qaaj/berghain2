@@ -22,4 +22,5 @@
 
  - Add timeout for player messages in the Event
  - Possible to give a target instead of player_locked? A la camera?
+ - Dialouge model? Lander Ik denk da gij aan zoietske bezig zijt ja
  
