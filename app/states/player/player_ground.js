@@ -6,12 +6,31 @@
 
         this.name = "Player ground state";
 
+        var inFrontOfObject, interaction_object, speed;
+
         this.update = function(target) {
 
-            var inFrontOfObject = false;
-            var interaction_object = {};
+            // 1. Check if the player can interact with any object at his current position
+            this.checkForInteractionWithBackdropObject(target);
 
+            // 2. Collide with the world environment
+            this.doCollisionWithEnvironment(target);
 
+            // 3. See if the player should change his state (e.g. Jump etc)
+            this.checkIfPlayerNeedsStateChange(target);
+
+            // 4. Update the players position according to key inputs
+            this.updatePlayerPosition(target);
+
+        }
+
+        this.doCollisionWithEnvironment = function(target) {
+            game.physics.arcade.collide(target, physics_model.environment);
+        }
+
+        this.checkForInteractionWithBackdropObject = function(target) {
+            interaction_object = {};
+            inFrontOfObject = false;
             for (var i = 0; i < physics_model.interactable_background_objects.length; i++) {
 
                 var obj = physics_model.interactable_background_objects[i];
@@ -20,20 +39,18 @@
                 if (xpos > obj.x + 5 && xpos < obj.x + obj.width - 5) {
                     inFrontOfObject = true;
                     interaction_object = obj;
-                    if(interaction_object.type == "DOOR"){
+                    if (interaction_object.type == "DOOR") {
                         lo.g("PHYSICS", "PLAYER IN FRONT OF DOOR");
                     }
-                    if(interaction_object.type == "UBAHN"){
+                    if (interaction_object.type == "UBAHN") {
                         lo.g("PHYSICS", "PLAYER IN FRONT OF UBAHN");
-                    }      
+                    }
                 }
 
             }
+        }
 
-
-            game.physics.arcade.collide(target, physics_model.environment);
-
-
+        this.checkIfPlayerNeedsStateChange = function(target) {
             if (!target.body.touching.down && !target.body.onFloor()) {
 
                 lo.g("PHYSICS", "Change state to jump");
@@ -44,9 +61,11 @@
                 });
 
             }
+        }
 
-            var speed = 200;
+        this.updatePlayerPosition = function(target) {
 
+            speed = 200;
             if (input.sprint) speed = 1000;
 
             if (input.goLeft) {
@@ -54,7 +73,7 @@
                 target.body.velocity.x = -1 * speed;
             }
             if (input.goUp) {
-                if (physics_model.player_jump_allowed) target.body.velocity.y = -1000;
+                if (physics_model.player_jump_allowed) target.body.velocity.y = -600 - (speed / 2);
             }
             if (input.goRight) {
                 target.animations.play('right');
@@ -70,8 +89,11 @@
 
 
                 if (inFrontOfObject) {
-                    dispatcher.dispatch("player_interact_with_backdrop",{target:target,object:interaction_object});
-                    
+                    dispatcher.dispatch("player_interact_with_backdrop", {
+                        target: target,
+                        object: interaction_object
+                    });
+
                 } else {
                     target.frame = 40;
 
@@ -84,6 +106,7 @@
                 target.frame = 2;
             }
         }
+
 
     };
 
