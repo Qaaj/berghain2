@@ -2,11 +2,13 @@
 
     'use strict';
 
-    berghain2.CreateWorldCommand = function (dispatcher, mediators, lo, config, game, input, physics_model, player_model) {
+    berghain2.CreateWorldCommand = function (dispatcher, mediators, lo, config, game, input, physics_model, player_model, rnd, camera_model) {
 
         var interactableGroup;
 
         this.execute = function (event) {
+
+            rnd.resetSeedGenerator();
 
             lo.g("COMMAND", "Creating World");
 
@@ -67,6 +69,7 @@
         function createCamera() {
             // Define world bounds
             mediators.create(berghain2.CameraMediator, game.camera);
+           
         }
 
         function initGamePhysics() {
@@ -81,6 +84,8 @@
         function createNPCs() {
             var npc = game.add.sprite(window.innerWidth - 370, window.innerHeight - 64 - 96, 'npc');
             npc.name = "NPC";
+            console.log(npc.name);
+            mediators.create(berghain2.NPCMediator, npc);
         }
 
         function createPlaces() {
@@ -94,8 +99,8 @@
             bin.name = "Fire Bin 1";
             mediators.create(berghain2.FireBinMediator, bin);
 
-            var bin2 = game.add.sprite(window.innerWidth - 400, window.innerHeight - physics_model.ground_height - 48, 'fire_bin');
-            bin2.name = "Fire Bin 2";
+            var bin2 = game.add.sprite(window.innerWidth - 500, window.innerHeight - physics_model.ground_height - 48, 'fire_bin');
+            bin2.name = "Fire Bin 2"
             mediators.create(berghain2.FireBinMediator, bin2);
         }
 
@@ -111,7 +116,7 @@
 
             var y = 0;
             for (var i = 0; i < window.innerHeight; i++) {
-                var c = Phaser.Color.interpolateColor(0x000000, 0x555555, window.innerHeight, i);
+                var c = Phaser.Color.interpolateColor(0x000000, 0xbd4c14, window.innerHeight, i);
 
                 // console.log(Phaser.Color.getWebRGB(c));
 

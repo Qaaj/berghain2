@@ -2,9 +2,10 @@
 
     'use strict';
 
-    var Playing = function (dispatcher,input,lo,config,game) {
+    var Playing = function (dispatcher,input,lo,config,game,physics_model) {
 
         this.name = "App playing state";
+        console.log(physics_model);
           
         this.init = function (target) {
 
@@ -23,7 +24,7 @@
         }
 
         this.shutdown = function (target) {
-
+            physics_model.reset();
         }
 
         this.render = function(target){

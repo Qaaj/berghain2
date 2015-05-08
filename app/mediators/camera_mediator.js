@@ -2,12 +2,17 @@
     'use strict';
 
     berghain2.CameraMediator = function (target,  camera_model, lo, dispatcher, game) {
+
         lo.g("MEDIATOR", "Camera mediator instantiated", target);
         var self = this;
         this.bufferWidth = game.width/3.0;
         this.smoothCamera = 7.0; //the lower, the smoother
-        dispatcher.addEventListener('game_update', function (event) {
-            if(typeof(camera_model.cameraTarget != 'undefined'))
+
+        game.camera.x = camera_model.cameraX;
+        game.camera.y = camera_model.cameraY;
+
+        var update = function(event){
+               if(typeof(camera_model.cameraTarget != 'undefined'))
             {
                 var leftBorder = game.camera.x  + self.bufferWidth;
                 var rightBorder = game.camera.x  + (game.width-self.bufferWidth);
@@ -30,7 +35,14 @@
                     game.camera.x += diffX;
                 }
             }
-        });
+
+            camera_model.cameraX = game.camera.x;
+            camera_model.cameraY = game.camera.y;
+        }
+
+        dispatcher.addEventListener('game_update', update);
+
+
     };
 
 

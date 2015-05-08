@@ -33,6 +33,12 @@
 		dispatcher.addEventListener('register_interactable_background_object', function (event) {
             that.interactable_background_objects.push(event.params);
         });
+
+        this.reset = function(){
+        	this.environment = {};
+        	this.player = {};
+        }
+       
 	};
 	
 	berghain2.PhysicsModel = PhysicsModel;
