@@ -3,14 +3,18 @@
     'use strict';
 
     var PlayerModel = function(dispatcher, input, lo, config, game) {
+        
         lo.g("MODEL", "Player Model Initiated");
+
+        this.dispatcher = dispatcher;
+        this.isAlive = true;
 
         this.xPosition = 0;
         this.yPosition = 0;
 
         this.health = 100;
 
-
+        
         this.mana = 5;
 
     };
@@ -20,7 +24,9 @@
             return this._health;
         },
         set health(val) {
-        	// add check for health
+        	if(val <= 0){
+        		this.dispatcher.dispatch("player_death")
+        	}
             this._health = val;
         }
     };

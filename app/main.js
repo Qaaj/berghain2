@@ -20,6 +20,7 @@ define([
         "commands/create_backdrop_command",
         "commands/camera_target_command",
         "commands/player_interact_with_backdrop",
+        "commands/player_death_command",
         // MEDIATORS
         "mediators/player_mediator",
         "mediators/game_mediator",
@@ -77,6 +78,7 @@ define([
         create_backdrop_command,
         camera_target_command,
         player_interact_with_backdrop,
+        player_death_command,
         // MEDIATORS
         player_mediator,
         game_mediator,
@@ -152,6 +154,8 @@ define([
                     this.commands.add("create_backdrop", berghain2.CreateBackdropCommand);
                     this.commands.add("camera_target", berghain2.CameraTargetCommand);
                     this.commands.add("player_interact_with_backdrop", berghain2.PlayerInteractWithBackdropCommand);
+                    this.commands.add("player_death", berghain2.PlayerDeathCommand);
+
 
 
                     // Model

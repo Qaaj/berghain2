@@ -9,11 +9,10 @@
         dispatcher.addEventListener('game_update', function(event) {
 
             if (player_model.health <= 0) {
-                dispatcher.dispatch("player_death");
-                lo.g("EVENT", "Player is dead");
                 target.width = 0;
                 return;
             }
+
             target.width = 250 * (player_model.health / 100);
 
         });
