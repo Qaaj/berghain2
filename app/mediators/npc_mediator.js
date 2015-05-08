@@ -2,7 +2,7 @@
 
     'use strict';
 
-    berghain2.NPCMediator = function(target, game, dispatcher, mediators, lo, input, state_model, physics_model, config, player_model) {
+    berghain2.NPCMediator = function(target, game, dispatcher, lo, input, npc_model, config) {
 
         var NPC_LIST = ["smoker", "weirdo", "cop"];
 
@@ -22,7 +22,7 @@
         } else {
             lo.g("MEDIATOR", "NPC mediator instantiated with type: " + target.name, target);
         }
-        target.name = "cop";
+
         switch (target.name) {
 
             case "smoker":

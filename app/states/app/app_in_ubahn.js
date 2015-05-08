@@ -17,7 +17,7 @@
         this.create = function (target) {     
             
 
-            var pushtext = game.add.bitmapText(game.width/2, game.height/2, "carrier_command", "You enter the Ubahn station. It seem it's out of service. Scheisse.", 12);
+            var pushtext = game.add.bitmapText(game.width/2, game.height/2, "carrier_command", "You enter the Ubahn station. It seems it's out of service. Scheisse.", 12);
             pushtext.updateText();
             pushtext.x -= (pushtext.width / 2)
 
