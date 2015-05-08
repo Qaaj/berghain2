@@ -113,7 +113,6 @@
 
             bmd.addToWorld();
 
-
             var y = 0;
             for (var i = 0; i < window.innerHeight; i++) {
                 var c = Phaser.Color.interpolateColor(0x000000, 0xbd4c14, window.innerHeight, i);

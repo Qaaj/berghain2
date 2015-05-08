@@ -2,7 +2,7 @@
 
     'use strict';
 
-    var MessageView = function (game, message, dispatcher, player_notification_model) {
+    var MessageView = function (game, message, dispatcher, player_notification_model, text_model) {
 
         var screenWidth = 0;
         var centerX = 0;
@@ -16,7 +16,9 @@
         create();
 
         function create() {
-            text = game.add.bitmapText(0, 0, "carrier_command", "" + message.text, message.type.fontSize);
+            var messageText = text_model.localise("" + message.text);
+            
+            text = game.add.bitmapText(0, 0, "carrier_command", messageText.toLowerCase(), message.type.fontSize);
             //text.anchor.x = 0.5;
             text.updateText();
 

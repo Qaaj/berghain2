@@ -25,13 +25,18 @@
     "de": "Ich wolle eine Zigarette!"
   },
   
-  "ubahn": {
+  "interactable.ubahn": {
     "en": "Too dark",
-    "de": "Gutentag"
+    "de": "TONKER"
   },
   
-  "door": {
+  "interactable.door": {
     "en": "Looks like a door",
+    "de": "Tauer"
+  },
+  
+  "interactable.npc": {
+    "en": "I don't trust you",
     "de": "Gutentag"
   }
 }

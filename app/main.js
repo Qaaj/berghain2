@@ -167,7 +167,6 @@ define([
                     this.commands.add("player_notification_tween_completed", berghain2.ShowPlayerNotificationCommand);
                     this.commands.add("create_backdrop", berghain2.CreateBackdropCommand);
                     this.commands.add("camera_target", berghain2.CameraTargetCommand);
-                    //this.commands.add("player_enter_building", berghain2.PlayerEnterBuildingCommand);
                     this.commands.add("player_interact_with_backdrop", berghain2.PlayerInteractWithBackdropCommand);
 
                     // Model
@@ -178,9 +177,6 @@ define([
                     this.injector.mapClass('game_model', berghain2.GameModel, true);
                     this.injector.mapClass('camera_model', berghain2.CameraModel, true);
                     this.injector.mapClass('npc_model', berghain2.NPCModel, true);
-
- 
-                    //this.injector.mapClass('message_vo', berghain2.MessageVO, true);
                     this.injector.mapClass('player_notification_model', berghain2.PlayerNotificationModel, true);
                    
                     this.injector.mapClass('text_model', berghain2.TextModel, true);

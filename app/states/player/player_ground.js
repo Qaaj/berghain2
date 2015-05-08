@@ -8,7 +8,7 @@
 
         var inFrontOfObject, interaction_object, speed;
 
-        this.update = function(target) {
+        this.update = function (target) {
             // 1. Check if the player can interact with any object at his current position
             this.checkForInteractionWithBackdropObject(target);
 
@@ -23,13 +23,15 @@
 
         }
 
-        this.doCollisionWithEnvironment = function(target) {
+        this.doCollisionWithEnvironment = function (target) {
             game.physics.arcade.collide(target, physics_model.environment);
         }
 
-        this.checkForInteractionWithBackdropObject = function(target) {
+        this.checkForInteractionWithBackdropObject = function (target) {
+           
             interaction_object = {};
             inFrontOfObject = false;
+            
             for (var i = 0; i < physics_model.interactable_background_objects.length; i++) {
 
                 var obj = physics_model.interactable_background_objects[i];
@@ -39,29 +41,16 @@
                     inFrontOfObject = true;
                     interaction_object = obj;
 
-                    if (interaction_object.type == "DOOR") {
-                        var message = {uid: 0, text: "Too dark man", messageType: message_type.LOCK_ON_PLAYER };
-                        dispatcher.dispatch("show_player_notification", message);
-                        
-                        lo.g("PHYSICS", "PLAYER IN FRONT OF DOOR");
-                    }
+                    lo.g("PHYSICS", "PLAYER IN FRONT OF " + interaction_object.type);
+                     
+                    var message = { uid: Math.random(), text: "interactable." + interaction_object.type, messageType: message_type.LOCK_ON_PLAYER };                    
                     
-                    if (interaction_object.type == "UBAHN") {
-                        lo.g("PHYSICS", "PLAYER IN FRONT OF UBAHN");
-                        
-                        var message = {uid: 9, text: "Too deep", messageType: message_type.LOCK_ON_PLAYER };
-                        dispatcher.dispatch("show_player_notification", message);
-                    }
-                    
-                    if (interaction_object.type == "NPC") {
-                        lo.g("PHYSICS", "PLAYER IN FRONT OF NPC");
-                    }
+                    dispatcher.dispatch("show_player_notification", message);
                 }
-
             }
         }
- 
-        this.checkIfPlayerNeedsStateChange = function(target) {
+
+        this.checkIfPlayerNeedsStateChange = function (target) {
             if (!target.body.touching.down && !target.body.onFloor()) {
 
                 lo.g("PHYSICS", "Change state to jump");
@@ -74,7 +63,7 @@
             }
         }
 
-        this.updatePlayerPosition = function(target) {
+        this.updatePlayerPosition = function (target) {
 
             speed = 200;
             if (input.sprint) speed = 1000;
@@ -91,15 +80,9 @@
                 target.body.velocity.x = 1 * speed;
             }
 
-            if (input.goDown) { }
-
-
-
             if (input.actionButton && !(input.goRight || input.goLeft)) {
                 target.body.velocity.x = 0;
 
-
- 
                 if (inFrontOfObject) {
                     dispatcher.dispatch("player_interact_with_backdrop", {
                         target: target,
@@ -118,12 +101,7 @@
                 target.frame = 2;
             }
         }
-
-
     };
-
-    // ContentModel.prototype.clear = function() {
-    // };
 
     berghain2.Player_Ground = Player_Ground;
 

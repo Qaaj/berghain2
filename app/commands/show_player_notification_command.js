@@ -2,7 +2,7 @@
 
     'use strict';
 
-    berghain2.ShowPlayerNotificationCommand = function (lo, config, game, player_model, message_type, mediators, player_notification_model, dispatcher) {
+    berghain2.ShowPlayerNotificationCommand = function (lo, config, game, player_model, text_model, mediators, player_notification_model, dispatcher) {
 
         var screenWidth = 0;
         var centerX = 0;
@@ -47,7 +47,7 @@
         }
 
         function createMessageThatLocksOnPlayerPosition(currentMessage) {
-            var text = new berghain2.MessageView(game, currentMessage, dispatcher, player_notification_model);
+            var text = new berghain2.MessageView(game, currentMessage, dispatcher, player_notification_model, text_model);
             mediators.create(berghain2.MessageMediator, text);
         }
     };

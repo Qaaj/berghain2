@@ -12,8 +12,19 @@
 			
 			var loc = game.cache.getJSON("text");
 
+			var lowercaseSearchString = str.toLowerCase();
+			
+			var text;
+			try {
+			     text = loc[lowercaseSearchString][lang];
+			}
+			catch(err) {
+				text = "???";
+			    console.log("> ERROR! Couldn't find languages.json key " + lowercaseSearchString + " in " + lang);
+			}
+
 			// return the specified string in the specified language
-			return loc[str][lang];
+			return text;
 		}
 	};
 
