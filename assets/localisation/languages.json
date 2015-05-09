@@ -3,7 +3,7 @@
     "en": "Wow",
     "de": "Ganz geil"
   },
-  "push_any_key_to_start": {
+  "actions.pushanykeytostart": {
     "en": "PUSH ANY KEY TO START",
     "de": "PRESSE EINE KNOPFE ZUM STARTEN"
   },
@@ -28,7 +28,11 @@
     "de": "TONKER"
   },
   "interactable.door": {
-    "en": ["Looks like a door", "Nice door", "Open sesame!"],        
+    "en": [
+      "Looks like a door",
+      "Nice door",
+      "Open sesame!"
+    ],
     "de": "Tauer"
   },
   "interactable.npc": {
@@ -50,6 +54,14 @@
   "interactable.npc.weirdo.greet": {
     "en": "Hi weirdo",
     "de": "Bongiourno weirdo"
+  },
+  "building.ubahn.welcome": {
+    "en": "Welcome to Ubahn",
+    "de": "Ubahn wilkommen sie"
+  },
+  "building.welcome": {
+    "en": "This shop looks closed",
+    "de": "Nicht geoffnet!"
   },
   "game.over": {
     "en": "Game over",

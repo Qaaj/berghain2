@@ -2,7 +2,7 @@
 
     'use strict';
 
-    var InBuilding = function (game, input) {
+    var InBuilding = function (game, input, text_model) {
 
         this.name = "InBuilding boot state";
 
@@ -15,7 +15,7 @@
         }
 
         this.create = function (target) {     
-            var pushtext = game.add.bitmapText(game.width/2, game.height/2, "carrier_command", "You are inside a building. It's quite amazing - too bad the light's out.", 12);
+            var pushtext = game.add.bitmapText(game.width/2, game.height/2, "carrier_command", text_model.localise("building.welcome"), 12);
             
             pushtext.updateText();
             pushtext.x -= (pushtext.width / 2)

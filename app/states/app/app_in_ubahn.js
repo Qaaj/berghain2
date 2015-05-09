@@ -2,7 +2,7 @@
 
     'use strict';
 
-    var InUbahn = function (game, input) {
+    var InUbahn = function (game, input, text_model) {
 
         this.name = "InUbahn boot state";
 
@@ -14,8 +14,10 @@
 
         }
 
-        this.create = function (target) {     
-            var pushtext = game.add.bitmapText(game.width/2, game.height/2, "carrier_command", "You enter the Ubahn station. It seems it's out of service. Scheisse.", 12);
+        this.create = function (target) { 
+            console.log("scheisssssse " + text_model);
+                
+            var pushtext = game.add.bitmapText(game.width/2, game.height/2, "carrier_command", text_model.localise("building.ubahn.welcome"), 12);
             pushtext.updateText();
             pushtext.x -= (pushtext.width / 2)
 

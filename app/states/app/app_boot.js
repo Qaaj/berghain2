@@ -2,7 +2,7 @@
 
     'use strict';
 
-    var Boot = function (game, input) {
+    var Boot = function (game, input, text_model) {
 
         this.name = "Application boot state";
 
@@ -18,7 +18,7 @@
             var logo = game.add.sprite(game.width/2, game.height/2 - 150, 'logo');
             logo.x -= (logo.width/2);
 
-            var pushtext = game.add.bitmapText(game.width/2, logo.y + logo.height + 50, "carrier_command", "PUSH ANY KEY TO START", 12);
+            var pushtext = game.add.bitmapText(game.width/2, logo.y + logo.height + 50, "carrier_command", text_model.localise("actions.PushAnyKeyToStart"), 12);
             pushtext.updateText();
             pushtext.x -= (pushtext.width / 2)
 
