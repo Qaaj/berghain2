@@ -31,21 +31,21 @@
         function showIntroText() {
 
 
-            var message = { uid: 1, text: text_model.localise("hello"), messageType: message_type.LOCK_ON_PLAYER };
+            var message = {text: text_model.localise("hello"), messageType: message_type.LOCK_ON_PLAYER };
             dispatcher.dispatch("show_player_notification", message);
 
 
-            var message = { uid: 1, text: "Wow", messageType: message_type.LOCK_ON_PLAYER };
+            var message = {text: "Wow", messageType: message_type.LOCK_ON_PLAYER };
             dispatcher.dispatch("show_player_notification", message);
 
-            var message = { uid: 3, text: text_model.localise("welcome"), messageType: message_type.SMALL };
+            var message = {text: text_model.localise("welcome"), messageType: message_type.SMALL };
             dispatcher.dispatch("show_message", message);
 
-            message = { uid: 4, text: text_model.localise("welcome.chapter.one"), messageType: message_type.MEDIUM };
+            message = {text: text_model.localise("welcome.chapter.one"), messageType: message_type.MEDIUM };
 
             dispatcher.dispatch("show_message", message);
 
-            message = { uid: 5, text: text_model.localise("welcome.chapter.one.objective"), messageType: message_type.LARGE };
+            message = {text: text_model.localise("welcome.chapter.one.objective"), messageType: message_type.LARGE };
 
             dispatcher.dispatch("show_message", message);
         }

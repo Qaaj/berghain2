@@ -8,14 +8,13 @@
     	
         var message = player_notification_model.currentMessage;
         
-        target.create(game, message);        
+        target.create(game, message, player_model.xPosition, player_model.yPosition);        
         
         dispatcher.addEventListener('game_update', function (event) {
             target.updatePosition(player_model.xPosition, player_model.yPosition);
         });
         
         dispatcher.addEventListener('destroy_player_notification', destroyPlayerNotification);  
-        
         
         function destroyPlayerNotification(){            
              console.log(">>> CLOCK TICKING");

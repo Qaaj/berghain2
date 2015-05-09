@@ -13,8 +13,10 @@
         var text;
         var currentTextTween;
 
-        this.create = function(game, message) {
-            text = game.add.bitmapText(0, 0, "carrier_command", message.text, message.type.fontSize);
+        var yOffset = 15;
+        
+        this.create = function(game, message, x, y) {
+            text = game.add.bitmapText(x, y - yOffset, "carrier_command", message.text, message.type.fontSize);
             //text.anchor.x = 0.5;
             text.updateText();
         }
@@ -29,7 +31,7 @@
         this.updatePosition = function (x, y) {
             if (text) {
                 text.x = x;
-                text.y = y - 15;
+                text.y = y - yOffset;
             }
         }
     };

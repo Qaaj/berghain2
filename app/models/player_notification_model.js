@@ -23,31 +23,17 @@
 			var messageID = message.id;
 
 			lo.g("MODEL", "Removing player notification from que: " + message.id);
-
-			/*delete this.messages[messageID];
-			this.messages[messageID] = null;
-			this.currentMessage = null;*/
- 
-			/*if (typeof this.messages[messageID] !== undefined) {
-				lo.g("MODEL", "Removing player notification from que: " + message.id);
-				
-				delete this.messages["" + messageID]
-				delete this.messages.messageID;
-				this.currentMessage = null;
-			}*/
 			
-			this.removeItem(messageID);
-			
-			
+			this.removeItem(messageID);			
 		}
 		
 		this.removeItem = function (key) {
-				if (!this.hasOwnProperty(key))
+				if (!this.messages.hasOwnProperty(key))
 					return;
-				if (isNaN(parseInt(key)) || !(this instanceof Array))
-					delete this[key];
+				if (isNaN(parseInt(key)) || !(this.messages instanceof Array))
+					delete this.messages[key];
 				else
-					this.splice(key, 1);
+					this.messages.splice(key, 1);
 			};
 
 		this.setCurrentMessageToNextMessageInQue = function () {
