@@ -11,7 +11,7 @@
 		 this.isTweening = false;
 		 
 		 this.addMessage = function(messageObj){
-			lo.g("MODEL","Adding message to que with type " + messageObj.messageType);
+			lo.g("MODEL","Adding message to message que model with type " + messageObj.messageType);
 			
 			var messageID = this.messages.length;
 			
@@ -22,7 +22,7 @@
 		}
 		
 		this.removeLastMessageFromQue = function(){
-			lo.g("MODEL","Removing last message from que");
+			lo.g("MODEL","Removing last message from message que model");
 			
 			this.messages.splice(0, 1);			
 			this.setCurrentMessageToNextMessageInQue();
