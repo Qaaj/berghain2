@@ -20,17 +20,34 @@
 			var lowercaseSearchString = str.toLowerCase();
 
 			var text;
-			try {
-				text = loc[lowercaseSearchString][lang];
+			try {				
+				var jsonType = loc[lowercaseSearchString][lang];
+
+				// Check if loaded text is a string or an array (array used by speech randomizer)
+				if (Object.prototype.toString.call(jsonType) === '[object Array]') {					
+					var arr = [];
+					arr = loc[lowercaseSearchString][lang];
+
+					var notificationsLength = arr.length;
+					var randomNotificationID = Math.floor(this.getRandomNumber(0, notificationsLength));
+
+					text = arr[randomNotificationID];
+				}else{					
+					text = loc[lowercaseSearchString][lang];
+				}
 			}
 			catch (err) {
-				text = "404_key_not_found";
-				
+				text = "404:" + lowercaseSearchString;
+
 				throw "> ERROR! Couldn't find languages.json key: '" + lowercaseSearchString + "' in " + lang;
 			}
 
 			// return the specified string in the specified language
 			return text;
+		}
+
+		this.getRandomNumber = function (min, max) {
+			return Math.random() * (max - min) + min;
 		}
 	};
 
