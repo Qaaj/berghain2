@@ -15,14 +15,14 @@
 
         var yOffset = 15;
         
-        this.create = function(game, message, x, y) {
+        this.create = function(game, message, x, y) {            
             text = game.add.bitmapText(x, y - yOffset, "carrier_command", message.text, message.type.fontSize);
             //text.anchor.x = 0.5;
             text.updateText();
         }
 
-        this.destroy = function () {
-            if (text) {                
+        this.destroy = function () {            
+            if (text) {                                
                 text.destroy();
                 text = null;
             }

@@ -11,32 +11,31 @@
         target.create(game, message, player_model.xPosition, player_model.yPosition);        
         
         dispatcher.addEventListener('game_update', function (event) {
-            target.updatePosition(player_model.xPosition, player_model.yPosition);
+            if ( target ){
+                target.updatePosition(player_model.xPosition, player_model.yPosition);
+            }
         });
         
         dispatcher.addEventListener('destroy_player_notification', destroyPlayerNotification);  
         
-        function destroyPlayerNotification(){            
-             console.log(">>> CLOCK TICKING");
-             
-             if (target){
-                 console.log(">>> DESTROY MEDIATOR");
-                    
-                 target.destroy();
+        function destroyPlayerNotification(){                         
+             if (target){                 
                  destroy();
             }    
         }      
         
-       function destroy() {
-            lo.g("MEDIATOR", "Destroyed Message mediator ", target);
-    	
+       function destroy() {    	
+            target.destroy();
+             
             player_notification_model.isShowingNotification = false;
             
             dispatcher.removeEventListener('game_update');
-            dispatcher.removeEventListener('destroy_player_notification');
+            dispatcher.removeEventListener('destroy_player_notification', destroyPlayerNotification);
             
             player_notification_model.removeMessage(message);
             player_notification_model.currentMessage = null;
+            
+            target = null;
         }
     };
 

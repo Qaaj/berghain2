@@ -29,20 +29,10 @@
         }
 
         function showIntroText() {
-
-
-            var message = {text: text_model.localise("hello"), messageType: message_type.LOCK_ON_PLAYER };
-            dispatcher.dispatch("show_player_notification", message);
-
-
-            var message = {text: "Wow", messageType: message_type.LOCK_ON_PLAYER };
-            dispatcher.dispatch("show_player_notification", message);
-
             var message = {text: text_model.localise("welcome"), messageType: message_type.SMALL };
             dispatcher.dispatch("show_message", message);
 
             message = {text: text_model.localise("welcome.chapter.one"), messageType: message_type.MEDIUM };
-
             dispatcher.dispatch("show_message", message);
 
             message = {text: text_model.localise("welcome.chapter.one.objective"), messageType: message_type.LARGE };

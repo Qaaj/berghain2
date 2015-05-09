@@ -1,56 +1,58 @@
 {
-
-"wow": {
-    "uid": 1,
+  "wow": {
     "en": "Wow",
     "de": "Ganz geil"
   },
-  
   "push_any_key_to_start": {
-    "uid": 1,
     "en": "PUSH ANY KEY TO START",
     "de": "PRESSE EINE KNOPFE ZUM STARTEN"
   },
-  
-   "hello": {
-     "uid": 2,
+  "hello": {
     "en": "Hello",
     "de": "Willkommen"
   },
-  
-   "welcome": {
-     "uid": 3,
+  "welcome": {
     "en": "Welcome to Berghain II",
     "de": "Zillkommen zu Berghain II"
   },
-  
   "welcome.chapter.one": {
-    "uid": 4,
     "en": "Chapter I",
     "de": "Chapter I"
   },
-  
   "welcome.chapter.one.objective": {
-    "uid": 5,
     "en": "Get some cigarettes",
     "de": "Ich wolle eine Zigarette!"
   },
-  
   "interactable.ubahn": {
-    "uid": 6,
     "en": "Too dark",
     "de": "TONKER"
   },
-  
   "interactable.door": {
-    "uid": 7,
     "en": "Looks like a door",
     "de": "Tauer"
   },
-  
   "interactable.npc": {
-    "uid": 8,
     "en": "I don't trust you",
     "de": "Gutentag"
+  },
+  "interactable.npc.npc.greet": {
+    "en": "Howdy",
+    "de": "Bongiourno"
+  },
+  "interactable.npc.cop.greet": {
+    "en": "Hi cop",
+    "de": "Bongiourno cop"
+  },
+  "interactable.npc.smoker.greet": {
+    "en": "Hi smoker",
+    "de": "Bongiourno smoker"
+  },
+  "interactable.npc.weirdo.greet": {
+    "en": "Hi weirdo",
+    "de": "Bongiourno weirdo"
+  },
+  "game.over": {
+    "en": "Game over",
+    "de": "Ende"
   }
 }
