@@ -6,21 +6,27 @@
 
 		lo.g("MODEL", "Text Model initiated for language: " + config.locale);
 
-		this.localise = function(str) {
+		var loc;
+
+		this.localise = function (str) {
 			var lang = config.locale;
 			console.log("lang = " + lang);
-			
-			var loc = game.cache.getJSON("text");
+
+			if (!loc) {
+				lo.g("MODEL", "Caching languages.json in: " + config.locale);
+				loc = game.cache.getJSON("text");
+			}
 
 			var lowercaseSearchString = str.toLowerCase();
-			
+
 			var text;
 			try {
-			     text = loc[lowercaseSearchString][lang];
+				text = loc[lowercaseSearchString][lang];
 			}
-			catch(err) {
-				text = "???";
-			    console.log("> ERROR! Couldn't find languages.json key " + lowercaseSearchString + " in " + lang);
+			catch (err) {
+				text = "404_key_not_found";
+				
+				throw "> ERROR! Couldn't find languages.json key: '" + lowercaseSearchString + "' in " + lang;
 			}
 
 			// return the specified string in the specified language
