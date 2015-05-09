@@ -13,29 +13,46 @@
         var font = "carrier_command";
         var fontSize = 34;
 
+        var dispatchedMessage;
+        var currentMessage;
+    
         this.execute = function (event) {
-            lo.g("COMMAND", "Show player notification: ");
+            dispatchedMessage = event.params;
+            var id = dispatchedMessage.text.toLowerCase();
 
-            if (event.params) {
-                var currentMessage = event.params;
-                player_notification_model.addMessage(currentMessage);
-            }
-
-            if (!player_notification_model.isTweening) {
-                var notif = player_notification_model.getNextPlayerNotificationInQue();
-
-                if (typeof notif !== "undefined") {
-                    player_notification_model.isTweening = true;
-
-                    currentMessage = notif;
-                    showMessage(currentMessage);
+            if (player_notification_model.currentMessage) {
+                if (player_notification_model.currentMessage.id != id) {
+                    player_notification_model.removeMessage(player_notification_model.currentMessage);
+                    dispatcher.dispatch("destroy_player_notification");
                 }
             }
+            
+            createMessage();
         }
 
-        function showMessage(currentMessage) {         
+        function createMessage() {
+            var id = dispatchedMessage.text.toLowerCase();
+            var text = text_model.localise("" + dispatchedMessage.text);
+            var messageType = dispatchedMessage.messageType;
+            
+            currentMessage = new berghain2.MessageVO(id, text, messageType);
+
+            player_notification_model.currentMessage = currentMessage;
+            player_notification_model.addMessage(currentMessage);
+
+            //if (!player_notification_model.isTweening) {
+            //var notif = player_notification_model.getNextPlayerNotificationInQue();
+
+            //if (typeof notif !== "undefined") {
+            player_notification_model.isTweening = true;
+
+
+            showMessage();
+        }
+
+        function showMessage() {
             setScreenSettings();
-            createMessageThatLocksOnPlayerPosition(currentMessage);
+            createMessageThatLocksOnPlayerPosition();
         }
 
         function setScreenSettings() {
@@ -46,8 +63,8 @@
             centerY = screenHeight / 2;
         }
 
-        function createMessageThatLocksOnPlayerPosition(currentMessage) {
-            var text = new berghain2.MessageView(game, currentMessage, dispatcher, player_notification_model, text_model);
+        function createMessageThatLocksOnPlayerPosition() {
+            var text = new berghain2.MessageView();
             mediators.create(berghain2.MessageMediator, text);
         }
     };

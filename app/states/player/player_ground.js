@@ -6,7 +6,9 @@
 
         this.name = "Player ground state";
 
-        var inFrontOfObject, interaction_object, speed;
+        var inFrontOfObject;
+        var interaction_object;
+        var speed;
 
         this.update = function (target) {
             // 1. Check if the player can interact with any object at his current position
@@ -43,7 +45,7 @@
 
                     lo.g("PHYSICS", "PLAYER IN FRONT OF " + interaction_object.type);
                      
-                    var message = { uid: Math.random(), text: "interactable." + interaction_object.type, messageType: message_type.LOCK_ON_PLAYER };                    
+                    var message = {text: "interactable." + interaction_object.type, messageType: message_type.LOCK_ON_PLAYER };                    
                     
                     dispatcher.dispatch("show_player_notification", message);
                 }

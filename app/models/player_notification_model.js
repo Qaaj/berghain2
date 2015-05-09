@@ -9,21 +9,14 @@
 		this.messages = {};
 		this.isTweening = false;
 
-		var messages =  '{ "employees" : [' +
-'{ "firstName":"John" , "lastName":"Doe" },' +
-'{ "firstName":"Anna" , "lastName":"Smith" },' +
-'{ "firstName":"Peter" , "lastName":"Jones" } ]}';
-
 		this.addMessage = function (messageObj) {
-			var messageID = messageObj.uid;//Object.keys(this.messages).length;
+			var messageID = messageObj.text;//Object.keys(this.messages).length;
 
 			if (typeof this.messages[messageID] !== undefined) {
-				var message = new berghain2.MessageVO(messageID, messageObj.text, messageObj.messageType);
-
-				lo.g("MODEL", "Adding player notification to que with text " + messageObj.text + " & type fontsize " + messageObj.messageType.fontSize);
+				lo.g("MODEL", "Adding player notification to que with text " + messageObj.text + " & type fontsize " + messageObj.type.fontSize);
 				
-				this.messages[messageID] = message;
-				this.currentMessage = message;
+				this.messages[messageID] = messageObj;
+				//this.currentMessage = message;
 			}
 		}
 
@@ -33,7 +26,7 @@
 			var messageID = message.id;
 			delete this.messages[messageID];
 
-			this.currentMessage = this.setCurrentMessageToNextMessageInQue();
+			//this.currentMessage = this.setCurrentMessageToNextMessageInQue();
 		}
 
 		this.setCurrentMessageToNextMessageInQue = function () {

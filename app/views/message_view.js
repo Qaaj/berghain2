@@ -2,7 +2,7 @@
 
     'use strict';
 
-    var MessageView = function (game, message, dispatcher, player_notification_model, text_model) {
+    var MessageView = function () {
 
         var screenWidth = 0;
         var centerX = 0;
@@ -13,37 +13,24 @@
         var text;
         var currentTextTween;
 
-        create();
-
-        function create() {
-            var messageText = text_model.localise("" + message.text);
-            
-            text = game.add.bitmapText(0, 0, "carrier_command", messageText.toLowerCase(), message.type.fontSize);
+        this.create = function(game, message) {
+            text = game.add.bitmapText(0, 0, "carrier_command", message.text, message.type.fontSize);
             //text.anchor.x = 0.5;
             text.updateText();
+        }
 
-            currentTextTween = game.add.tween(text).to({
-                alpha: 0,
-            }, 2000, "Linear");
-    	       
-            currentTextTween.onComplete.add(onTextTweenCompleted, this);
-            
-            currentTextTween.start();
+        this.destroy = function () {
+            if (text) {                
+                text.destroy();
+                text = null;
+            }
         }
 
         this.updatePosition = function (x, y) {
-            text.x = x;
-            text.y = y - 15;
-        }
-        
-        function onTextTweenCompleted(tween){
-            player_notification_model.isTweening = false;
-            
-            player_notification_model.removeMessage(message);
-            
-            currentTextTween.onComplete.remove(onTextTweenCompleted, this);
-
-            dispatcher.dispatch("player_notification_tween_completed");          
+            if (text) {
+                text.x = x;
+                text.y = y - 15;
+            }
         }
     };
 
