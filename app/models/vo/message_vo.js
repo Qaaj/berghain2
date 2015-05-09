@@ -8,7 +8,7 @@
 		this.type = message_type;
 		this.isWaitingForUserInteraction = false;
 		
-		this.toString = function() { return "" + this.id + " " + this.text}
+		//this.toString = function() { return "" + this.id + " " + this.text}
 	};
 
 	berghain2.MessageVO = MessageVO;

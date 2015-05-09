@@ -21,11 +21,8 @@
             var id = dispatchedMessage.text.toLowerCase();
 
             if (player_notification_model.currentMessage) {
-                if (player_notification_model.currentMessage.id != id) {
-                    player_notification_model.removeMessage(player_notification_model.currentMessage);
+                if (player_notification_model.currentMessage.id != id) {                    
                     dispatcher.dispatch("destroy_player_notification");
-                    
-                    player_notification_model.currentMessage = null;
                     
                     createMessage();
                 }

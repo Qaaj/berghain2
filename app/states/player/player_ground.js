@@ -7,6 +7,8 @@
         this.name = "Player ground state";
 
         var inFrontOfObject;
+        var isPlayerNotificationShown = true;
+        
         var interaction_object;
         var speed;
 
@@ -33,7 +35,7 @@
 
             interaction_object = {};
             inFrontOfObject = false;
-
+    
             for (var i = 0; i < physics_model.interactable_background_objects.length; i++) {
 
                 var obj = physics_model.interactable_background_objects[i];
@@ -47,14 +49,17 @@
 
                     var message = { text: "interactable." + interaction_object.type, messageType: message_type.LOCK_ON_PLAYER };
                     dispatcher.dispatch("show_player_notification", message);
+                    
+                    isPlayerNotificationShown = true;
                 }
             }
             
-            DestroyPlayerNotificationWhenPlayerIsNotInFrontOfObject();
+           DestroyPlayerNotificationWhenPlayerIsNotInFrontOfObject();   
         }
         
         function DestroyPlayerNotificationWhenPlayerIsNotInFrontOfObject(){
-            if (!inFrontOfObject) {
+            if (!inFrontOfObject && isPlayerNotificationShown) {
+                isPlayerNotificationShown = false;
                 dispatcher.dispatch("destroy_player_notification");
             }
         }

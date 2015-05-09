@@ -14,14 +14,19 @@
             target.updatePosition(player_model.xPosition, player_model.yPosition);
         });
         
-        dispatcher.addEventListener('destroy_player_notification', function (event) {
-            console.log(">>> DESTROY MEDIATOR");
-            
-            target.destroy();
-            
-            destroy();
+        dispatcher.addEventListener('destroy_player_notification', destroyPlayerNotification);  
+        
+        
+        function destroyPlayerNotification(){            
+             console.log(">>> CLOCK TICKING");
              
-        });        
+             if (target){
+                 console.log(">>> DESTROY MEDIATOR");
+                    
+                 target.destroy();
+                 destroy();
+            }    
+        }      
         
        function destroy() {
             lo.g("MEDIATOR", "Destroyed Message mediator ", target);

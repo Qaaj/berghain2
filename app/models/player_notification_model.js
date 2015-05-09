@@ -10,7 +10,7 @@
 		this.isShowingNotification = false;
 
 		this.addMessage = function (messageObj) {
-			var messageID = messageObj.text;//Object.keys(this.messages).length;
+			var messageID = messageObj.text.toLowerCase();//Object.keys(this.messages).length;
 
 			if (typeof this.messages[messageID] !== undefined) {
 				lo.g("MODEL", "Adding player notification to que with text " + messageObj.text + " & type fontsize " + messageObj.type.fontSize);
@@ -24,9 +24,31 @@
 
 			lo.g("MODEL", "Removing player notification from que: " + message.id);
 
-			delete this.messages[messageID];
-			this.currentMessage = null;
+			/*delete this.messages[messageID];
+			this.messages[messageID] = null;
+			this.currentMessage = null;*/
+ 
+			/*if (typeof this.messages[messageID] !== undefined) {
+				lo.g("MODEL", "Removing player notification from que: " + message.id);
+				
+				delete this.messages["" + messageID]
+				delete this.messages.messageID;
+				this.currentMessage = null;
+			}*/
+			
+			this.removeItem(messageID);
+			
+			
 		}
+		
+		this.removeItem = function (key) {
+				if (!this.hasOwnProperty(key))
+					return;
+				if (isNaN(parseInt(key)) || !(this instanceof Array))
+					delete this[key];
+				else
+					this.splice(key, 1);
+			};
 
 		this.setCurrentMessageToNextMessageInQue = function () {
 			this.currentMessage = this.getNextPlayerNotificationInQue();
