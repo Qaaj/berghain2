@@ -24,10 +24,14 @@
                 if (player_notification_model.currentMessage.id != id) {
                     player_notification_model.removeMessage(player_notification_model.currentMessage);
                     dispatcher.dispatch("destroy_player_notification");
+                    
+                    player_notification_model.currentMessage = null;
+                    
+                    createMessage();
                 }
-            }
-            
-            createMessage();
+            }else{
+                createMessage();
+            }           
         }
 
         function createMessage() {
@@ -39,14 +43,9 @@
 
             player_notification_model.currentMessage = currentMessage;
             player_notification_model.addMessage(currentMessage);
-
-            //if (!player_notification_model.isTweening) {
-            //var notif = player_notification_model.getNextPlayerNotificationInQue();
-
-            //if (typeof notif !== "undefined") {
-            player_notification_model.isTweening = true;
-
-
+            
+            player_notification_model.isShowingNotification = true;
+            
             showMessage();
         }
 

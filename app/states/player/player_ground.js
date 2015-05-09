@@ -30,10 +30,10 @@
         }
 
         this.checkForInteractionWithBackdropObject = function (target) {
-           
+
             interaction_object = {};
             inFrontOfObject = false;
-            
+
             for (var i = 0; i < physics_model.interactable_background_objects.length; i++) {
 
                 var obj = physics_model.interactable_background_objects[i];
@@ -44,11 +44,18 @@
                     interaction_object = obj;
 
                     lo.g("PHYSICS", "PLAYER IN FRONT OF " + interaction_object.type);
-                     
-                    var message = {text: "interactable." + interaction_object.type, messageType: message_type.LOCK_ON_PLAYER };                    
-                    
+
+                    var message = { text: "interactable." + interaction_object.type, messageType: message_type.LOCK_ON_PLAYER };
                     dispatcher.dispatch("show_player_notification", message);
                 }
+            }
+            
+            DestroyPlayerNotificationWhenPlayerIsNotInFrontOfObject();
+        }
+        
+        function DestroyPlayerNotificationWhenPlayerIsNotInFrontOfObject(){
+            if (!inFrontOfObject) {
+                dispatcher.dispatch("destroy_player_notification");
             }
         }
 

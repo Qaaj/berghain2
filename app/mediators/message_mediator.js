@@ -20,6 +20,10 @@
         });        
         
         this.destroy = function() {
+            lo.g("MEDIATOR", "Destroyed Message mediator ", target);
+    	
+            player_notification_model.isShowingNotification = false;
+            
             dispatcher.removeEventListener('game_update');
             dispatcher.removeEventListener('destroy_player_notification');
         }

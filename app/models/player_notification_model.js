@@ -7,7 +7,7 @@
 
 		this.currentMessage;
 		this.messages = {};
-		this.isTweening = false;
+		this.isShowingNotification = false;
 
 		this.addMessage = function (messageObj) {
 			var messageID = messageObj.text;//Object.keys(this.messages).length;
@@ -16,17 +16,17 @@
 				lo.g("MODEL", "Adding player notification to que with text " + messageObj.text + " & type fontsize " + messageObj.type.fontSize);
 				
 				this.messages[messageID] = messageObj;
-				//this.currentMessage = message;
 			}
 		}
 
 		this.removeMessage = function (message) {
-			lo.g("MODEL", "Removing player notification from que: " + message.id);
-
 			var messageID = message.id;
-			delete this.messages[messageID];
-
-			//this.currentMessage = this.setCurrentMessageToNextMessageInQue();
+			
+			if (typeof this.messages[messageID] !== undefined){
+				lo.g("MODEL", "Removing player notification from que: " + message.id);
+				
+				delete this.messages[messageID];	
+			}
 		}
 
 		this.setCurrentMessageToNextMessageInQue = function () {
