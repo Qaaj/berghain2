@@ -12,7 +12,7 @@
     "de": "Willkommen"
   },
   "welcome": {
-    "en": ["Welcome to Berghain II", "Welcome"],
+    "en": "Welcome to Berghain II",
     "de": "Zillkommen zu Berghain II"
   },
   "welcome.chapter.one": {
@@ -28,7 +28,7 @@
     "de": "TONKER"
   },
   "interactable.door": {
-    "en": ["Looks like a door", "no"],        
+    "en": ["Looks like a door", "Nice door", "Open sesame!"],        
     "de": "Tauer"
   },
   "interactable.npc": {
