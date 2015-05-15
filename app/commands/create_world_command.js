@@ -25,6 +25,7 @@
             env.enableBody = true;
             physics_model.environment = env;
 
+
             // CREATE BACKGROUND COLISSION GROUP
             createFloor();
            
@@ -83,7 +84,6 @@
 
         function createNPCs() {
             var npc = game.add.sprite(window.innerWidth - 370, window.innerHeight - 64 - 96, 'npc');
-            npc.name = "NPC";
             console.log(npc.name);
             mediators.create(berghain2.NPCMediator, npc);
         }
@@ -95,12 +95,9 @@
         }
 
         function createEnemies() {
-            var bin = game.add.sprite(200, window.innerHeight - 64 - 48, 'fire_bin');
-            bin.name = "Fire Bin 1";
-            mediators.create(berghain2.FireBinMediator, bin);
-
+           
             var bin2 = game.add.sprite(window.innerWidth - 500, window.innerHeight - physics_model.ground_height - 48, 'fire_bin');
-            bin2.name = "Fire Bin 2"
+            bin2.name = "Fire Bin 1"
             mediators.create(berghain2.FireBinMediator, bin2);
         }
 

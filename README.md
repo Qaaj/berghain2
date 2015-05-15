@@ -168,5 +168,7 @@ pass: berghain2
 * lander.willems@gmail.com / Skype: lander.willems
 * allaert.mathieu@gmail.com / Skype: allaertm
 
+Slack integration
+
 
 * [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
