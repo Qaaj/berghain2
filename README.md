@@ -3,7 +3,7 @@
 
 ### What is this repository for? ###
 
-* Berghain2.com - THE GAME
+* Berghain2.com - THE GAME!
 
 * Version 0.1
 
