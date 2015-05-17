@@ -9,7 +9,7 @@
 
             var bootState = new berghain2.Boot(game, input, text_model);
             var playState = new berghain2.Playing(dispatcher, input, lo, config, game, physics_model);
-            var buildingState = new berghain2.InBuilding(game, input, text_model);
+            var buildingState = new berghain2.InBuilding(game, input, text_model, dispatcher);
             var ubahnState = new berghain2.InUbahn(game, input, text_model);
 
             game.state.add('Boot', bootState);
