@@ -47,7 +47,7 @@
             var y = playerStart[0].y;
 
             var player = game.add.sprite(x, y, 'punker');
-            //game.physics.arcade.disable(player);
+            mediators.create(berghain2.PlayerMediator, player);
 
             var pickupsGroup = game.add.group();
             pickupsGroup.enableBody = true;

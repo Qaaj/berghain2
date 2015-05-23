@@ -62,6 +62,7 @@ define([
     "states/player/player_ground",
     "states/player/player_jump",
     "states/player/player_zombie",
+    "states/player/player_inside",
 
 // OTHER
     "util/log",
@@ -121,7 +122,7 @@ define([
         player_ground_state,
         player_jump_state,
         player_zombie_state,
- 
+        player_inside_state,
         // STATES
         app_boot,
         app_playing,

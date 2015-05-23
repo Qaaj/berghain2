@@ -23,7 +23,7 @@
         target.animations.add('walk_down', [40, 41, 42, 43, 44, 45, 46, 47], 10, false);
         target.animations.add('go_inside', [40, 41], 10, false);
 
-        var physics_state = state_model.PLAYER_GROUND;
+        var physics_state = state_model.currentState;
 
         dispatcher.dispatch('camera_target', {
             'target': target
@@ -55,7 +55,7 @@
         dispatcher.addEventListener('game_render', handleGameRender);
 
         var destroy = function() {
-            console.log("player mediator is rekt");
+            lo.g("MEDIATOR", "player mediator is rekt");
             dispatcher.removeEventListener('change_player_state',handleChangePlayerState);
             dispatcher.removeEventListener('game_update',handleGameUpdate);
             dispatcher.removeEventListener('game_render',handleGameRender);
