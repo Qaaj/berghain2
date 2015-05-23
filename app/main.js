@@ -24,6 +24,7 @@ define([
     "commands/player_interact_with_backdrop",
     "commands/player_death_command",
     "commands/create_building_command",
+    "commands/init_physics_command",
  
 // MEDIATORS
     "mediators/player_mediator",
@@ -89,6 +90,7 @@ define([
         player_interact_with_backdrop,
         player_death_command,
         create_building_command,
+        init_physics_command,
         // MEDIATORS
         player_mediator,
         game_mediator,
@@ -173,6 +175,7 @@ define([
                     this.commands.add("player_interact_with_backdrop", berghain2.PlayerInteractWithBackdropCommand);
                     this.commands.add("player_death", berghain2.PlayerDeathCommand);
                     this.commands.add("create_building", berghain2.CreateBuildingCommand);
+                    this.commands.add("init_physics", berghain2.InitPhysicsCommand);
 
                     // Model
                     this.injector.mapClass('state_model', berghain2.StateModel, true);

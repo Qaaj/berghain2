@@ -28,7 +28,6 @@
             target.body.allowGravity = false;
             target.body.collideWorldBounds = false;
 		}
- 
 
 		dispatcher.addEventListener('register_interactable_background_object', function (event) {
             that.interactable_background_objects.push(event.params);

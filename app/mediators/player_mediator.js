@@ -9,19 +9,13 @@
         // Add the player variable to our physics model
         physics_model.player = target;
 
-        // THIS HAS TO HAPPEN SOMEWHERE ELSE
-        game.physics.arcade.gravity.y = 2500;
-        game.physics.enable(target, Phaser.Physics.ARCADE);
+        
 
-        target.body.collideWorldBounds = true;
+        dispatcher.dispatch("init_physics");
 
-        // Change the dimensions of the body bounding box
-        target.body.setSize(target.body.width - 60, target.body.height, 30, 1);
+// THIS HAS TO HAPPEN SOMEWHERE ELSE
+        
 
-        target.animations.add('left', [30, 31, 32, 33, 34, 35, 36, 37], 10, true);
-        target.animations.add('right', [10, 11, 12, 13, 14, 15, 16, 17], 10, true);
-        target.animations.add('walk_down', [40, 41, 42, 43, 44, 45, 46, 47], 10, false);
-        target.animations.add('go_inside', [40, 41], 10, false);
 
         var physics_state = state_model.currentState;
 
