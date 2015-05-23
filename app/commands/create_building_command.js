@@ -17,7 +17,6 @@
             createBackground();
            
             // http://www.gamedevacademy.org/html5-phaser-tutorial-top-down-games-with-tiled/
-
             // Add the tilemap 'building' to the gme
             map = game.add.tilemap('building');
 
@@ -115,14 +114,8 @@
         }
 
         function createPlayer() {
-            // Create the player 
-            var player = game.add.sprite(player_model.xPosition, player_model.yPosition, 'punker');
-            player.name = "Punker";
-
-            // Attach the mediator to the player
-            mediators.create(berghain2.PlayerMediator, player);
+            dispatcher.dispatch("create_player");
         }
-
     };
 
 })(window.berghain2 = window.berghain2 || {});

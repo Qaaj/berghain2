@@ -9,18 +9,24 @@
         this.execute = function(event) {
             lo.g("COMMAND", "Init physics command");
 
-            player = physics_model.player;
 
-            var dispatchedMessage = event.params;
-            //var id = dispatchedMessage.text.toLowerCase();
 
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            game.physics.enable(event.params, Phaser.Physics.ARCADE);
             game.physics.arcade.gravity.y = 2500;
-            game.physics.enable(player, Phaser.Physics.ARCADE);
+            
+            //game.physics.arcade.enableBody(event.params);
 
-            player.body.collideWorldBounds = true;
+            player = event.params;
+
+            lo.g("COMMAND", " PLAYER = " + player);
+            lo.g("COMMAND", " PLAYER BODY = " + player.body);
 
             // Change the dimensions of the body bounding box
             player.body.setSize(player.body.width - 60, player.body.height, 30, 1);
+            player.body.collideWorldBounds = true;
+           
+            player = physics_model.player;
 
             player.animations.add('left', [30, 31, 32, 33, 34, 35, 36, 37], 10, true);
             player.animations.add('right', [10, 11, 12, 13, 14, 15, 16, 17], 10, true);

@@ -1,28 +1,31 @@
-(function (berghain2) {
+(function(berghain2) {
 
     'use strict';
 
-    berghain2.PlayerInteractWithBackdropCommand = function (dispatcher, lo, config, game, input, state_model, message_type, message_model) {
+    berghain2.PlayerInteractWithBackdropCommand = function(dispatcher, lo, config, game, input, state_model, message_type, message_model) {
 
-        this.execute = function (event) {
+        var interactedWithObject;
+
+        this.execute = function(event) {
 
             dispatcher.dispatch("destroy_player_notification");
 
             var target = event.params.target;
             var type = event.params.object.type;
+            interactedWithObject = event.params.object;
 
-            if (type == "DOOR") {                
+            if (type == "DOOR") {
                 target.animations.play('go_inside');
                 target.alpha = 1;
                 game.add.tween(target).to({
                     alpha: 0
-                }, 500, Phaser.Easing.Linear.None, true, 250).onComplete.add(function () {
+                }, 500, Phaser.Easing.Linear.None, true, 250).onComplete.add(function() {
 
                     lo.g("APPLICATION", "Switch to INSIDE BUILDING - state");
                     game.state.start('InBuilding');
                     dispatcher.dispatch("change_player_state", {
                         type: "PHYSICS",
-                        state: state_model.PLAYER_GROUND
+                        state: state_model.PLAYER_INSIDE
                     });
 
                     game.add.tween(target).to({
@@ -41,7 +44,7 @@
                 game.add.tween(target).to({
                     alpha: 0,
                     x: target.x + 20
-                }, 500, Phaser.Easing.Linear.None, true, 250).onComplete.add(function () {
+                }, 500, Phaser.Easing.Linear.None, true, 250).onComplete.add(function() {
 
                     lo.g("APPLICATION", "Switch to INSIDE BUILDING - state");
                     game.state.start('InUbahn');
@@ -65,27 +68,31 @@
                 target.frame = 40
 
                 showPlayerNotification("npc");
-                
+
                 dispatcher.dispatch("change_player_state", {
                     type: "PHYSICS",
                     state: state_model.PLAYER_ZOMBIE
                 });
-            }
 
-            setTimeout(function () {
+                showResponse();
+            }
+        }
+
+        function showResponse() {
+            setTimeout(function() {
 
                 var txt = "...";
 
-                if (event.params.object.npc.target.name == "cop") {
+                if (interactedWithObject.npc.target.name == "cop") {
                     txt = "Keep your distance";
                     console.log(event.params.object.npc);
                     event.params.object.npc.doAction("Keep your distance");
                 }
 
-                if (event.params.object.npc.target.name == "smoker") txt = "...";
-                if (event.params.object.npc.target.name == "weirdo") txt = "burp";
-            
-                showPlayerNotification(event.params.object.npc.target.name);
+                if (interactedWithObject.npc.target.name == "smoker") txt = "...";
+                if (interactedWithObject.npc.target.name == "weirdo") txt = "burp";
+
+                showPlayerNotification(interactedWithObject.npc.target.name);
 
                 dispatcher.dispatch("change_player_state", {
                     type: "PHYSICS",
@@ -94,11 +101,14 @@
             }, 1000);
         }
 
-         function showPlayerNotification(interactableTargetName) {
-            
+        function showPlayerNotification(interactableTargetName) {
+
             var jsonTextKey = "interactable.npc." + interactableTargetName.toLowerCase() + ".greet";
-            
-            var message = { text: jsonTextKey, messageType: message_type.LOCK_ON_PLAYER };
+
+            var message = {
+                text: jsonTextKey,
+                messageType: message_type.LOCK_ON_PLAYER
+            };
             dispatcher.dispatch("show_player_notification", message);
         }
     };

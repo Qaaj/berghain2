@@ -6,18 +6,12 @@
 
         lo.g("MEDIATOR", "Player mediator instantiated", target);
 
+        console.log(">>> player = " + this.body);
+
         // Add the player variable to our physics model
-        physics_model.player = target;
+        //physics_model.player = this;
 
-        
-
-        dispatcher.dispatch("init_physics");
-
-// THIS HAS TO HAPPEN SOMEWHERE ELSE
-        
-
-
-        var physics_state = state_model.currentState;
+        var currentState = state_model.currentState;
 
         dispatcher.dispatch('camera_target', {
             'target': target
@@ -25,12 +19,12 @@
 
         var handleChangePlayerState = function(event){
             if (event.params.type == "PHYSICS") {
-                    physics_state = event.params.state;
+                    currentState = event.params.state;
                 }
         }
 
         var handleGameUpdate = function(event){
-            physics_state.update(target);
+            currentState.update(target);
 
                 player_model.xPosition = target.body.x;
                 player_model.yPosition = target.body.y;
@@ -53,6 +47,8 @@
             dispatcher.removeEventListener('change_player_state',handleChangePlayerState);
             dispatcher.removeEventListener('game_update',handleGameUpdate);
             dispatcher.removeEventListener('game_render',handleGameRender);
+
+            //physics_model.player = null;
         }
 
         target.events.onDestroy.add(destroy, this);

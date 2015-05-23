@@ -1,45 +1,66 @@
 (function(berghain2) {
 
-	'use strict';
+    'use strict';
 
-	var PhysicsModel = function(dispatcher,input,lo,config,game) {
+    var PhysicsModel = function(dispatcher, input, lo, config, game) {
 
-		lo.g("MODEL","Physics Model Initiated");
+        lo.g("MODEL", "Physics Model Initiated");
 
-		// Variables
-		this.environment = {};
-		this.player = {};
-		this.interactable = {};
-		
-		// Player physics
-		this.player_jump_allowed = true;
+        // Variables
+        this.environment = {};
 
-		// Helper variables
-		this.ground_height = 0;
-		this.interactable_background_objects = [];
+        // Properties
+        var _player = {};
+        Object.defineProperty(this, "player", {
 
-		// Helper functions
-		var that = this;
+            get: function player() {
+                return _player;
+            },
 
-		this.makeImmovable = function(target){
-			// lo.g("PHYSICS","Making object immovable: " + target.name)
-			game.physics.enable(target, Phaser.Physics.ARCADE);
-			target.body.immovable = true;
+            set: function player(value) {
+                lo.g("MODEL", "PhysIcsModel: PLAYER BODY WAS SET: " + value.body);
+
+                _player = value;
+
+                dispatcher.dispatch("init_physics", value);
+            },
+
+            configurable: true,
+            enumerable: false
+        });
+
+        this.interactable = {};
+
+        // Player physics
+        this.player_jump_allowed = true;
+
+        // Helper variables
+        this.ground_height = 64;
+        this.interactable_background_objects = [];
+
+        // Helper functions
+        var that = this;
+
+        this.makeImmovable = function(target) {
+            // lo.g("PHYSICS","Making object immovable: " + target.name)
+            game.physics.enable(target, Phaser.Physics.ARCADE);
+
+            target.body.immovable = true;
             target.body.allowGravity = false;
             target.body.collideWorldBounds = false;
-		}
+        }
 
-		dispatcher.addEventListener('register_interactable_background_object', function (event) {
+        dispatcher.addEventListener('register_interactable_background_object', function(event) {
             that.interactable_background_objects.push(event.params);
         });
 
-        this.reset = function(){
-        	this.environment = {};
-        	this.player = {};
+        this.reset = function() {
+            this.environment = {};
+            this.player = {};
         }
-       
-	};
-	
-	berghain2.PhysicsModel = PhysicsModel;
+
+    };
+
+    berghain2.PhysicsModel = PhysicsModel;
 
 })(window.berghain2 = window.berghain2 || {});

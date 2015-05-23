@@ -25,6 +25,7 @@ define([
     "commands/player_death_command",
     "commands/create_building_command",
     "commands/init_physics_command",
+    "commands/create_player_command",
  
 // MEDIATORS
     "mediators/player_mediator",
@@ -91,6 +92,7 @@ define([
         player_death_command,
         create_building_command,
         init_physics_command,
+        create_player_command,
         // MEDIATORS
         player_mediator,
         game_mediator,
@@ -176,7 +178,7 @@ define([
                     this.commands.add("player_death", berghain2.PlayerDeathCommand);
                     this.commands.add("create_building", berghain2.CreateBuildingCommand);
                     this.commands.add("init_physics", berghain2.InitPhysicsCommand);
-
+                    this.commands.add("create_player", berghain2.CreatePlayerCommand);
                     // Model
                     this.injector.mapClass('state_model', berghain2.StateModel, true);
                     this.injector.mapClass('player_model', berghain2.PlayerModel, true);
