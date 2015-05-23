@@ -102,14 +102,12 @@
             }
         }
 
-        function createFloor() {
+        function createFloor() {            
             var env = physics_model.environment;
 
             var numTiles = 40; //Math.round(window.innerWidth/128);
 
             for (var i = 0; i < numTiles; i++) {
-
-
                 var block = env.create(i * 128, window.innerHeight - physics_model.ground_height, 'ground', Math.floor(Math.random() * 4));
                 block.name = "Ground Block #" + i;
 

@@ -12,7 +12,7 @@
         var interaction_object;
         var speed;
 
-        this.update = function (target) {
+        this.update = function (target) {            
             // 1. Check if the player can interact with any object at his current position
             this.checkForInteractionWithBackdropObject(target);
 
@@ -28,7 +28,7 @@
         }
 
         this.doCollisionWithEnvironment = function (target) {
-            game.physics.arcade.collide(target, physics_model.environment);
+           // game.physics.arcade.collide(target, physics_model.environment);
         }
 
         this.checkForInteractionWithBackdropObject = function (target) {
@@ -78,17 +78,34 @@
         }
 
         this.updatePlayerPosition = function (target) {
-
+            
+            
             speed = 200;
+            
             if (input.sprint) speed = 1000;
 
             if (input.goLeft) {
                 target.animations.play('left');
                 target.body.velocity.x = -1 * speed;
             }
+            
             if (input.goUp) {
-                if (physics_model.player_jump_allowed) target.body.velocity.y = -600 - (speed / 2);
+                console.log("> update position");
+                
+                console.log("upp");
+                target.body.velocity.y = -1 * speed;
+                target.frame = 40;
+                
+                //if (physics_model.player_jump_allowed) target.body.velocity.y = -600 - (speed / 2);
             }
+            
+             if (input.goDown) {
+                target.body.y = 1 * speed;
+                target.frame = 40;
+                
+                //if (physics_model.player_jump_allowed) target.body.velocity.y = -600 - (speed / 2);
+            }
+            
             if (input.goRight) {
                 target.animations.play('right');
                 target.body.velocity.x = 1 * speed;
@@ -110,6 +127,7 @@
             }
 
             if (!input.goLeft && !input.goRight && !input.actionButton) {
+                target.body.velocity.y = 0;
                 target.body.velocity.x = 0;
                 target.animations.stop();
                 target.frame = 2;

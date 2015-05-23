@@ -2,7 +2,7 @@
 
     'use strict';
 
-    berghain2.InitPhysicsCommand = function(lo, config, game, player_model, physics_model) {
+    berghain2.InitPhysicsCommand = function(lo, config, game, state_model, physics_model) {
 
         var player;
 
@@ -11,14 +11,14 @@
 
             player = physics_model.player;
 
-            //console.log("> init player sprite physics: " + player.name);
-
             game.physics.startSystem(Phaser.Physics.ARCADE);
-            game.physics.arcade.gravity.y = 2500;
-     
-
+            
+             if ( state_model.currentState.name == berghain2.StateModel.PLAYER_INSIDE){
+                  game.physics.arcade.gravity.y = 0;
+            } else{
+                  game.physics.arcade.gravity.y = 2500;
+            }           
         }
-
     };
 
 })(window.berghain2 = window.berghain2 || {});

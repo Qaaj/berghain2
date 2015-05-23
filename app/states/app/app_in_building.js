@@ -15,16 +15,13 @@
         }
 
         this.create = function (target) {     
-            var pushtext = game.add.bitmapText(game.width/2, game.height/2, "carrier_command", text_model.localise("building.welcome"), 12);
-            
-            pushtext.updateText();
-            pushtext.x -= (pushtext.width / 2);
-
             dispatcher.dispatch("create_building");
         }
 
         this.update = function (target) {
-          if (input.isAnyButtonPressed) {                
+          dispatcher.dispatch('game_update');
+            
+          if (input.goUp) {                
                 game.state.start('Playing'); 
             }
         }

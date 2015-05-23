@@ -44,8 +44,6 @@
             dispatcher.removeEventListener('change_player_state', handleChangePlayerState);
             dispatcher.removeEventListener('game_update', handleGameUpdate);
             dispatcher.removeEventListener('game_render', handleGameRender);
-
-            //physics_model.player = null;
         }
 
         target.events.onDestroy.add(destroy, this);

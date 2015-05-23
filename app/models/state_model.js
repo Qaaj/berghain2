@@ -7,7 +7,7 @@
         this.PLAYER_JUMP = new berghain2.Player_Jump(dispatcher, input, lo, config, this, game, physics_model);
         this.PLAYER_GROUND = new berghain2.Player_Ground(dispatcher, input, lo, config, this, game, physics_model, message_type);
         this.PLAYER_ZOMBIE = new berghain2.Player_Zombie(dispatcher, input, lo, config, this, game, physics_model);
-        this.PLAYER_INSIDE = new berghain2.Player_Ground(dispatcher, input, lo, config, this, game, physics_model, message_type);
+        this.PLAYER_INSIDE = new berghain2.Player_Inside(dispatcher, input, lo, config, this, game, physics_model, message_type);
 
         this.currentState = this.PLAYER_GROUND;
     	

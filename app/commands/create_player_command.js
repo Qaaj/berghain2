@@ -7,8 +7,18 @@
 
             var player = game.add.sprite(player_model.xPosition, player_model.yPosition, 'punker');
             player.name = "Punker";
-            game.physics.enable(player, Phaser.Physics.ARCADE);
-
+            
+            console.log("> Currentstate = " + state_model.currentState.name);
+            
+            game.physics.enable(player, Phaser.Physics.ARCADE);   
+             
+            if ( state_model.currentState.name == state_model.PLAYER_INSIDE.name){
+                lo.g("COMMAND", "Player created inside building, disabling gravity");
+                
+                player.body.allowGravity = false;
+                game.physics.arcade.gravity.y = 0;
+            } 
+                        
              // Change the dimensions of the body bounding box
         	player.body.setSize(player.body.width - 60, player.body.height, 30, 1);
         	player.body.collideWorldBounds = true;
