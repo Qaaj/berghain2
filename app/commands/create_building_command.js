@@ -43,6 +43,12 @@
             console.log("> Playerstart x = " + playerStart[0].x);
             console.log("> Playerstart y = " + playerStart[0].y);
 
+            var x = playerStart[0].x;
+            var y = playerStart[0].y;
+
+            var player = game.add.sprite(x, y, 'punker');
+            //game.physics.arcade.disable(player);
+
             var pickupsGroup = game.add.group();
             pickupsGroup.enableBody = true;
 
@@ -53,6 +59,8 @@
 
                 console.log("> Pickup x = " + element.x);
                 console.log("> Pickup y = " + element.y);
+
+                createFromTiledObject(element, pickupsGroup);
             });
 
             var wallsGroup = game.add.group();
@@ -76,6 +84,8 @@
         }
 
         function createFromTiledObject(element, group) {
+            console.log("> Create sprite from Tiled object");
+
             var sprite = group.create(element.x, element.y, element.properties.sprite);
 
             //copy all Tiled properties to the sprite
