@@ -12,14 +12,11 @@
 
             lo.g("COMMAND", "Creating World");
 
-            physics_model.ground_height = 64;
-
-            initGamePhysics();
+            //initGamePhysics();
 
             createWorld();
         
             createBackground();
-
 
             var env = game.add.group();
             env.enableBody = true;
@@ -29,34 +26,19 @@
             // CREATE BACKGROUND COLISSION GROUP
             createFloor();
            
-
-           
-
             // CREATE INTERACTABLE GROUP
             interactableGroup = game.add.group();
             interactableGroup.enableBody = true;
             //physics_model.makeImmovable(interactableGroup);
             physics_model.interactable = interactableGroup;
 
-
             createCamera();
-
-
-
-
             createBackdrop();
-  
             createCamera();
-           
-
             createSky();
-
             createNPCs();
-
             createPlaces();
-
             createPlayer();
-
             createEnemies();
 
             dispatcher.dispatch('create_hud');
@@ -69,14 +51,13 @@
 
         function createCamera() {
             // Define world bounds
-            mediators.create(berghain2.CameraMediator, game.camera);
-           
+            mediators.create(berghain2.CameraMediator, game.camera);  
         }
 
-        function initGamePhysics() {
+        /*function initGamePhysics() {
             //  We're going to be using physics, so enable the Arcade Physics system
             game.physics.startSystem(Phaser.Physics.ARCADE);
-        }
+        }*/
 
         function createBackdrop() {
             dispatcher.dispatch("create_backdrop");
@@ -84,7 +65,7 @@
 
         function createNPCs() {
             var npc = game.add.sprite(window.innerWidth - 370, window.innerHeight - 64 - 96, 'npc');
-            console.log(npc.name);
+            npc.name = "NPC";
             mediators.create(berghain2.NPCMediator, npc);
         }
 
@@ -105,7 +86,6 @@
             // Background
             game.stage.backgroundColor = 0x333333;
 
-
             var bmd = game.add.bitmapData(game.world.bounds.width, window.innerHeight);
 
             bmd.addToWorld();
@@ -123,9 +103,6 @@
         }
 
         function createFloor() {
-
-            // Floor
-
             var env = physics_model.environment;
 
             var numTiles = 40; //Math.round(window.innerWidth/128);
@@ -138,12 +115,9 @@
 
                 physics_model.makeImmovable(block);
             }
-
         }
 
         function createSky() {
-            // Add moon 
-
             game.add.sprite(window.innerWidth - 200, 50, 'moon');
 
             // Add cloud
@@ -151,14 +125,8 @@
         }
 
         function createPlayer() {
-            // Create the player 
-            var player = game.add.sprite(player_model.xPosition, player_model.yPosition, 'punker');
-            player.name = "Punker";
-
-            // Attach the mediator to the player
-            mediators.create(berghain2.PlayerMediator, player);
+            dispatcher.dispatch("create_player");   
         }
-
     };
 
 })(window.berghain2 = window.berghain2 || {});

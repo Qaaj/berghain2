@@ -2,7 +2,7 @@
 
     'use strict';
 
-    var InBuilding = function (game, input, text_model) {
+    var InBuilding = function (game, input, text_model, dispatcher) {
 
         this.name = "InBuilding boot state";
 
@@ -18,7 +18,9 @@
             var pushtext = game.add.bitmapText(game.width/2, game.height/2, "carrier_command", text_model.localise("building.welcome"), 12);
             
             pushtext.updateText();
-            pushtext.x -= (pushtext.width / 2)
+            pushtext.x -= (pushtext.width / 2);
+
+            dispatcher.dispatch("create_building");
         }
 
         this.update = function (target) {
