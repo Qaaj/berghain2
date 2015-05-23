@@ -28,12 +28,12 @@
         }
 
         this.doCollisionWithEnvironment = function (target) {
-           // game.physics.arcade.collide(target, physics_model.environment);
+           game.physics.arcade.collide(target, physics_model.environment);
         }
 
         this.checkForInteractionWithBackdropObject = function (target) {
 
-            interaction_object = {};
+           /* interaction_object = {};
             inFrontOfObject = false;
     
             for (var i = 0; i < physics_model.interactable_background_objects.length; i++) {
@@ -54,7 +54,7 @@
                 }
             }
             
-           DestroyPlayerNotificationWhenPlayerIsNotInFrontOfObject();   
+           DestroyPlayerNotificationWhenPlayerIsNotInFrontOfObject();   */
         }
         
         function DestroyPlayerNotificationWhenPlayerIsNotInFrontOfObject(){
@@ -93,14 +93,14 @@
                 console.log("> update position");
                 
                 console.log("upp");
-                target.body.velocity.y = -1 * speed;
+                target.body.velocity.y = -5 * speed;
                 target.frame = 40;
                 
                 //if (physics_model.player_jump_allowed) target.body.velocity.y = -600 - (speed / 2);
             }
             
              if (input.goDown) {
-                target.body.y = 1 * speed;
+                target.body.velocity.y = 1 * speed;
                 target.frame = 40;
                 
                 //if (physics_model.player_jump_allowed) target.body.velocity.y = -600 - (speed / 2);
@@ -126,7 +126,7 @@
                 }
             }
 
-            if (!input.goLeft && !input.goRight && !input.actionButton) {
+            if (!input.isAnyButtonPressed) {
                 target.body.velocity.y = 0;
                 target.body.velocity.x = 0;
                 target.animations.stop();

@@ -57,6 +57,8 @@
         this.reset = function() {
             this.environment = {};
             this.player = {};
+            
+            this.interactable_background_objects = [];
         }
 
     };

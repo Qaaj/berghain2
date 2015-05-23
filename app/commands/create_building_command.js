@@ -11,7 +11,7 @@
 
         this.execute = function(event) {
             lo.g("COMMAND", "Creating Building");
-            
+               
             /* dispatcher.dispatch("change_player_state", {
                         type: "PHYSICS",
                         state: state_model.PLAYER_INSIDE

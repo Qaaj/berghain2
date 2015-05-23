@@ -22,8 +22,8 @@
           dispatcher.dispatch('game_update');
             
           if (input.goUp) {                
-                game.state.start('Playing'); 
-            }
+              game.state.start('Playing'); 
+          }
         }
 
         this.shutdown = function (target) {

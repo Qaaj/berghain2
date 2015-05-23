@@ -14,8 +14,8 @@
 
             game.state.add('Boot', bootState);
             game.state.add('Playing', playState);
-            game.state.add('InBuilding', buildingState)
-            game.state.add('InUbahn', ubahnState)
+            game.state.add('InBuilding', buildingState);
+            game.state.add('InUbahn', ubahnState);
 
             if (config.skipIntro) {
                 game.state.start('Playing');
