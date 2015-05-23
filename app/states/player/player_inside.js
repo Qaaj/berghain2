@@ -78,37 +78,34 @@
         }
 
         this.updatePlayerPosition = function (target) {
-            
-            
             speed = 200;
             
-            if (input.sprint) speed = 1000;
+            if (input.sprint) {
+                speed = 500;
+            }
 
             if (input.goLeft) {
+                target.body.velocity.y = 0;
+                
                 target.animations.play('left');
                 target.body.velocity.x = -1 * speed;
+            }else if (input.goRight) {
+                target.body.velocity.y = 0;
+                
+                target.animations.play('right');
+                target.body.velocity.x = 1 * speed;
             }
             
             if (input.goUp) {
-                console.log("> update position");
+                target.body.velocity.x = 0;
                 
-                console.log("upp");
-                target.body.velocity.y = -5 * speed;
+                target.body.velocity.y = -1 * speed;
                 target.frame = 40;
+            }else if (input.goDown) {
+                target.body.velocity.x = 0;
                 
-                //if (physics_model.player_jump_allowed) target.body.velocity.y = -600 - (speed / 2);
-            }
-            
-             if (input.goDown) {
                 target.body.velocity.y = 1 * speed;
-                target.frame = 40;
-                
-                //if (physics_model.player_jump_allowed) target.body.velocity.y = -600 - (speed / 2);
-            }
-            
-            if (input.goRight) {
-                target.animations.play('right');
-                target.body.velocity.x = 1 * speed;
+                target.frame = 2;
             }
 
             if (input.actionButton && !(input.goRight || input.goLeft)) {
@@ -122,7 +119,6 @@
 
                 } else {
                     target.frame = 40;
-
                 }
             }
 

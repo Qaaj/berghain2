@@ -4,6 +4,8 @@
 
     berghain2.InputNormal = function (game, dispatcher, lo) {
 
+        console.log("------------------------ INPUT ONRMAL ------------------------");
+
         //public variables
         this.goLeft = false;
         this.goRight = false;
@@ -23,14 +25,9 @@
         lo.g("USER", "game.input.gamepad.active: " + game.input.gamepad.active);
         lo.g("USER", "pad1.connected: " + pad1.connected);
 
-        this.update = function () {
-            console.log("> RUNNING");
-            
-            
+        this.update = function () {                        
             // ACTIVATE ITEM
             if (inputs.up.isDown) {
-                console.log("--- UP ---");
-                
                 this.actionButton = true;
             } else {
                 this.actionButton = false;
@@ -51,7 +48,7 @@
             }
             
             // SPRINT
-            if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)) {
+            if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)) {                
                 this.sprint = true;
             } else {
                 this.sprint = false;

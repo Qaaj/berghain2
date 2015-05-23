@@ -15,6 +15,8 @@
         }
 
         this.create = function (target) {
+             input.currentInput = input.INPUT_NORMAL;
+             
             var pushtext = game.add.bitmapText(game.width / 2, game.height / 2, "carrier_command", text_model.localise("building.ubahn.welcome"), 12);
             pushtext.updateText();
             pushtext.x -= (pushtext.width / 2)

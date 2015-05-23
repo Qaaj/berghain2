@@ -29,7 +29,7 @@
             this.goDown = this.currentInput.goDown;
             
             // EXTRA
-            this.sprint = this.currentInput.Sprint;
+            this.sprint = this.currentInput.sprint;
             this.actionButton = this.currentInput.actionButton;
             
             this.isAnyButtonPressed = this.goLeft ||  this.goRight ||  this.goUp ||  this.goDown || this.actionButton || this.sprint;

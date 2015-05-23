@@ -77,10 +77,13 @@
             }
         }
 
-        this.updatePlayerPosition = function (target) {
-
+        this.updatePlayerPosition = function (target) {            
             speed = 200;
-            if (input.sprint) speed = 1000;
+            
+            if (input.sprint) {
+                console.log("sprinting");
+                speed = 1000;
+            }
 
             if (input.goLeft) {
                 target.animations.play('left');

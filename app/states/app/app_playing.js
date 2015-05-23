@@ -15,7 +15,9 @@
             
         }
 
-        this.create = function (target) {            
+        this.create = function (target) {        
+            input.currentInput = input.INPUT_NORMAL;
+                
             dispatcher.dispatch('create_world');
         }
 

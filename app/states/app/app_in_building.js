@@ -14,17 +14,15 @@
 
         }
 
-        this.create = function (target) {                  
+        this.create = function (target) {           
+            input.currentInput = input.INPUT_TOP_DOWN;
+                   
             dispatcher.dispatch("create_building");
         }
 
         this.update = function (target) {  
           input.update();          
           dispatcher.dispatch('game_update');
-            
-          if (input.goUp) {                
-              game.state.start('Playing'); 
-          }
         }
 
         this.shutdown = function (target) {
