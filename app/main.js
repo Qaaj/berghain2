@@ -65,6 +65,8 @@ define([
     "states/player/player_jump",
     "states/player/player_zombie",
     "states/player/player_inside",
+    "states/input/input_normal",
+    "states/input/input_topdown",
 
 // OTHER
     "util/log",
@@ -127,6 +129,8 @@ define([
         player_jump_state,
         player_zombie_state,
         player_inside_state,
+        input_normal_state,
+        input_topdown_state,
         // STATES
         app_boot,
         app_playing,
@@ -151,8 +155,6 @@ define([
                     soma.Application.call(this);
                 },
                 init: function () {
-
-           
 
                     // Misc class
                     this.injector.mapClass('lo', berghain2.Log, true);

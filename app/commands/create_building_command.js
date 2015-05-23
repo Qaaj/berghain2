@@ -2,7 +2,7 @@
 
     'use strict';
 
-    berghain2.CreateBuildingCommand = function(dispatcher, mediators, lo, config, game, input, physics_model, player_model, state_model, text_model) {
+    berghain2.CreateBuildingCommand = function(dispatcher, injector, lo, config, game, input, physics_model, player_model, state_model, text_model) {
         var map;
 
         var backgroundLayer;
@@ -11,7 +11,7 @@
 
         this.execute = function(event) {
             lo.g("COMMAND", "Creating Building");
-               
+                        
             /* dispatcher.dispatch("change_player_state", {
                         type: "PHYSICS",
                         state: state_model.PLAYER_INSIDE

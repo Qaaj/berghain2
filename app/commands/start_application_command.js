@@ -10,7 +10,6 @@
 
             lo.g("APPLICATION", "Application Starting with seed: " + seed);
 
-
             injector.mapValue("game", new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.CANVAS, '', {
                 preload: function() {
                     dispatcher.dispatch('preload_assets');

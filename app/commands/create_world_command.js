@@ -11,24 +11,13 @@
             rnd.resetSeedGenerator();
 
             lo.g("COMMAND", "Creating World");
-
-            //initGamePhysics();
-
+            
             createWorld();
-        
-            createBackground();
-
-            var env = game.add.group();
-            env.enableBody = true;
-            physics_model.environment = env;
-
-
-            // CREATE BACKGROUND COLISSION GROUP
-            createFloor();
-           
+                       
             // CREATE INTERACTABLE GROUP
             interactableGroup = game.add.group();
             interactableGroup.enableBody = true;
+            
             //physics_model.makeImmovable(interactableGroup);
             physics_model.interactable = interactableGroup;
 
@@ -45,20 +34,23 @@
         }
 
         function createWorld() {
-            //game.world.setBounds(0, 0, game.width, 3000);
             game.world.setBounds(0, 0, 5120, 3000);
+            
+            createBackground();
+
+            var env = game.add.group();
+            env.enableBody = true;
+            physics_model.environment = env;
+
+            // CREATE BACKGROUND COLISSION GROUP
+            createFloor();
         }
 
         function createCamera() {
             // Define world bounds
             mediators.create(berghain2.CameraMediator, game.camera);  
         }
-
-        /*function initGamePhysics() {
-            //  We're going to be using physics, so enable the Arcade Physics system
-            game.physics.startSystem(Phaser.Physics.ARCADE);
-        }*/
-
+ 
         function createBackdrop() {
             dispatcher.dispatch("create_backdrop");
         }
@@ -78,7 +70,7 @@
         function createEnemies() {
            
             var bin2 = game.add.sprite(window.innerWidth - 500, window.innerHeight - physics_model.ground_height - 48, 'fire_bin');
-            bin2.name = "Fire Bin 1"
+            bin2.name = "Fire Bin 1";
             mediators.create(berghain2.FireBinMediator, bin2);
         }
 
