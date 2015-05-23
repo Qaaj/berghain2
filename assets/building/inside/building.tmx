@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="120" tilewidth="16" tileheight="16" nextobjectid="3">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="120" tilewidth="16" tileheight="16" nextobjectid="5">
  <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16">
-  <image source="tiles.png" width="48" height="16"/>
+  <image source="tiles.png" width="64" height="16"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="floor"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="type" value="playerStart"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="backgroundLayer" width="100" height="120">
   <data encoding="csv">
@@ -128,6 +143,9 @@
 </data>
  </layer>
  <layer name="blockedLayer" width="100" height="120">
+  <properties>
+   <property name="type" value="wall"/>
+  </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -251,5 +269,17 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="objectsLayer"/>
+ <objectgroup name="objectsLayer">
+  <object id="3" name="playerStart" type="playerStart" gid="3" x="380.932" y="396.835">
+   <properties>
+    <property name="test" value="testWaarde"/>
+    <property name="type" value="playerStart"/>
+   </properties>
+  </object>
+  <object id="4" name="pickup" type="green" gid="4" x="387" y="272">
+   <properties>
+    <property name="type" value="pickup"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

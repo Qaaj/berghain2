@@ -16,6 +16,10 @@
          "height":120,
          "name":"blockedLayer",
          "opacity":1,
+         "properties":
+            {
+             "type":"wall"
+            },
          "type":"tilelayer",
          "visible":true,
          "width":100,
@@ -24,17 +28,50 @@
         }, 
         {
          "draworder":"topdown",
-         "height":10,
+         "height":0,
          "name":"objectsLayer",
-         "objects":[],
+         "objects":[
+                {
+                 "gid":3,
+                 "height":0,
+                 "id":3,
+                 "name":"playerStart",
+                 "properties":
+                    {
+                     "test":"testWaarde",
+                     "type":"playerStart"
+                    },
+                 "rotation":0,
+                 "type":"playerStart",
+                 "visible":true,
+                 "width":0,
+                 "x":380.932,
+                 "y":396.835
+                }, 
+                {
+                 "gid":4,
+                 "height":0,
+                 "id":4,
+                 "name":"pickup",
+                 "properties":
+                    {
+                     "type":"pickup"
+                    },
+                 "rotation":0,
+                 "type":"green",
+                 "visible":true,
+                 "width":0,
+                 "x":387,
+                 "y":272
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
-         "width":10,
+         "width":0,
          "x":0,
          "y":0
         }],
- "nextobjectid":3,
+ "nextobjectid":5,
  "orientation":"orthogonal",
  "properties":
     {
@@ -47,7 +84,7 @@
          "firstgid":1,
          "image":"..\/building\/inside\/tiles.png",
          "imageheight":16,
-         "imagewidth":48,
+         "imagewidth":64,
          "margin":0,
          "name":"tiles",
          "properties":
@@ -56,6 +93,21 @@
             },
          "spacing":0,
          "tileheight":16,
+         "tileproperties":
+            {
+             "0":
+                {
+                 "type":"floor"
+                },
+             "1":
+                {
+                 "type":"wall"
+                },
+             "2":
+                {
+                 "type":"playerStart"
+                }
+            },
          "tilewidth":16
         }],
  "tilewidth":16,

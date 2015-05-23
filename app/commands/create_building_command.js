@@ -4,36 +4,64 @@
 
     berghain2.CreateBuildingCommand = function(dispatcher, mediators, lo, config, game, input, physics_model, player_model, rnd, camera_model) {
 
-        var interactableGroup;
+
+        var map;
+
+        var backgroundLayer;
+        var blockedLayer;
+        var objectsLayer;
 
         this.execute = function(event) {
             lo.g("COMMAND", "Creating Building");
 
-            createWorld();
             createBackground();
-            createFloor();
-            createPlayer();
-
-
+           
             // http://www.gamedevacademy.org/html5-phaser-tutorial-top-down-games-with-tiled/
-            game.map = game.add.tilemap('building');
+
+            // Add the tilemap 'building' to the gme
+            map = game.add.tilemap('building');
 
             //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
-            game.map.addTilesetImage('tiles', 'gameTiles');
+            map.addTilesetImage('tiles', 'gameTiles');
 
-            //create layer
-            game.backgroundlayer = game.map.createLayer('backgroundLayer');
-            game.blockedLayer = game.map.createLayer('blockedLayer');
+            // Create a layer from the JSON file
+            backgroundLayer = map.createLayer('backgroundLayer');
+            blockedLayer = map.createLayer('blockedLayer');
+            objectsLayer = map.createLayer('objectsLayer');
 
-            //collision on blockedLayer
-            game.map.setCollisionBetween(1, 2000, true, 'blockedLayer');
+            // Set the collision range. 1 is upper left of tiles in image
+            map.setCollisionBetween(1, 10, true, 'blockedLayer');
 
             //resizes the game world to match the layer dimensions
-            game.backgroundlayer.resizeWorld();
+            backgroundLayer.resizeWorld();
 
+            game.physics.enable(map);
+
+
+            var playerStart = findObjectsByType('playerStart', map, 'objectsLayer');
+
+            console.log("> Playerstart x = " + playerStart[0].x);
+            console.log("> Playerstart y = " + playerStart[0].y);
+
+            var pickupsGroup = game.add.group();
+            pickupsGroup.enableBody = true;
+
+            var pickups = findObjectsByType('pickup', map, 'objectsLayer');
+
+            pickups.forEach(function(element){
+                console.log("> Creating pickup");
+
+                console.log("> Pickup x = " + element.x);
+                console.log("> Pickup y = " + element.y);
+            });
+
+            var wallsGroup = game.add.group();
+            wallsGroup.enableBody = true;
         }
 
         function findObjectsByType(type, map, layer) {
+            console.log("Map = " + map.objects[layer]);
+
             var result = new Array();
             map.objects[layer].forEach(function(element) {
                 if (element.properties.type === type) {
@@ -56,11 +84,6 @@
             });
         }
 
-        function createWorld() {
-            //game.world.setBounds(0, 0, game.width, 3000);
-            //game.world.setBounds(0, 0, 5120, 3000);
-        }
-
         function createBackground() {
             // Background
             game.stage.backgroundColor = 0x333333;
@@ -79,24 +102,6 @@
 
                 y += 2;
             }
-        }
-
-        function createFloor() {
-            // Floor
-            /*var env = physics_model.environment;
-
-            var numTiles = 40; //Math.round(window.innerWidth/128);
-
-            for (var i = 0; i < numTiles; i++) {
-                var block = env.create(i * 128, window.innerHeight - physics_model.ground_height, 'ground', Math.floor(Math.random() * 4));
-                block.name = "Ground Block #" + i;
-
-                physics_model.makeImmovable(block);
-            }*/
-
-            var bmd = game.add.bitmapData(game.world.bounds.width, window.innerHeight);
-
-            bmd.addToWorld();
         }
 
         function createPlayer() {
