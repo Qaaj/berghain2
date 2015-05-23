@@ -6,10 +6,7 @@
 
         lo.g("MEDIATOR", "Player mediator instantiated", target);
 
-        console.log(">>> player = " + this.body);
-
-        // Add the player variable to our physics model
-        //physics_model.player = this;
+        console.log(">>> player = " + target.body);
 
         var currentState = state_model.currentState;
 
@@ -17,24 +14,24 @@
             'target': target
         });
 
-        var handleChangePlayerState = function(event){
+        var handleChangePlayerState = function(event) {
             if (event.params.type == "PHYSICS") {
-                    currentState = event.params.state;
-                }
+                currentState = event.params.state;
+            }
         }
 
-        var handleGameUpdate = function(event){
+        var handleGameUpdate = function(event) {
             currentState.update(target);
 
-                player_model.xPosition = target.body.x;
-                player_model.yPosition = target.body.y;
+            player_model.xPosition = target.body.x;
+            player_model.yPosition = target.body.y;
 
-                if (target.body.y > game.height) {
-                    player_model.health = 0;
-                }
+            if (target.body.y > game.height) {
+                player_model.health = 0;
+            }
         }
 
-        var handleGameRender = function(event){
+        var handleGameRender = function(event) {
             if (config.debug) game.debug.body(target);
         }
 
@@ -44,9 +41,9 @@
 
         var destroy = function() {
             lo.g("MEDIATOR", "player mediator is rekt");
-            dispatcher.removeEventListener('change_player_state',handleChangePlayerState);
-            dispatcher.removeEventListener('game_update',handleGameUpdate);
-            dispatcher.removeEventListener('game_render',handleGameRender);
+            dispatcher.removeEventListener('change_player_state', handleChangePlayerState);
+            dispatcher.removeEventListener('game_update', handleGameUpdate);
+            dispatcher.removeEventListener('game_render', handleGameRender);
 
             //physics_model.player = null;
         }
