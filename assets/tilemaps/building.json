@@ -39,27 +39,28 @@
                  "name":"playerStart",
                  "properties":
                     {
-                     "test":"testWaarde",
+                     "spriteName":"player_start",
                      "type":"playerStart"
                     },
                  "rotation":0,
                  "type":"playerStart",
                  "visible":true,
                  "width":16,
-                 "x":1220.59866666667,
-                 "y":783.168333333333
+                 "x":1220.6,
+                 "y":783.168
                 }, 
                 {
                  "gid":4,
                  "height":16,
                  "id":4,
-                 "name":"pickup",
+                 "name":"bottle",
                  "properties":
                     {
+                     "spriteName":"pickup_bottle",
                      "type":"pickup"
                     },
                  "rotation":0,
-                 "type":"green",
+                 "type":"pickup",
                  "visible":true,
                  "width":16,
                  "x":387,

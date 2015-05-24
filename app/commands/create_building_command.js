@@ -55,24 +55,29 @@
             createPlayer();
 
             var pickupsGroup = game.add.group();
+            pickupsGroup.name = "group_pickups";
             pickupsGroup.enableBody = true;
 
-           /* var pickups = findObjectsByType('pickup', map, 'objectsLayer');
+            var pickups = findObjectsByType('pickup', map, 'objectsLayer');
 
             pickups.forEach(function(element){
-                console.log("> Creating pickup");
+                var pickupSpriteData = createFromTiledObject(element, pickupsGroup);                
+                
+                console.log("> Creating pickup:");
+                console.log("> Pickup x = " + pickupSpriteData.x);
+                console.log("> Pickup y = " + pickupSpriteData.y);
+                console.log("> Pickup sprite name = " + pickupSpriteData.spriteName);
+                
+                pickupsGroup.create(pickupSpriteData.x, pickupSpriteData.y, pickupSpriteData.spriteName);                
+            });
+            
+            // DISABLE GRAVITY ON PICKUPSGROUP
+            pickupsGroup.forEach(function(pickup){
+                console.log("> Disabling gravity in pickups group item");
 
-                console.log("> Pickup x = " + element.x);
-                console.log("> Pickup y = " + element.y);
-
-                var pickupSprite = createFromTiledObject(element, pickupsGroup);
-                
-                console.log("> GAME = " + game);
-                
-                //pickupsGroup.create(pickupSprite.x, pickupSprite.y, 'pickup_bottle');
-                
-                game.add.sprite(element.x, element.y, 'pickup_bottle');
-            });*/
+                pickup.body.allowGravity = false;   
+            });
+            
 
             var wallsGroup = game.add.group();
             wallsGroup.enableBody = true;
@@ -100,14 +105,23 @@
         }
 
         function createFromTiledObject(element, group) {
-            console.log("> Create sprite from Tiled object");
+            var spriteNameInTiled =  element.properties['spriteName'];
+            
+            console.log("> Create sprite from Tiled object: " + spriteNameInTiled);
 
-            var sprite = group.create(element.x, element.y, element.properties.sprite);
-
+            var sprite = {};// = group.create(element.x, element.y, spriteNameInTiled);
+                
+            sprite.x = element.x;
+            sprite.y = element.y;
+            
             //copy all Tiled properties to the sprite
             Object.keys(element.properties).forEach(function(key) {
+                console.log("> Adding property to sprite " + key + ": " + element.properties[key] );
+                
                 sprite[key] = element.properties[key];
             });
+            
+            return sprite;
         }
 
         function createBackground() {
