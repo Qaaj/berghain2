@@ -14,18 +14,19 @@
 
         }
 
-        this.create = function (target) { 
-            console.log("scheisssssse " + text_model);
-                
-            var pushtext = game.add.bitmapText(game.width/2, game.height/2, "carrier_command", text_model.localise("building.ubahn.welcome"), 12);
+        this.create = function (target) {
+             input.currentInput = input.INPUT_NORMAL;
+             
+            var pushtext = game.add.bitmapText(game.width / 2, game.height / 2, "carrier_command", text_model.localise("building.ubahn.welcome"), 12);
             pushtext.updateText();
             pushtext.x -= (pushtext.width / 2)
-
         }
 
         this.update = function (target) {
-          if (input.isAnyButtonPressed) {                
-                game.state.start('Playing'); 
+            input.update();
+            
+            if (input.isAnyButtonPressed) {
+                game.state.start('Playing');
             }
         }
 
@@ -33,7 +34,7 @@
 
         }
 
-        this.render = function(target){
+        this.render = function (target) {
             // dispatcher.dispatch('game_render');
         }
 

@@ -14,19 +14,20 @@
 
         }
 
-        this.create = function (target) {            
-            var logo = game.add.sprite(game.width/2, game.height/2 - 150, 'logo');
-            logo.x -= (logo.width/2);
+        this.create = function (target) {
+            var logo = game.add.sprite(game.width / 2, game.height / 2 - 150, 'logo');
+            logo.x -= (logo.width / 2);
 
-            var pushtext = game.add.bitmapText(game.width/2, logo.y + logo.height + 50, "carrier_command", text_model.localise("actions.PushAnyKeyToStart"), 12);
+            var pushtext = game.add.bitmapText(game.width / 2, logo.y + logo.height + 50, "carrier_command", text_model.localise("actions.PushAnyKeyToStart"), 12);
             pushtext.updateText();
             pushtext.x -= (pushtext.width / 2)
-
         }
 
         this.update = function (target) {
-           if (input.isAnyButtonPressed) {                
-                game.state.start('Playing'); 
+            input.update();
+            
+            if (input.isAnyButtonPressed) {
+                game.state.start('Playing');
             }
         }
 
@@ -34,7 +35,7 @@
 
         }
 
-        this.render = function(target){
+        this.render = function (target) {
             // dispatcher.dispatch('game_render');
         }
 

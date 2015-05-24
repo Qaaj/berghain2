@@ -2,90 +2,37 @@
 
     'use strict';
 
-    var constructor = berghain2.Input = function (game, dispatcher, lo) {
-
-        //public variables
-        constructor.goLeft = false;
-        constructor.goRight = false;
-        constructor.goUp = false;
-        constructor.goDown = false;
-        constructor.sprint = false;
-
-        constructor.isAnyButtonPressed = false;
-        constructor.actionButton = false;
-
-        // Cursor keys
-        var inputs = game.input.keyboard.createCursorKeys();
-
-        // Gamepad keys
-        game.input.gamepad.start();
-        var pad1 = game.input.gamepad.pad1;
-
-        lo.g("USER", "game.input.gamepad.supported: " + game.input.gamepad.supported);
-        lo.g("USER", "game.input.gamepad.active: " + game.input.gamepad.active);
-        lo.g("USER", "pad1.connected: " + pad1.connected);
-
-        game.input.keyboard.onDownCallback = function (e) {
-                constructor.isAnyButtonPressed = true;
-        }
+    berghain2.Input = function (game, dispatcher, lo) {
         
-        game.input.keyboard.onUpCallback = function (e) {
-                constructor.isAnyButtonPressed = false;
+        this.INPUT_NORMAL = new berghain2.InputNormal(game, dispatcher, lo);
+        this.INPUT_TOP_DOWN = new berghain2.InputTopDown(game, dispatcher, lo);
+
+        this.currentInput = this.INPUT_NORMAL;
+        
+        //public variables
+        this.goLeft = false;
+        this.goRight = false;
+        this.goUp = false;
+        this.goDown = false;
+        this.sprint = false;
+
+        this.isAnyButtonPressed = false;
+        this.actionButton = false;
+  
+        this.update = function() {                      
+            this.currentInput.update();
+            
+            // MOVEMENT    
+            this.goLeft = this.currentInput.goLeft;
+            this.goRight = this.currentInput.goRight;
+            this.goUp = this.currentInput.goUp;
+            this.goDown = this.currentInput.goDown;
+            
+            // EXTRA
+            this.sprint = this.currentInput.sprint;
+            this.actionButton = this.currentInput.actionButton;
+            
+            this.isAnyButtonPressed = this.goLeft ||  this.goRight ||  this.goUp ||  this.goDown || this.actionButton || this.sprint;
         }
-
-        dispatcher.addEventListener('game_update', function (event) {
-            
-            // ACTIVATE ITEM
-            if(inputs.up.isDown){
-                constructor.actionButton = true;
-            }else{
-                constructor.actionButton = false;
-            }
-
-            // JUMP
-            if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) || pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_UP) || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) < -0.1) {
-                constructor.goUp = true;
-            } else {
-                constructor.goUp = false;
-            }
-
-            // DOWN
-            if (inputs.down.isDown || pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_DOWN) || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) > 0.1) {
-                constructor.goDown = true;
-            } else {
-                constructor.goDown = false;
-            }
-
-            if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)) {
-                constructor.sprint = true;
-            } else {
-                constructor.sprint = false;
-            }
-
-            
-
-            // LEFT
-            if (inputs.left.isDown || pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_LEFT) || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) {
-                constructor.goLeft = true;
-            } else {
-                constructor.goLeft = false;
-            }
-
-            // RIGHT
-            if (inputs.right.isDown || pad1.isDown(Phaser.Gamepad.XBOX360_DPAD_RIGHT) || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1) {
-                constructor.goRight = true;
-            } else {
-                constructor.goRight = false;
-            }
-        });
-
-
-
-        return constructor;
-
     };
-
-
-
-
 })(window.berghain2 = window.berghain2 || {});

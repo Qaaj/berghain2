@@ -13,10 +13,7 @@
         this.yPosition = 0;
 
         this.health = 100;
-
-        
         this.mana = 5;
-
     };
 
     PlayerModel.prototype = {

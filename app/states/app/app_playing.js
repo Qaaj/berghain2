@@ -15,11 +15,15 @@
             
         }
 
-        this.create = function (target) {
+        this.create = function (target) {        
+            input.currentInput = input.INPUT_NORMAL;
+                
             dispatcher.dispatch('create_world');
         }
 
-        this.update = function (target) {
+        this.update = function (target) {          
+            input.update();
+            
             dispatcher.dispatch('game_update');
         }
 

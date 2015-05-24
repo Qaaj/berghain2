@@ -23,6 +23,9 @@ define([
     "commands/camera_target_command",
     "commands/player_interact_with_backdrop",
     "commands/player_death_command",
+    "commands/create_building_command",
+    "commands/init_physics_command",
+    "commands/create_player_command",
  
 // MEDIATORS
     "mediators/player_mediator",
@@ -61,6 +64,9 @@ define([
     "states/player/player_ground",
     "states/player/player_jump",
     "states/player/player_zombie",
+    "states/player/player_inside",
+    "states/input/input_normal",
+    "states/input/input_topdown",
 
 // OTHER
     "util/log",
@@ -86,6 +92,9 @@ define([
         camera_target_command,
         player_interact_with_backdrop,
         player_death_command,
+        create_building_command,
+        init_physics_command,
+        create_player_command,
         // MEDIATORS
         player_mediator,
         game_mediator,
@@ -119,7 +128,9 @@ define([
         player_ground_state,
         player_jump_state,
         player_zombie_state,
- 
+        player_inside_state,
+        input_normal_state,
+        input_topdown_state,
         // STATES
         app_boot,
         app_playing,
@@ -145,8 +156,6 @@ define([
                 },
                 init: function () {
 
-           
-
                     // Misc class
                     this.injector.mapClass('lo', berghain2.Log, true);
                     this.injector.mapClass('config', berghain2.Config, true);
@@ -169,8 +178,9 @@ define([
                     this.commands.add("camera_target", berghain2.CameraTargetCommand);
                     this.commands.add("player_interact_with_backdrop", berghain2.PlayerInteractWithBackdropCommand);
                     this.commands.add("player_death", berghain2.PlayerDeathCommand);
-
-
+                    this.commands.add("create_building", berghain2.CreateBuildingCommand);
+                    this.commands.add("init_physics", berghain2.InitPhysicsCommand);
+                    this.commands.add("create_player", berghain2.CreatePlayerCommand);
                     // Model
                     this.injector.mapClass('state_model', berghain2.StateModel, true);
                     this.injector.mapClass('player_model', berghain2.PlayerModel, true);

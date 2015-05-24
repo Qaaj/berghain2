@@ -1,18 +1,18 @@
-(function(berghain2) {
+(function (berghain2) {
 
     'use strict';
 
-    var Player_Ground = function(dispatcher, input, lo, config, state_model, game, physics_model, message_type) {
+    var Player_Inside = function (dispatcher, input, lo, config, state_model, game, physics_model, message_type) {
 
-        this.name = "Player ground state";
+        this.name = "Player inside state";
 
         var inFrontOfObject;
         var isPlayerNotificationShown = true;
-
+        
         var interaction_object;
         var speed;
 
-        this.update = function(target) {
+        this.update = function (target) {            
             // 1. Check if the player can interact with any object at his current position
             this.checkForInteractionWithBackdropObject(target);
 
@@ -27,15 +27,15 @@
 
         }
 
-        this.doCollisionWithEnvironment = function(target) {
-            game.physics.arcade.collide(target, physics_model.environment);
+        this.doCollisionWithEnvironment = function (target) {
+           game.physics.arcade.collide(target, physics_model.environment);
         }
 
-        this.checkForInteractionWithBackdropObject = function(target) {
+        this.checkForInteractionWithBackdropObject = function (target) {
 
-            interaction_object = {};
+           /* interaction_object = {};
             inFrontOfObject = false;
-
+    
             for (var i = 0; i < physics_model.interactable_background_objects.length; i++) {
 
                 var obj = physics_model.interactable_background_objects[i];
@@ -45,42 +45,27 @@
                     inFrontOfObject = true;
                     interaction_object = obj;
 
-                    // lo.g("PHYSICS", "PLAYER IN FRONT OF " + interaction_object.type);
+                    lo.g("PHYSICS", "PLAYER IN FRONT OF " + interaction_object.type);
 
-                    // If it's not an NPC
-                    if (interaction_object.type.indexOf("npc") == -1) {
-
-                        var message = {
-                            text: "interactable." + interaction_object.type,
-                            messageType: message_type.LOCK_ON_PLAYER
-                        };
-                        dispatcher.dispatch("show_player_notification", message);
-                        isPlayerNotificationShown = true;
-
-                    } else { // If it's an NPC
-                         var message = {
-                            text: "interactable." + interaction_object.type + ".action",
-                            messageType: message_type.LOCK_ON_PLAYER
-                        };
-                        dispatcher.dispatch("show_player_notification", message);
-                        isPlayerNotificationShown = true;
-                    }
-
+                    var message = { text: "interactable." + interaction_object.type, messageType: message_type.LOCK_ON_PLAYER };
+                    dispatcher.dispatch("show_player_notification", message);
+                    
+                    isPlayerNotificationShown = true;
                 }
             }
-
-            DestroyPlayerNotificationWhenPlayerIsNotInFrontOfObject();
+            
+           DestroyPlayerNotificationWhenPlayerIsNotInFrontOfObject();   */
         }
-
-        function DestroyPlayerNotificationWhenPlayerIsNotInFrontOfObject() {
+        
+        function DestroyPlayerNotificationWhenPlayerIsNotInFrontOfObject(){
             if (!inFrontOfObject && isPlayerNotificationShown) {
                 isPlayerNotificationShown = false;
                 dispatcher.dispatch("destroy_player_notification");
             }
         }
 
-        this.checkIfPlayerNeedsStateChange = function(target) {
-            if (!target.body.touching.down && !target.body.onFloor()) {
+        this.checkIfPlayerNeedsStateChange = function (target) {
+            /*if (!target.body.touching.down && !target.body.onFloor()) {
 
                 lo.g("PHYSICS", "Change state to jump");
 
@@ -89,28 +74,38 @@
                     state: state_model.PLAYER_JUMP
                 });
 
-            }
+            }*/
         }
 
-
-        this.updatePlayerPosition = function (target) {            
+        this.updatePlayerPosition = function (target) {
             speed = 200;
             
             if (input.sprint) {
-                console.log("sprinting");
-                speed = 1000;
+                speed = 500;
             }
 
             if (input.goLeft) {
+                target.body.velocity.y = 0;
+                
                 target.animations.play('left');
                 target.body.velocity.x = -1 * speed;
-            }
-            if (input.goUp) {
-                if (physics_model.player_jump_allowed) target.body.velocity.y = -600 - (speed / 2);
-            }
-            if (input.goRight) {
+            }else if (input.goRight) {
+                target.body.velocity.y = 0;
+                
                 target.animations.play('right');
                 target.body.velocity.x = 1 * speed;
+            }
+            
+            if (input.goUp) {
+                target.body.velocity.x = 0;
+                
+                target.body.velocity.y = -1 * speed;
+                target.frame = 40;
+            }else if (input.goDown) {
+                target.body.velocity.x = 0;
+                
+                target.body.velocity.y = 1 * speed;
+                target.frame = 2;
             }
 
             if (input.actionButton && !(input.goRight || input.goLeft)) {
@@ -124,11 +119,11 @@
 
                 } else {
                     target.frame = 40;
-
                 }
             }
 
-            if (!input.goLeft && !input.goRight && !input.actionButton) {
+            if (!input.isAnyButtonPressed) {
+                target.body.velocity.y = 0;
                 target.body.velocity.x = 0;
                 target.animations.stop();
                 target.frame = 2;
@@ -136,6 +131,6 @@
         }
     };
 
-    berghain2.Player_Ground = Player_Ground;
+    berghain2.Player_Inside = Player_Inside;
 
 })(window.berghain2 = window.berghain2 || {});
