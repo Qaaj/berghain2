@@ -32,10 +32,10 @@
             var message = {text: text_model.localise("welcome"), messageType: message_type.SMALL };
             dispatcher.dispatch("show_message", message);
 
-            message = {text: text_model.localise("welcome.chapter.one"), messageType: message_type.MEDIUM };
+            message = {text: text_model.localise("levels.level1.name"), messageType: message_type.MEDIUM };
             dispatcher.dispatch("show_message", message);
 
-            message = {text: text_model.localise("welcome.chapter.one.objective"), messageType: message_type.LARGE };
+            message = {text: text_model.localise("levels.level1.chapter1.text"), messageType: message_type.LARGE };
 
             dispatcher.dispatch("show_message", message);
         }

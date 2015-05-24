@@ -9,7 +9,7 @@
             lo.g("COMMAND", "Loading Assets");
 
             // LOCALISATION
-            game.load.json("text", "/assets/localisation/languages.json");
+            game.load.json("text", "/assets/localisation/data.json");
             
             // TILEMAPS JSON
             game.load.tilemap('building', 'assets/tilemaps/building.json', null, Phaser.Tilemap.TILED_JSON);

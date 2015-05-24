@@ -1,29 +1,40 @@
-(function (berghain2) {
+(function(berghain2) {
 
     'use strict';
 
-    berghain2.CreateWorldCommand = function (dispatcher, mediators, lo, config, game, input, physics_model, player_model, rnd, camera_model) {
+    berghain2.CreateWorldCommand = function(dispatcher, mediators, lo, config, game, input, physics_model, player_model, rnd, camera_model) {
 
         var interactableGroup;
 
-        this.execute = function (event) {
+        this.execute = function(event) {
 
             rnd.resetSeedGenerator();
 
             lo.g("COMMAND", "Creating World");
-            
+
             createWorld();
-                       
+
+            createBackground();
+
+            var env = game.add.group();
+            env.enableBody = true;
+            physics_model.environment = env;
+
+            // CREATE BACKGROUND COLISSION GROUP
+            createFloor();
+
+
             // CREATE INTERACTABLE GROUP
             interactableGroup = game.add.group();
             interactableGroup.enableBody = true;
-            
+
             //physics_model.makeImmovable(interactableGroup);
             physics_model.interactable = interactableGroup;
 
-            createCamera();
+
             createBackdrop();
             createCamera();
+
             createSky();
             createNPCs();
             createPlaces();
@@ -35,7 +46,7 @@
 
         function createWorld() {
             game.world.setBounds(0, 0, 5120, 3000);
-            
+
             createBackground();
 
             var env = game.add.group();
@@ -48,27 +59,32 @@
 
         function createCamera() {
             // Define world bounds
-            mediators.create(berghain2.CameraMediator, game.camera);  
+            mediators.create(berghain2.CameraMediator, game.camera);
         }
- 
+
         function createBackdrop() {
             dispatcher.dispatch("create_backdrop");
         }
 
         function createNPCs() {
             var npc = game.add.sprite(window.innerWidth - 370, window.innerHeight - 64 - 96, 'npc');
-            npc.name = "NPC";
+
+            // npc.name = "NPC";
             mediators.create(berghain2.NPCMediator, npc);
         }
 
         function createPlaces() {
-           var ubahn = game.add.sprite(window.innerWidth - 200, window.innerHeight - 64 - 192, 'ubahn');
-            dispatcher.dispatch("register_interactable_background_object",{type:"UBAHN",x:ubahn.x + 20,width:ubahn.width - 100});
+            var ubahn = game.add.sprite(window.innerWidth - 200, window.innerHeight - 64 - 192, 'ubahn');
+            dispatcher.dispatch("register_interactable_background_object", {
+                type: "object.ubahn",
+                x: ubahn.x + 20,
+                width: ubahn.width - 100
+            });
             ubahn.name = "ubahn";
         }
 
         function createEnemies() {
-           
+
             var bin2 = game.add.sprite(window.innerWidth - 500, window.innerHeight - physics_model.ground_height - 48, 'fire_bin');
             bin2.name = "Fire Bin 1";
             mediators.create(berghain2.FireBinMediator, bin2);
@@ -94,7 +110,7 @@
             }
         }
 
-        function createFloor() {            
+        function createFloor() {
             var env = physics_model.environment;
 
             var numTiles = 40; //Math.round(window.innerWidth/128);
@@ -115,7 +131,7 @@
         }
 
         function createPlayer() {
-            dispatcher.dispatch("create_player");   
+            dispatcher.dispatch("create_player");
         }
     };
 

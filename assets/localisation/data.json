@@ -1,0 +1,104 @@
+{
+  "en": {
+    "player": {},
+    "interactable": {
+      "npc": {
+        "smoker": {
+          "action": "TALK",
+          "greet1": "Hi",
+          "greet2": "Mind sharing those cigarettes?",
+          "reply1": "...",
+          "reply2": "..."
+        },
+        "cop": {
+          "action": "TALK",
+          "greet1": "G'day",
+          "greet2": "...",
+          "reply1": "Keep your distance",
+          "reply2": "..."
+        },
+        "weirdo": {
+          "action": "TALK",
+          "greet1": "Hi",
+          "greet2": "Where's the party?",
+          "reply1": "burp",
+          "reply2": "hiccup"
+        }
+      },
+      "object": {
+        "ubahn": "Enter Ubahn",
+        "door": "Enter Building"
+      }
+    },
+    "menu": {
+      "presskey": "Press any key to start",
+      "start": "Start Game",
+      "exit": "Exit Game"
+    },
+    "levels": {
+      "level1": {
+        "name": "Neukolln",
+        "chapter1": {
+          "text": "Get some cigarettes"
+        },
+        "chapter2": {
+          "text": "Get some money"
+        }
+      }
+    },
+    "inventory": {
+      "bottle": "An empty beer bottle."
+    }
+  },
+  "de": {
+    "player": {},
+    "interactable": {
+      "npc": {
+        "smoker": {
+          "action": "TALK",
+          "greet1": "Hi",
+          "greet2": "Mind sharing those cigarettes?",
+          "reply1": "...",
+          "reply2": "..."
+        },
+        "cop": {
+          "action": "TALK",
+          "greet1": "G'day",
+          "greet2": "...",
+          "reply1": "Keep your distance",
+          "reply2": "..."
+        },
+        "weirdo": {
+          "action": "TALK",
+          "greet1": "Hi",
+          "greet2": "Where's the party?",
+          "reply1": "burp",
+          "reply2": "hiccup"
+        }
+      },
+      "object": {
+        "ubahn": "Enter Ubahn",
+        "door": "Enter Building"
+      }
+    },
+    "menu": {
+      "presskey": "Press any key to start",
+      "start": "Start Game",
+      "exit": "Exit Game"
+    },
+    "levels": {
+      "level1": {
+        "name": "Neukolln",
+        "chapter1": {
+          "text": "Get some cigarettes"
+        },
+        "chapter2": {
+          "text": "Get some money"
+        }
+      }
+    },
+    "inventory": {
+      "bottle": "An empty beer bottle."
+    }
+  }
+}

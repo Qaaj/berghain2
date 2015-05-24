@@ -24,6 +24,7 @@
             }));
 
             if (config.debug == true) {
+                window.dispatcher = dispatcher;
                 lo.g("APPLICATION", "DEBUG MODE ON");
             }
 

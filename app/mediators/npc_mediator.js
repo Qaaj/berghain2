@@ -41,7 +41,7 @@
 
 
         dispatcher.dispatch("register_interactable_background_object", {
-            type: "NPC",
+            type: "npc." + target.name,
             x: target.x - 50,
             width: target.width + 50,
             npc: this
