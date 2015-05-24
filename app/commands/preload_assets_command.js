@@ -13,7 +13,8 @@
             
             // TILEMAPS JSON
             game.load.tilemap('building', 'assets/tilemaps/building.json', null, Phaser.Tilemap.TILED_JSON);
-            game.load.image('gameTiles', 'assets/building/inside/tiles.png');
+            game.load.image('gameTiles', 'assets/building/inside/tile_inside_black_tiles.png');
+            
             
             // PICKUPS
             game.load.image('pickup_bottle', 'assets/pickups/pickup_bottle.png');

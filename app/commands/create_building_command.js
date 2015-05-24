@@ -25,7 +25,7 @@
             map = game.add.tilemap('building');
 
             //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
-            map.addTilesetImage('tiles', 'gameTiles');
+            map.addTilesetImage('building_inside_black', 'gameTiles');
 
             // Create a layer from the JSON file
             backgroundLayer = map.createLayer('backgroundLayer');
@@ -57,7 +57,7 @@
             var pickupsGroup = game.add.group();
             pickupsGroup.enableBody = true;
 
-            var pickups = findObjectsByType('pickup', map, 'objectsLayer');
+           /* var pickups = findObjectsByType('pickup', map, 'objectsLayer');
 
             pickups.forEach(function(element){
                 console.log("> Creating pickup");
@@ -72,7 +72,7 @@
                 //pickupsGroup.create(pickupSprite.x, pickupSprite.y, 'pickup_bottle');
                 
                 game.add.sprite(element.x, element.y, 'pickup_bottle');
-            });
+            });*/
 
             var wallsGroup = game.add.group();
             wallsGroup.enableBody = true;
