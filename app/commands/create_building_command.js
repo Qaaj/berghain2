@@ -6,7 +6,7 @@
         var map;
 
         var backgroundLayer;
-        var blockedLayer;
+        var collisionsLayer;
         var objectsLayer;
 
         this.execute = function (event) {
@@ -21,7 +21,9 @@
             createWalls();
 
             game.physics.enable(map);
-
+            
+            //map.setCollision();
+            
             showBuildingWelcomeText();
         }
 
@@ -36,10 +38,10 @@
 
         function createBackground() {
             game.stage.backgroundColor = 0x333333;
-            
+
             var bmd = game.add.bitmapData(game.world.bounds.width, window.innerHeight);
             bmd.addToWorld();
-            
+
             var y = 0;
             for (var i = 0; i < window.innerHeight; i++) {
                 var c = Phaser.Color.interpolateColor(0x000000, 0xbd4c14, window.innerHeight, i);
@@ -49,25 +51,42 @@
             }
         }
 
-        function createBuildingMap() {
+        function createBuildingMap() {            
             // Add the tilemap 'building' to the gme
             map = game.add.tilemap('building');
+            
+            var collisions = findObjectsByType("collision", map, 'collisionsLayer');
+            
+            console.log("> Collisions = " + collisions);
+            
+            collisions.forEach(function (element) {
+                //var pickupSpriteData = createFromTiledObject(element, pickupsGroup);
 
+                console.log("> Creating collision: " + element);
+                
+                /*console.log("> Pickup x = " + pickupSpriteData.x);
+                console.log("> Pickup y = " + pickupSpriteData.y);
+                console.log("> Pickup sprite name = " + pickupSpriteData.spriteName);*/
+
+                //pickupsGroup.create(pickupSpriteData.x, pickupSpriteData.y, pickupSpriteData.spriteName);
+            });
+            
             //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
             map.addTilesetImage('building_inside_black', 'gameTiles');
 
-            initMapLayers();
+            createMapLayersFromTiledLayers();
         }
 
-        function initMapLayers() {
-            // Create a layer from the JSON file
+        function createMapLayersFromTiledLayers() {
             backgroundLayer = map.createLayer('backgroundLayer');
-            blockedLayer = map.createLayer('blockedLayer');
+            collisionsLayer = map.createLayer('collisionsLayer');
             objectsLayer = map.createLayer('objectsLayer');
 
+            
+            
             // Set the collision range. 1 is upper left of tiles in image
-            map.setCollisionBetween(1, 10, true, 'blockedLayer');
-
+            //map.setCollisionBetween(1, 10, true, 'objectsLayer');
+            
             //resizes the game world to match the layer dimensions
             backgroundLayer.resizeWorld();
         }
@@ -137,9 +156,21 @@
         function createWalls() {
             var wallsGroup = game.add.group();
             wallsGroup.enableBody = true;
-            
-            //var walls = findObjectsByType('wall', map, 'blockedLayer');
-            //console.log("> Walls = " + walls);
+
+            var walls = findObjectsByType('collision', map, 'collisionsLayer');
+
+            console.log("> Walls = " + walls);
+
+            walls.forEach(function (element) {
+                //var pickupSpriteData = createFromTiledObject(element, pickupsGroup);
+
+                console.log("> Creating WALL:");
+                /*console.log("> Pickup x = " + pickupSpriteData.x);
+                console.log("> Pickup y = " + pickupSpriteData.y);
+                console.log("> Pickup sprite name = " + pickupSpriteData.spriteName);
+
+                pickupsGroup.create(pickupSpriteData.x, pickupSpriteData.y, pickupSpriteData.spriteName);*/
+            });
         }
 
         function createPlayer() {
