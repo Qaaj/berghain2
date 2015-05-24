@@ -20,34 +20,24 @@
         
             createBackground();
 
-
             var env = game.add.group();
             env.enableBody = true;
             physics_model.environment = env;
 
-
             // CREATE BACKGROUND COLISSION GROUP
             createFloor();
            
-
-           
-
             // CREATE INTERACTABLE GROUP
             interactableGroup = game.add.group();
             interactableGroup.enableBody = true;
             //physics_model.makeImmovable(interactableGroup);
             physics_model.interactable = interactableGroup;
 
-
             createCamera();
-
-
-
 
             createBackdrop();
   
             createCamera();
-           
 
             createSky();
 
@@ -84,13 +74,12 @@
 
         function createNPCs() {
             var npc = game.add.sprite(window.innerWidth - 370, window.innerHeight - 64 - 96, 'npc');
-            console.log(npc.name);
             mediators.create(berghain2.NPCMediator, npc);
         }
 
         function createPlaces() {
            var ubahn = game.add.sprite(window.innerWidth - 200, window.innerHeight - 64 - 192, 'ubahn');
-            dispatcher.dispatch("register_interactable_background_object",{type:"UBAHN",x:ubahn.x + 20,width:ubahn.width - 100});
+            dispatcher.dispatch("register_interactable_background_object",{type:"object.ubahn",x:ubahn.x + 20,width:ubahn.width - 100});
             ubahn.name = "ubahn";
         }
 

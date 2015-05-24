@@ -10,6 +10,7 @@
 		this.isShowingNotification = false;
 
 		this.addMessage = function (messageObj) {
+			console.log(messageObj);
 			var messageID = messageObj.text.toLowerCase();//Object.keys(this.messages).length;
 
 			if (typeof this.messages[messageID] !== undefined) {

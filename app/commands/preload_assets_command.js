@@ -8,7 +8,7 @@
 
             lo.g("COMMAND", "Loading Assets");
 
-            game.load.json("text", "/assets/localisation/languages.json");
+            game.load.json("text", "/assets/localisation/data.json");
             
             //HUD
             game.load.bitmapFont('carrier_command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');

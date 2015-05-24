@@ -1,18 +1,18 @@
-(function (berghain2) {
+(function(berghain2) {
 
     'use strict';
 
-    var Player_Ground = function (dispatcher, input, lo, config, state_model, game, physics_model, message_type) {
+    var Player_Ground = function(dispatcher, input, lo, config, state_model, game, physics_model, message_type) {
 
         this.name = "Player ground state";
 
         var inFrontOfObject;
         var isPlayerNotificationShown = true;
-        
+
         var interaction_object;
         var speed;
 
-        this.update = function (target) {
+        this.update = function(target) {
             // 1. Check if the player can interact with any object at his current position
             this.checkForInteractionWithBackdropObject(target);
 
@@ -27,15 +27,15 @@
 
         }
 
-        this.doCollisionWithEnvironment = function (target) {
+        this.doCollisionWithEnvironment = function(target) {
             game.physics.arcade.collide(target, physics_model.environment);
         }
 
-        this.checkForInteractionWithBackdropObject = function (target) {
+        this.checkForInteractionWithBackdropObject = function(target) {
 
             interaction_object = {};
             inFrontOfObject = false;
-    
+
             for (var i = 0; i < physics_model.interactable_background_objects.length; i++) {
 
                 var obj = physics_model.interactable_background_objects[i];
@@ -45,26 +45,41 @@
                     inFrontOfObject = true;
                     interaction_object = obj;
 
-                    lo.g("PHYSICS", "PLAYER IN FRONT OF " + interaction_object.type);
+                    // lo.g("PHYSICS", "PLAYER IN FRONT OF " + interaction_object.type);
 
-                    var message = { text: "interactable." + interaction_object.type, messageType: message_type.LOCK_ON_PLAYER };
-                    dispatcher.dispatch("show_player_notification", message);
-                    
-                    isPlayerNotificationShown = true;
+                    // If it's not an NPC
+                    if (interaction_object.type.indexOf("npc") == -1) {
+
+                        var message = {
+                            text: "interactable." + interaction_object.type,
+                            messageType: message_type.LOCK_ON_PLAYER
+                        };
+                        dispatcher.dispatch("show_player_notification", message);
+                        isPlayerNotificationShown = true;
+
+                    } else { // If it's an NPC
+                         var message = {
+                            text: "interactable." + interaction_object.type + ".action",
+                            messageType: message_type.LOCK_ON_PLAYER
+                        };
+                        dispatcher.dispatch("show_player_notification", message);
+                        isPlayerNotificationShown = true;
+                    }
+
                 }
             }
-            
-           DestroyPlayerNotificationWhenPlayerIsNotInFrontOfObject();   
+
+            DestroyPlayerNotificationWhenPlayerIsNotInFrontOfObject();
         }
-        
-        function DestroyPlayerNotificationWhenPlayerIsNotInFrontOfObject(){
+
+        function DestroyPlayerNotificationWhenPlayerIsNotInFrontOfObject() {
             if (!inFrontOfObject && isPlayerNotificationShown) {
                 isPlayerNotificationShown = false;
                 dispatcher.dispatch("destroy_player_notification");
             }
         }
 
-        this.checkIfPlayerNeedsStateChange = function (target) {
+        this.checkIfPlayerNeedsStateChange = function(target) {
             if (!target.body.touching.down && !target.body.onFloor()) {
 
                 lo.g("PHYSICS", "Change state to jump");
@@ -77,7 +92,7 @@
             }
         }
 
-        this.updatePlayerPosition = function (target) {
+        this.updatePlayerPosition = function(target) {
 
             speed = 200;
             if (input.sprint) speed = 1000;

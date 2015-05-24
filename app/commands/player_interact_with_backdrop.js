@@ -2,7 +2,7 @@
 
     'use strict';
 
-    berghain2.PlayerInteractWithBackdropCommand = function (dispatcher, lo, config, game, input, state_model, message_type, message_model) {
+    berghain2.PlayerInteractWithBackdropCommand = function (dispatcher, lo, config, game, input, state_model, message_type, message_model,text_model) {
 
         this.execute = function (event) {
 
@@ -11,7 +11,7 @@
             var target = event.params.target;
             var type = event.params.object.type;
 
-            if (type == "DOOR") {                
+            if (type == "object.door") {                
                 target.animations.play('go_inside');
                 target.alpha = 1;
                 game.add.tween(target).to({
@@ -35,7 +35,7 @@
                     state: state_model.PLAYER_ZOMBIE
                 });
 
-            } else if (type == "UBAHN") {
+            } else if (type == "object.ubahn") {
                 target.animations.play('walk_down');
                 target.alpha = 1;
                 game.add.tween(target).to({
@@ -70,20 +70,23 @@
                     type: "PHYSICS",
                     state: state_model.PLAYER_ZOMBIE
                 });
-            }
 
-            setTimeout(function () {
+                setTimeout(function () {
 
                 var txt = "...";
-
-                if (event.params.object.npc.target.name == "cop") {
+                console.log(event.params);
+                if (event.params.object.type == "npc.cop") {
                     txt = "Keep your distance";
                     console.log(event.params.object.npc);
                     event.params.object.npc.doAction("Keep your distance");
                 }
 
-                if (event.params.object.npc.target.name == "smoker") txt = "...";
-                if (event.params.object.npc.target.name == "weirdo") txt = "burp";
+                if (event.params.object.type == "npc.cop" == "npc.smoker") txt = "...";
+                if (event.params.object.type == "npc.cop" == "npc.weirdo") txt = "burp";
+
+                var message = {text: txt, messageType: message_type.MEDIUM };
+
+                dispatcher.dispatch("show_message", message);
             
                 showPlayerNotification(event.params.object.npc.target.name);
 
@@ -92,11 +95,14 @@
                     state: state_model.PLAYER_GROUND
                 });
             }, 1000);
+            }
+
+            
         }
 
          function showPlayerNotification(interactableTargetName) {
             
-            var jsonTextKey = "interactable.npc." + interactableTargetName.toLowerCase() + ".greet";
+            var jsonTextKey = "interactable.npc." + interactableTargetName.toLowerCase() + ".greet1";
             
             var message = { text: jsonTextKey, messageType: message_type.LOCK_ON_PLAYER };
             dispatcher.dispatch("show_player_notification", message);

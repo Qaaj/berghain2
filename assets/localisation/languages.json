@@ -3,6 +3,14 @@
     "en": "Wow",
     "de": "Ganz geil"
   },
+  "player.action.npc": {
+    "en": "TALK",
+    "de": "ENTER"
+  },
+  "player.action.door": {
+    "en": "ENTER",
+    "de": "ENTER"
+  },
   "actions.pushanykeytostart": {
     "en": "PUSH ANY KEY TO START",
     "de": "PRESSE EINE KNOPFE ZUM STARTEN"
@@ -24,15 +32,11 @@
     "de": "Ich wolle eine Zigarette!"
   },
   "interactable.ubahn": {
-    "en": "Too dark",
+    "en": "ENTER",
     "de": "TONKER"
   },
   "interactable.door": {
-    "en": [
-      "Looks like a door",
-      "Nice door",
-      "Open sesame!"
-    ],
+    "en": "ENTER",
     "de": "Tauer"
   },
   "interactable.npc": {
@@ -46,10 +50,6 @@
   "interactable.npc.cop.greet": {
     "en": "Hi cop",
     "de": "Bongiourno cop"
-  },
-  "interactable.npc.smoker.greet": {
-    "en": "Hi smoker",
-    "de": "Bongiourno smoker"
   },
   "interactable.npc.weirdo.greet": {
     "en": "Hi weirdo",
@@ -68,3 +68,5 @@
     "de": "Ende"
   }
 }
+
+
