@@ -65,7 +65,7 @@
          "name":"collisionsLayer",
          "objects":[
                 {
-                 "height":5.33299999999997,
+                 "height":10.6060606060605,
                  "id":9,
                  "name":"wall",
                  "properties":
@@ -77,12 +77,12 @@
                  "type":"collision",
                  "visible":true,
                  "width":512,
-                 "x":896,
-                 "y":888
+                 "x":896.363636363636,
+                 "y":886.727272727273
                 }, 
                 {
-                 "height":0,
-                 "id":14,
+                 "height":251.939393939394,
+                 "id":18,
                  "name":"wall",
                  "properties":
                     {
@@ -92,9 +92,105 @@
                  "rotation":0,
                  "type":"collision",
                  "visible":true,
-                 "width":0,
-                 "x":900,
-                 "y":869.333
+                 "width":18.3030303030305,
+                 "x":887.030303030303,
+                 "y":637.393939393939
+                }, 
+                {
+                 "height":189.333333333333,
+                 "id":21,
+                 "name":"wall",
+                 "properties":
+                    {
+                     "spriteName":"collision",
+                     "type":"collision"
+                    },
+                 "rotation":0,
+                 "type":"collision",
+                 "visible":true,
+                 "width":18.3030303030305,
+                 "x":888.363636363636,
+                 "y":130.666666666667
+                }, 
+                {
+                 "height":693.333333333333,
+                 "id":22,
+                 "name":"wall",
+                 "properties":
+                    {
+                     "spriteName":"collision",
+                     "type":"collision"
+                    },
+                 "rotation":0,
+                 "type":"collision",
+                 "visible":true,
+                 "width":18.3030303030305,
+                 "x":1397.69696969697,
+                 "y":194.666666666667
+                }, 
+                {
+                 "height":700,
+                 "id":23,
+                 "name":"wall",
+                 "properties":
+                    {
+                     "spriteName":"collision",
+                     "type":"collision"
+                    },
+                 "rotation":0,
+                 "type":"collision",
+                 "visible":true,
+                 "width":18.3030303030305,
+                 "x":311.030303030303,
+                 "y":129.333333333333
+                }, 
+                {
+                 "height":9.39393939393935,
+                 "id":24,
+                 "name":"wall",
+                 "properties":
+                    {
+                     "spriteName":"collision",
+                     "type":"collision"
+                    },
+                 "rotation":0,
+                 "type":"collision",
+                 "visible":true,
+                 "width":499.030303030303,
+                 "x":905.333333333333,
+                 "y":190.666666666667
+                }, 
+                {
+                 "height":9.39393939393935,
+                 "id":25,
+                 "name":"wall",
+                 "properties":
+                    {
+                     "spriteName":"collision",
+                     "type":"collision"
+                    },
+                 "rotation":0,
+                 "type":"collision",
+                 "visible":true,
+                 "width":564,
+                 "x":329.333333333333,
+                 "y":125.333333333333
+                }, 
+                {
+                 "height":9.39393939393935,
+                 "id":26,
+                 "name":"wall",
+                 "properties":
+                    {
+                     "spriteName":"collision",
+                     "type":"collision"
+                    },
+                 "rotation":0,
+                 "type":"collision",
+                 "visible":true,
+                 "width":564,
+                 "x":322.666666666667,
+                 "y":821.333333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -103,7 +199,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":16,
+ "nextobjectid":27,
  "orientation":"orthogonal",
  "properties":
     {
@@ -163,6 +259,7 @@
                 },
              "4":
                 {
+                 "spriteName":"collision",
                  "type":"collision"
                 },
              "9":

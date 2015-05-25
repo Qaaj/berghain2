@@ -62,6 +62,8 @@
             map.addTilesetImage('building_inside_black', 'gameTiles');
 
             createMapLayersFromTiledLayers();
+            
+            map.setCollisionByExclusion([]);
         }
 
         function createMapLayersFromTiledLayers() {
@@ -100,6 +102,8 @@
                 console.log("> Collision spritename = " + collisionData.spriteName);
 
                 var collisionSprite = collisionGroup.create(collisionData.x, collisionData.y, collisionData.spriteName);
+                collisionSprite.width = collisionData.width;
+                collisionSprite.height = collisionData.height;
 
                 game.physics.enable(collisionSprite, Phaser.Physics.ARCADE);
 
@@ -108,6 +112,8 @@
                 collisionSprite.body.collideWorldBounds = true;
                 collisionSprite.body.immovable = true;
                 collisionSprite.body.allowGravity = false;
+
+                collisionSprite.renderable = false;
 
                 collisionGroup.add(collisionSprite);
             });
@@ -150,7 +156,9 @@
                     //Phaser uses top left, Tiled bottom left so we have to adjust the y position
                     //also keep in mind that the cup images are a bit smaller than the tile which is 16x16
                     //so they might not be placed in the exact pixel position as in Tiled
-                    element.y -= map.tileHeight;
+                    
+                    //element.y -= map.tileHeight;
+                    
                     result.push(element);
                 }
             });
@@ -169,6 +177,7 @@
             sprite.y = element.y;
             sprite.width = element.width;
             sprite.height = element.height;
+            
             //copy all Tiled properties to the sprite
             Object.keys(element.properties).forEach(function (key) {
                 console.log("> Adding property to sprite " + key + ": " + element.properties[key]);
