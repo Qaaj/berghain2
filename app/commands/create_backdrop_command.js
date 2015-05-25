@@ -5,17 +5,8 @@
     berghain2.CreateBackdropCommand = function(game, dispatcher, lo, config, game_model, physics_model, rnd) {
 
         this.execute = function(event) {
-
-            lo.g("COMMAND", "Create Backdrop Command");
-
             // Backdrop can consist of BUILDINGS / FENCE / PARK / GRASS + TREES
-
-            
-
             if (game_model.level == "NEUKOLLN") {
-
-                lo.g("VIEW", "Creating NEUKOLLN Buildings");
-
                 var i = 0;
 
                 var params = {
@@ -71,11 +62,7 @@
                             }
 
                             break;
-                    }
-
-                   
-
-
+                    }                
                     
                     if (rnd.getRandom() == 50) {
                         var lamp = physics_model.environment.create(params.lastX - 100  - Math.random() * 100, window.innerHeight - 255, 'street_lamp', Math.floor(Math.random() * 4));

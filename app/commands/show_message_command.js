@@ -18,7 +18,7 @@
         var currentTextTween;
 
         this.execute = function (event) {
-            lo.g("COMMAND", "Show message: " + event.params.messageType.fontSize);
+            //lo.g("COMMAND", "Show message: " + event.params.messageType.fontSize);
 
             decideWhichMessageToShow(event.params);
         }

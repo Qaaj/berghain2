@@ -2,10 +2,9 @@
 
     'use strict';
 
-    var CameraModel = function(lo) {
-
-        lo.g("MODEL","Camera Model Initiated");
+    var CameraModel = function() {
         this.cameraTarget = undefined;
+        
         this.cameraX = 0;
         this.cameraY = 0;
     };

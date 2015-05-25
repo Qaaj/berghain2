@@ -2,11 +2,7 @@
 
     'use strict';
 
-    berghain2.InputTopDown = function (game, dispatcher, lo) {
-        
-        
-        console.log("------------------------ INPUT TOP DOWN ------------------------");
-        
+    berghain2.InputTopDown = function (game, dispatcher, lo) {       
         
         //public variables
         this.goLeft = false;
@@ -23,13 +19,11 @@
         game.input.gamepad.start();
         var pad1 = game.input.gamepad.pad1;
 
-        lo.g("USER", "game.input.gamepad.supported: " + game.input.gamepad.supported);
+        /*lo.g("USER", "game.input.gamepad.supported: " + game.input.gamepad.supported);
         lo.g("USER", "game.input.gamepad.active: " + game.input.gamepad.active);
-        lo.g("USER", "pad1.connected: " + pad1.connected);
+        lo.g("USER", "pad1.connected: " + pad1.connected);*/
 
-        this.update = function(){
-            console.log("TOP DOWN UPDATE");
-            
+        this.update = function(){            
              // ACTIVATE ITEM
             if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
                 this.actionButton = true;

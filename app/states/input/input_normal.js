@@ -3,9 +3,6 @@
     'use strict';
 
     berghain2.InputNormal = function (game, dispatcher, lo) {
-
-        console.log("------------------------ INPUT ONRMAL ------------------------");
-
         //public variables
         this.goLeft = false;
         this.goRight = false;
@@ -21,9 +18,9 @@
         game.input.gamepad.start();
         var pad1 = game.input.gamepad.pad1;
 
-        lo.g("USER", "game.input.gamepad.supported: " + game.input.gamepad.supported);
+        /*lo.g("USER", "game.input.gamepad.supported: " + game.input.gamepad.supported);
         lo.g("USER", "game.input.gamepad.active: " + game.input.gamepad.active);
-        lo.g("USER", "pad1.connected: " + pad1.connected);
+        lo.g("USER", "pad1.connected: " + pad1.connected);*/
 
         this.update = function () {                        
             // ACTIVATE ITEM

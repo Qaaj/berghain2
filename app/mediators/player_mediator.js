@@ -3,10 +3,8 @@
     'use strict';
 
     berghain2.PlayerMediator = function(target, game, dispatcher, mediators, lo, input, state_model, physics_model, config, player_model) {
-
-        lo.g("MEDIATOR", "Player mediator instantiated", target);
-
-        console.log(">>> player = " + target.body);
+        
+        target.name = "Player";
 
         var currentState = state_model.currentState;
 

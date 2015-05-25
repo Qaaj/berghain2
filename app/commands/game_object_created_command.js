@@ -5,7 +5,7 @@
     berghain2.GameObjectCreatedCommand = function(dispatcher, injector, mediators, lo, config, game, physics_model) {
 
         this.execute = function(event) {
-            lo.g("COMMAND", "Game object has been created");
+            lo.g("COMMAND", "Game object has been created, Initialising INPUT");
                        
             var input = new berghain2.Input(game,dispatcher,lo);
             injector.mapValue("input", input);

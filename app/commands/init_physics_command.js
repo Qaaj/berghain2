@@ -15,7 +15,7 @@
             
              if ( state_model.currentState.name == berghain2.StateModel.PLAYER_INSIDE){
                   game.physics.arcade.gravity.y = 0;
-            } else{
+            } else{                
                   game.physics.arcade.gravity.y = 2500;
             }           
         }

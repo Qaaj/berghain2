@@ -18,7 +18,7 @@
             game.state.add('InUbahn', ubahnState);
 
             if (config.skipIntro) {
-                game.state.start('Playing');
+                game.state.start('InBuilding');
             } else {
                 game.state.start('Boot');
             }

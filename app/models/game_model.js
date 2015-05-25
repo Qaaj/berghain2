@@ -2,12 +2,8 @@
 
 	'use strict';
 
-	var GameModel = function(dispatcher,input,lo,config,game) {
-		
-		lo.g("MODEL","Game Model Initiated");
-		
+	var GameModel = function(dispatcher,input,lo,config,game) {		
 		this.level = "NEUKOLLN";
-
 	};
 	
 	berghain2.GameModel = GameModel;

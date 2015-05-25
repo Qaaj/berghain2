@@ -51,19 +51,19 @@
 0,0,0,0,0,15,11,16,16,16,17,16,16,17,11,16,16,16,16,16,16,18,0,0,0,
 0,0,0,0,0,15,11,11,11,11,16,16,17,18,10,16,17,12,12,12,12,18,0,0,0,
 0,0,0,0,0,15,16,16,16,16,16,17,12,18,10,16,17,17,17,17,17,18,0,0,0,
-0,0,0,0,0,20,21,21,21,21,21,21,21,23,10,11,12,17,17,17,17,18,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,20,21,21,21,21,22,21,23,0,0,0,
+0,0,0,0,0,20,22,21,21,21,21,21,21,23,10,11,12,17,17,17,17,18,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,20,21,21,21,21,21,21,23,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
  <objectgroup name="objectsLayer">
-  <object id="3" name="playerStart" type="playerStart" gid="3" x="1207.27" y="768.501" width="16" height="16">
+  <object id="3" name="playerStart" type="playerStart" gid="3" x="389.937" y="713.834" width="16" height="16">
    <properties>
     <property name="spriteName" value="player_start"/>
     <property name="type" value="playerStart"/>
    </properties>
   </object>
-  <object id="4" name="bottle" type="pickup" gid="4" x="387" y="272" width="16" height="16">
+  <object id="4" name="bottle" type="pickup" gid="4" x="1273.67" y="302.667" width="16" height="16">
    <properties>
     <property name="spriteName" value="pickup_bottle"/>
     <property name="type" value="pickup"/>

@@ -6,7 +6,7 @@
 
         this.execute = function(event) {
 
-            lo.g("COMMAND", "Loading Assets");
+            lo.g("COMMAND", "Preloading Assets");
 
             // LOCALISATION
             game.load.json("text", "/assets/localisation/data.json");

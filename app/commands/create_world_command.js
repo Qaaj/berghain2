@@ -1,16 +1,14 @@
-(function(berghain2) {
+(function (berghain2) {
 
     'use strict';
 
-    berghain2.CreateWorldCommand = function(dispatcher, mediators, lo, config, game, input, physics_model, player_model, rnd, camera_model) {
+    berghain2.CreateWorldCommand = function (dispatcher, mediators, lo, config, game, input, physics_model, player_model, rnd, camera_model) {
 
         var interactableGroup;
 
-        this.execute = function(event) {
+        this.execute = function (event) {
 
             rnd.resetSeedGenerator();
-
-            lo.g("COMMAND", "Creating World");
 
             createWorld();
 
@@ -18,7 +16,6 @@
 
             // CREATE BACKGROUND COLISSION GROUP
             createFloor();
-
 
             // CREATE INTERACTABLE GROUP
             interactableGroup = game.add.group();
@@ -40,7 +37,7 @@
         }
 
         function createWorld() {
-            game.world.setBounds(0, 0, 5120, 3000);
+            game.world.setBounds(0, 0, 5120, 2000);
 
             createBackground();
 
@@ -53,7 +50,6 @@
         }
 
         function createCamera() {
-            // Define world bounds
             mediators.create(berghain2.CameraMediator, game.camera);
         }
 
@@ -79,7 +75,6 @@
         }
 
         function createEnemies() {
-
             var bin2 = game.add.sprite(window.innerWidth - 500, window.innerHeight - physics_model.ground_height - 48, 'fire_bin');
             bin2.name = "Fire Bin 1";
             mediators.create(berghain2.FireBinMediator, bin2);

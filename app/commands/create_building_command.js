@@ -2,7 +2,7 @@
 
     'use strict';
 
-    berghain2.CreateBuildingCommand = function (dispatcher, injector, lo, config, game, input, physics_model, player_model, state_model, text_model) {
+    berghain2.CreateBuildingCommand = function (dispatcher, player, injector, lo, config, game, input, physics_model, player_model, state_model, text_model) {
         var map;
 
         var backgroundLayer;
@@ -10,19 +10,20 @@
         var objectsLayer;
 
         this.execute = function (event) {
-            lo.g("COMMAND", "Creating Building");
-
             changePlayerState();
-
             createBackground();
             createBuildingMap();
+            
+            // TODO ADD DYNAMIC TILE MAP SIZE?            
+            game.world.setBounds(0, 0, 1625, 960);
+            
             createPlayer();
             createPickups();
             
             showBuildingWelcomeText();
             
             //resizes the game world to match the layer dimensions
-            backgroundLayer.resizeWorld();
+           backgroundLayer.resizeWorld();           
         }
 
         function changePlayerState() {
@@ -76,7 +77,7 @@
             collisions.forEach(function (element) {
                 var collisionData = createFromTiledObject(element, collisionGroup);
 
-                console.log("> Creating collision: " + collisionData.name);
+                //console.log("> Creating collision: " + collisionData.name);
 
                 /*console.log("> Collision  x = " + collisionData.x);
                 console.log("> Collision y = " + collisionData.y);
@@ -89,7 +90,7 @@
                 console.log("> Collision body = " + collisionData.body);
                 console.log("> Collision spritename = " + collisionData.spriteName);*/
 
-                var collisionSprite = collisionGroup.create(collisionData.x, collisionData.y, collisionData.spriteName);
+                var collisionSprite = collisionGroup.create(collisionData.x, collisionData.y, '');
                 collisionSprite.width = collisionData.width;
                 collisionSprite.height = collisionData.height;
 
@@ -156,8 +157,6 @@
         function createFromTiledObject(element, group) {
             var spriteNameInTiled = element.properties['spriteName'];
 
-            console.log("> Create sprite from Tiled object: " + spriteNameInTiled);
-
             var sprite = {};
 
             sprite.name = element.name;
@@ -168,7 +167,7 @@
             
             //copy all Tiled properties to the sprite
             Object.keys(element.properties).forEach(function (key) {
-                console.log("> Adding property to sprite " + key + ": " + element.properties[key]);
+                //console.log("> Adding property to sprite " + key + ": " + element.properties[key]);
 
                 sprite[key] = element.properties[key];
             });
@@ -180,8 +179,8 @@
             // Find player in tilemap
             var playerStart = findObjectsByType('playerStart', map, 'objectsLayer');
 
-            console.log("> Playerstart x = " + playerStart[0].x);
-            console.log("> Playerstart y = " + playerStart[0].y);
+            //console.log("> Playerstart x = " + playerStart[0].x);
+            //console.log("> Playerstart y = " + playerStart[0].y);
 
             var x = playerStart[0].x;
             var y = playerStart[0].y;

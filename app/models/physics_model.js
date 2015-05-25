@@ -18,8 +18,6 @@
             },
 
             set: function player(value) {
-                lo.g("MODEL", "PhysIcsModel: PLAYER BODY WAS SET: " + value.body);
-
                 _player = value;
 
                 dispatcher.dispatch("init_physics", value);

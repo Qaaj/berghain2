@@ -11,13 +11,10 @@
         var centerY = 0;
 
         this.execute = function (event) {
-            lo.g("COMMAND", "Creating HUD: " + text_model);
-
             setScreenSettings();
             showIntroText();
 
             var healthBar = new berghain2.HealthBarView(game, mediators);
-
         }
 
         function setScreenSettings() {

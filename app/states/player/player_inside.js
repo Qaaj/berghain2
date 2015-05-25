@@ -12,6 +12,9 @@
         var interaction_object;
         var speed;
 
+    
+        game.camera.follow(this.target);
+    
         this.update = function(target) {
             // 1. Check if the player can interact with any object at his current position
             this.checkForInteractionWithBackdropObject(target);
@@ -24,7 +27,11 @@
 
             // 4. Update the players position according to key inputs
             this.updatePlayerPosition(target);
-
+            
+            game.camera.x = target.x;
+            game.camera.y = target.y;
+            
+            
         }
 
         this.doCollisionWithEnvironment = function(target) {
@@ -94,25 +101,19 @@
                 target.body.velocity.y = 0;
                 target.animations.play('walk');
                 target.body.velocity.x = 1 * speed;
-                                target.angle = 90;
-
-
+                target.angle = 90;
             }
 
             if (input.goUp) {
                 target.body.velocity.x = 0;
                 target.body.velocity.y = -1 * speed;
                 target.animations.play('walk');
-                                target.angle = 0;
-
-
+                target.angle = 0;
             } else if (input.goDown) {
                 target.body.velocity.x = 0;
                 target.animations.play('walk');
                 target.body.velocity.y = 1 * speed;
-                                target.angle = 180;
-
-     
+                target.angle = 180;     
             }
 
             if (input.actionButton && !(input.goRight || input.goLeft)) {
