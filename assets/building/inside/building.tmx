@@ -57,7 +57,7 @@
 </data>
  </layer>
  <objectgroup name="objectsLayer">
-  <object id="3" name="playerStart" type="playerStart" gid="3" x="393.933" y="459.168" width="16" height="16">
+  <object id="3" name="playerStart" type="playerStart" gid="3" x="1207.27" y="768.501" width="16" height="16">
    <properties>
     <property name="spriteName" value="player_start"/>
     <property name="type" value="playerStart"/>
