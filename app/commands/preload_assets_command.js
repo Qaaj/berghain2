@@ -26,6 +26,8 @@
             game.load.spritesheet('ground', 'assets/ground.png', 128,64);
             game.load.image('hain', 'assets/hain.png');
             game.load.spritesheet('punker', 'assets/punker.png', 96,96);
+            game.load.spritesheet('punker_topdown', 'assets/punker_topdown.png', 48,48);
+
             game.load.spritesheet('npc', 'assets/npc.png', 96,96);
             game.load.spritesheet('fire_bin', 'assets/fire_bin.png', 24,48);
             game.load.image('moon', 'assets/moon.png');

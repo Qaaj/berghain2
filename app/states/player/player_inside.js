@@ -1,18 +1,18 @@
-(function (berghain2) {
+(function(berghain2) {
 
     'use strict';
 
-    var Player_Inside = function (dispatcher, input, lo, config, state_model, game, physics_model, message_type) {
+    var Player_Inside = function(dispatcher, input, lo, config, state_model, game, physics_model, message_type) {
 
         this.name = "Player inside state";
 
         var inFrontOfObject;
         var isPlayerNotificationShown = true;
-        
+
         var interaction_object;
         var speed;
 
-        this.update = function (target) {            
+        this.update = function(target) {
             // 1. Check if the player can interact with any object at his current position
             this.checkForInteractionWithBackdropObject(target);
 
@@ -27,15 +27,15 @@
 
         }
 
-        this.doCollisionWithEnvironment = function (target) {
-           game.physics.arcade.collide(target, physics_model.environment);
+        this.doCollisionWithEnvironment = function(target) {
+            game.physics.arcade.collide(target, physics_model.environment);
         }
 
-        this.checkForInteractionWithBackdropObject = function (target) {
+        this.checkForInteractionWithBackdropObject = function(target) {
 
-           /* interaction_object = {};
+            /* interaction_object = {};
             inFrontOfObject = false;
-    
+
             for (var i = 0; i < physics_model.interactable_background_objects.length; i++) {
 
                 var obj = physics_model.interactable_background_objects[i];
@@ -56,15 +56,15 @@
             
            DestroyPlayerNotificationWhenPlayerIsNotInFrontOfObject();   */
         }
-        
-        function DestroyPlayerNotificationWhenPlayerIsNotInFrontOfObject(){
+
+        function DestroyPlayerNotificationWhenPlayerIsNotInFrontOfObject() {
             if (!inFrontOfObject && isPlayerNotificationShown) {
                 isPlayerNotificationShown = false;
                 dispatcher.dispatch("destroy_player_notification");
             }
         }
 
-        this.checkIfPlayerNeedsStateChange = function (target) {
+        this.checkIfPlayerNeedsStateChange = function(target) {
             /*if (!target.body.touching.down && !target.body.onFloor()) {
 
                 lo.g("PHYSICS", "Change state to jump");
@@ -77,35 +77,42 @@
             }*/
         }
 
-        this.updatePlayerPosition = function (target) {
+        this.updatePlayerPosition = function(target) {
             speed = 200;
-            
+
             if (input.sprint) {
                 speed = 500;
             }
 
             if (input.goLeft) {
                 target.body.velocity.y = 0;
-                
-                target.animations.play('left');
+                target.animations.play('walk');
                 target.body.velocity.x = -1 * speed;
-            }else if (input.goRight) {
+                target.angle = 270;
+
+            } else if (input.goRight) {
                 target.body.velocity.y = 0;
-                
-                target.animations.play('right');
+                target.animations.play('walk');
                 target.body.velocity.x = 1 * speed;
+                                target.angle = 90;
+
+
             }
-            
+
             if (input.goUp) {
                 target.body.velocity.x = 0;
-                
                 target.body.velocity.y = -1 * speed;
-                target.frame = 40;
-            }else if (input.goDown) {
+                target.animations.play('walk');
+                                target.angle = 0;
+
+
+            } else if (input.goDown) {
                 target.body.velocity.x = 0;
-                
+                target.animations.play('walk');
                 target.body.velocity.y = 1 * speed;
-                target.frame = 2;
+                                target.angle = 180;
+
+     
             }
 
             if (input.actionButton && !(input.goRight || input.goLeft)) {
@@ -126,7 +133,7 @@
                 target.body.velocity.y = 0;
                 target.body.velocity.x = 0;
                 target.animations.stop();
-                target.frame = 2;
+                target.frame = 0;
             }
         }
     };
