@@ -133,7 +133,7 @@
                 target.body.velocity.y = 0;
                 target.body.velocity.x = 0;
                 target.animations.stop();
-                target.frame = 2;
+                target.frame = 0;
             }
         }
     };
