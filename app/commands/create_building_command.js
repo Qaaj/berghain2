@@ -18,11 +18,6 @@
             createBuildingMap();
             createPlayer();
             createPickups();
-            createWalls();
-
-            game.physics.enable(map);
-            
-            //map.setCollision();
             
             showBuildingWelcomeText();
             
@@ -31,11 +26,6 @@
         }
 
         function changePlayerState() {
-            /* dispatcher.dispatch("change_player_state", {
-                       type: "PHYSICS",
-                       state: state_model.PLAYER_INSIDE
-                   });*/
-
             state_model.currentState = state_model.PLAYER_INSIDE;
         }
 
@@ -83,14 +73,12 @@
 
             var collisions = findObjectsByType("collision", map, 'collisionsLayer');
 
-            console.log("> Collisions = " + collisions);
-
             collisions.forEach(function (element) {
                 var collisionData = createFromTiledObject(element, collisionGroup);
 
                 console.log("> Creating collision: " + collisionData.name);
 
-                console.log("> Collision  x = " + collisionData.x);
+                /*console.log("> Collision  x = " + collisionData.x);
                 console.log("> Collision y = " + collisionData.y);
 
                 console.log("> Collision width = " + collisionData.width);
@@ -99,7 +87,7 @@
                 console.log("> Collision type = " + collisionData.type);
 
                 console.log("> Collision body = " + collisionData.body);
-                console.log("> Collision spritename = " + collisionData.spriteName);
+                console.log("> Collision spritename = " + collisionData.spriteName);*/
 
                 var collisionSprite = collisionGroup.create(collisionData.x, collisionData.y, collisionData.spriteName);
                 collisionSprite.width = collisionData.width;
@@ -107,13 +95,15 @@
 
                 game.physics.enable(collisionSprite, Phaser.Physics.ARCADE);
 
-                console.log("> Collision body = " + collisionSprite.body);
-
                 collisionSprite.body.collideWorldBounds = true;
                 collisionSprite.body.immovable = true;
                 collisionSprite.body.allowGravity = false;
 
-                collisionSprite.renderable = false;
+                if ( config.debug ){
+                    collisionSprite.renderable = true;   
+                }else{
+                    collisionSprite.renderable = false;
+                }
 
                 collisionGroup.add(collisionSprite);
             });
@@ -131,18 +121,16 @@
             pickups.forEach(function (element) {
                 var pickupSpriteData = createFromTiledObject(element, pickupsGroup);
 
-                console.log("> Creating pickup:");
+                /*console.log("> Creating pickup:");
                 console.log("> Pickup x = " + pickupSpriteData.x);
                 console.log("> Pickup y = " + pickupSpriteData.y);
-                console.log("> Pickup sprite name = " + pickupSpriteData.spriteName);
+                console.log("> Pickup sprite name = " + pickupSpriteData.spriteName);*/
 
                 pickupsGroup.create(pickupSpriteData.x, pickupSpriteData.y, pickupSpriteData.spriteName);
             });
             
             // DISABLE GRAVITY ON PICKUPSGROUP
             pickupsGroup.forEach(function (pickup) {
-                console.log("> Disabling gravity in pickups group item");
-
                 pickup.body.allowGravity = false;
             });
         }
@@ -186,26 +174,6 @@
             });
 
             return sprite;
-        }
-
-        function createWalls() {
-            var wallsGroup = game.add.group();
-            wallsGroup.enableBody = true;
-
-            var walls = findObjectsByType('collision', map, 'collisionsLayer');
-
-            console.log("> Walls = " + walls);
-
-            walls.forEach(function (element) {
-                //var pickupSpriteData = createFromTiledObject(element, pickupsGroup);
-
-                console.log("> Creating WALL:");
-                /*console.log("> Pickup x = " + pickupSpriteData.x);
-                console.log("> Pickup y = " + pickupSpriteData.y);
-                console.log("> Pickup sprite name = " + pickupSpriteData.spriteName);
-
-                pickupsGroup.create(pickupSpriteData.x, pickupSpriteData.y, pickupSpriteData.spriteName);*/
-            });
         }
 
         function createPlayer() {
