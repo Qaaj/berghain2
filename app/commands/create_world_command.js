@@ -27,7 +27,6 @@
             //physics_model.makeImmovable(interactableGroup);
             physics_model.interactable = interactableGroup;
 
-
             createBackdrop();
             createCamera();
 
