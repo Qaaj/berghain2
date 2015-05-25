@@ -16,10 +16,6 @@
 
             createBackground();
 
-            var env = game.add.group();
-            env.enableBody = true;
-            physics_model.environment = env;
-
             // CREATE BACKGROUND COLISSION GROUP
             createFloor();
 

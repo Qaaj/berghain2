@@ -25,6 +25,9 @@
             //map.setCollision();
             
             showBuildingWelcomeText();
+            
+            //resizes the game world to match the layer dimensions
+            backgroundLayer.resizeWorld();
         }
 
         function changePlayerState() {
@@ -55,22 +58,6 @@
             // Add the tilemap 'building' to the gme
             map = game.add.tilemap('building');
             
-            var collisions = findObjectsByType("collision", map, 'collisionsLayer');
-            
-            console.log("> Collisions = " + collisions);
-            
-            collisions.forEach(function (element) {
-                //var pickupSpriteData = createFromTiledObject(element, pickupsGroup);
-
-                console.log("> Creating collision: " + element);
-                
-                /*console.log("> Pickup x = " + pickupSpriteData.x);
-                console.log("> Pickup y = " + pickupSpriteData.y);
-                console.log("> Pickup sprite name = " + pickupSpriteData.spriteName);*/
-
-                //pickupsGroup.create(pickupSpriteData.x, pickupSpriteData.y, pickupSpriteData.spriteName);
-            });
-            
             //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
             map.addTilesetImage('building_inside_black', 'gameTiles');
 
@@ -79,16 +66,53 @@
 
         function createMapLayersFromTiledLayers() {
             backgroundLayer = map.createLayer('backgroundLayer');
-            collisionsLayer = map.createLayer('collisionsLayer');
-            objectsLayer = map.createLayer('objectsLayer');
 
-            
-            
-            // Set the collision range. 1 is upper left of tiles in image
-            //map.setCollisionBetween(1, 10, true, 'objectsLayer');
-            
-            //resizes the game world to match the layer dimensions
-            backgroundLayer.resizeWorld();
+            createCollisionsLayer();
+
+            objectsLayer = map.createLayer('objectsLayer');
+        }
+
+        function createCollisionsLayer() {
+            collisionsLayer = map.createLayer('collisionsLayer');
+
+            var collisionGroup = game.add.group();
+            collisionGroup.name = "group_collisions";
+            collisionGroup.enableBody = true;
+
+            var collisions = findObjectsByType("collision", map, 'collisionsLayer');
+
+            console.log("> Collisions = " + collisions);
+
+            collisions.forEach(function (element) {
+                var collisionData = createFromTiledObject(element, collisionGroup);
+
+                console.log("> Creating collision: " + collisionData.name);
+
+                console.log("> Collision  x = " + collisionData.x);
+                console.log("> Collision y = " + collisionData.y);
+
+                console.log("> Collision width = " + collisionData.width);
+                console.log("> Collision height = " + collisionData.height);
+
+                console.log("> Collision type = " + collisionData.type);
+
+                console.log("> Collision body = " + collisionData.body);
+                console.log("> Collision spritename = " + collisionData.spriteName);
+
+                var collisionSprite = collisionGroup.create(collisionData.x, collisionData.y, collisionData.spriteName);
+
+                game.physics.enable(collisionSprite, Phaser.Physics.ARCADE);
+
+                console.log("> Collision body = " + collisionSprite.body);
+
+                collisionSprite.body.collideWorldBounds = true;
+                collisionSprite.body.immovable = true;
+                collisionSprite.body.allowGravity = false;
+
+                collisionGroup.add(collisionSprite);
+            });
+
+            physics_model.environment = collisionGroup;
         }
 
         function createPickups() {
@@ -140,9 +164,11 @@
 
             var sprite = {};
 
+            sprite.name = element.name;
             sprite.x = element.x;
             sprite.y = element.y;
-            
+            sprite.width = element.width;
+            sprite.height = element.height;
             //copy all Tiled properties to the sprite
             Object.keys(element.properties).forEach(function (key) {
                 console.log("> Adding property to sprite " + key + ": " + element.properties[key]);

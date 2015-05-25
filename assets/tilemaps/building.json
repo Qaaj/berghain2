@@ -65,11 +65,12 @@
          "name":"collisionsLayer",
          "objects":[
                 {
-                 "height":8,
+                 "height":5.33299999999997,
                  "id":9,
                  "name":"wall",
                  "properties":
                     {
+                     "spriteName":"collision",
                      "type":"collision"
                     },
                  "rotation":0,
@@ -77,7 +78,7 @@
                  "visible":true,
                  "width":512,
                  "x":896,
-                 "y":885.333
+                 "y":888
                 }, 
                 {
                  "height":0,
@@ -85,6 +86,7 @@
                  "name":"wall",
                  "properties":
                     {
+                     "spriteName":"collision",
                      "type":"collision"
                     },
                  "rotation":0,
@@ -92,7 +94,7 @@
                  "visible":true,
                  "width":0,
                  "x":900,
-                 "y":869.333333333333
+                 "y":869.333
                 }],
          "opacity":1,
          "type":"objectgroup",

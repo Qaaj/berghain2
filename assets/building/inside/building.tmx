@@ -70,13 +70,15 @@
   </object>
  </objectgroup>
  <objectgroup color="#00ff00" name="collisionsLayer">
-  <object id="9" name="wall" type="collision" x="896" y="885.333" width="512" height="8">
+  <object id="9" name="wall" type="collision" x="896" y="888" width="512" height="5.333">
    <properties>
+    <property name="spriteName" value="collision"/>
     <property name="type" value="collision"/>
    </properties>
   </object>
   <object id="14" name="wall" type="collision" x="900" y="869.333">
    <properties>
+    <property name="spriteName" value="collision"/>
     <property name="type" value="collision"/>
    </properties>
   </object>
