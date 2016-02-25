@@ -150,12 +150,6 @@ I also created a TODO.md file. to preview Markdown files, install the "Markdown 
  - Select Markdown Preview to install
  - CMD + SHIFT + P - "Markdown preview"
 
-### FTP DETAILS ###
-
-server: ftp.berghain2.com
-user: berghain2.com
-pass: berghain2
-
 ### SUBLIME shortcuts ###
 
 - Hold down ALT and click and drag to edit multiple lines
