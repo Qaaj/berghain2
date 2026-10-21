@@ -8,7 +8,10 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "import-map": "python3 art/scripts/import_map.py"
+    "import-map": "python3 art/scripts/import_map.py",
+    "doctor": "bash scripts/check-setup.sh",
+    "art": "python3 art/scripts/street_art.py && python3 art/scripts/ubahn_art.py && python3 art/scripts/spati_art.py",
+    "maps": "python3 art/scripts/build_street_map.py && python3 art/scripts/build_ubahn_map.py && python3 art/scripts/build_spati_map.py"
   },
   "dependencies": {
     "phaser": "^4.2.1"
@@ -16,5 +19,6 @@
   "devDependencies": {
     "typescript": "^5.9.3",
     "vite": "^8.3.5"
-  }
+  },
+  "description": "Berghain2: a pixel-art side-scroller set in Neukölln, rebuilt in Phaser 4 + TypeScript"
 }

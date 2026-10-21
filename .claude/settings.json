@@ -1,0 +1,21 @@
+{
+  "extraKnownMarketplaces": {
+    "pixel-plugin": {
+      "source": { "source": "github", "repo": "willibrandon/pixel-plugin" }
+    }
+  },
+  "enabledPlugins": {
+    "pixel-plugin@pixel-plugin": true
+  },
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(npx tsc *)",
+      "Bash(python3 art/scripts/*)",
+      "Bash(bash scripts/check-setup.sh)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)"
+    ]
+  }
+}
