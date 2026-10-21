@@ -28,8 +28,14 @@
       "object": {
         "ubahn": "Enter Ubahn",
         "door": "Enter Building",
-        "exit": "Leave Building",
-        "bottle": "Pick up"
+        "exit": "Leave",
+        "bottle": "Pick up",
+        "shopkeeper": "TALK",
+        "pfand": "RETURN BOTTLES",
+        "cat": "PET",
+        "fridge": "LOOK",
+        "freezer": "LOOK",
+        "magazines": "LOOK"
       }
     },
     "menu": {
@@ -45,7 +51,8 @@
           "done": "Got the cigarettes!"
         },
         "chapter2": {
-          "text": "Get some money"
+          "text": "Get some money",
+          "done": "Got some money!"
         }
       }
     },
@@ -64,7 +71,31 @@
     "game": {
       "over": "Game Over"
     },
-    "welcome": "Welcome to Berghain2"
+    "welcome": "Welcome to Berghain2",
+    "spati": {
+      "shopkeeper": {
+        "greet_a": "Cigarettes? Floor. Do not ask.",
+        "greet_b": "We close at never.",
+        "greet_c": "Enjoy the smokes. Bis spaeter."
+      },
+      "pfand": {
+        "empty": "Bring me bottles.",
+        "ok": "Pfand! +0.25 EUR",
+        "nomoney": "Machine is thirsty."
+      },
+      "cat": {
+        "purr": "Purr."
+      },
+      "fridge": {
+        "look": "Ice cold. Not free."
+      },
+      "freezer": {
+        "look": "Eis. Mostly freezer burn."
+      },
+      "magazines": {
+        "look": "Old flyers. All sold out."
+      }
+    }
   },
   "de": {
     "player": {},
@@ -95,8 +126,14 @@
       "object": {
         "ubahn": "Enter Ubahn",
         "door": "Enter Building",
-        "exit": "Leave Building",
-        "bottle": "Pick up"
+        "exit": "Leave",
+        "bottle": "Pick up",
+        "shopkeeper": "TALK",
+        "pfand": "RETURN BOTTLES",
+        "cat": "PET",
+        "fridge": "LOOK",
+        "freezer": "LOOK",
+        "magazines": "LOOK"
       }
     },
     "menu": {
@@ -112,7 +149,8 @@
           "done": "Got the cigarettes!"
         },
         "chapter2": {
-          "text": "Get some money"
+          "text": "Get some money",
+          "done": "Got some money!"
         }
       }
     },
@@ -131,6 +169,30 @@
     "game": {
       "over": "Game Over"
     },
-    "welcome": "Welcome to Berghain2"
+    "welcome": "Welcome to Berghain2",
+    "spati": {
+      "shopkeeper": {
+        "greet_a": "Cigarettes? Floor. Do not ask.",
+        "greet_b": "We close at never.",
+        "greet_c": "Enjoy the smokes. Bis spaeter."
+      },
+      "pfand": {
+        "empty": "Bring me bottles.",
+        "ok": "Pfand! +0.25 EUR",
+        "nomoney": "Machine is thirsty."
+      },
+      "cat": {
+        "purr": "Purr."
+      },
+      "fridge": {
+        "look": "Ice cold. Not free."
+      },
+      "freezer": {
+        "look": "Eis. Mostly freezer burn."
+      },
+      "magazines": {
+        "look": "Old flyers. All sold out."
+      }
+    }
   }
 }

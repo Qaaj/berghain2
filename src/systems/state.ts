@@ -5,6 +5,7 @@ export const playerState = {
   isAlive: true,
   inventory: [] as string[],
   chapter: 1,
+  money: 0, // in cents
   // Where to put the player when coming back to the street
   streetX: 200,
 };

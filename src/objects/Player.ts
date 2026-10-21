@@ -33,10 +33,14 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.setOrigin(0, 0).setDepth(Depth.PLAYER);
-    this.body.setSize(36, 95).setOffset(30, 1);
-    this.body.setCollideWorldBounds(true);
     this.mode = mode;
-    if (mode === 'inside') this.body.setAllowGravity(false);
+    if (mode === 'inside') {
+      // Top-down: only the feet collide, so you can walk "behind" tall props
+      this.body.setSize(30, 18).setOffset(33, 77).setAllowGravity(false);
+    } else {
+      this.body.setSize(36, 95).setOffset(30, 1);
+    }
+    this.body.setCollideWorldBounds(true);
     this.name = 'Punker';
   }
 

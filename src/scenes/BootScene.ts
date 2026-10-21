@@ -3,6 +3,13 @@ import { config, FONT, MessageType } from '../config';
 import { localise } from '../systems/text';
 import { createPlayerAnimations } from '../objects/Player';
 
+// Props drawn for the Späti in Aseprite (art/scripts/spati_art.py)
+const SPATI_PROPS = [
+  'counter', 'shopkeeper', 'gondola', 'magazine_rack', 'crates', 'freezer', 'cig_wall',
+  'poster_party', 'poster_beer', 'poster_hours', 'neon_open', 'plant', 'trash_bin',
+  'doormat', 'cat', 'pfand', 'clock',
+];
+
 // Port of OG preload_assets_command + app_boot state (title screen)
 export class BootScene extends Phaser.Scene {
   constructor() {
@@ -13,7 +20,8 @@ export class BootScene extends Phaser.Scene {
     this.load.setPath('assets/');
     this.load.json('text', 'localisation/data.json');
     this.load.tilemapTiledJSON('building', 'tilemaps/building.json');
-    this.load.image('gameTiles', 'building/inside/tile_inside_black_tiles.png');
+    this.load.image('spati_tiles', 'building/spati/spati_tiles.png');
+    for (const name of SPATI_PROPS) this.load.image(`spati_${name}`, `building/spati/${name}.png`);
     this.load.image('pickup_bottle', 'pickups/pickup_bottle.png');
     this.load.image('pickup_cigarettes', 'pickups/pickup_cigarettes.png');
     this.load.image('spati_fridge', 'building/inside/spati_fridge.png');

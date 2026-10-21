@@ -4,6 +4,7 @@ import { BootScene } from './scenes/BootScene';
 import { BuildingScene } from './scenes/BuildingScene';
 import { StreetScene } from './scenes/StreetScene';
 import { UbahnScene } from './scenes/UbahnScene';
+import { playerState } from './systems/state';
 
 const game = new Phaser.Game({
   type: Phaser.AUTO,
@@ -18,4 +19,6 @@ const game = new Phaser.Game({
   scene: [BootScene, StreetScene, BuildingScene, UbahnScene],
 });
 
-if (import.meta.env.DEV) (window as unknown as { game: Phaser.Game }).game = game;
+if (import.meta.env.DEV) {
+  Object.assign(window, { game, playerState });
+}

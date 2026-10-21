@@ -34,6 +34,6 @@ export const Depth = {
   HAZARD: 8,
   PICKUP: 9,
   PLAYER: 10,
-  NOTIFICATION: 20,
-  HUD: 100,
+  NOTIFICATION: 900,
+  HUD: 1000,
 } as const;
