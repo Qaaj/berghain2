@@ -36,6 +36,11 @@
         "fridge": "LOOK",
         "freezer": "LOOK",
         "magazines": "LOOK"
+      },
+      "ubahn": {
+        "exit": "Stairs up",
+        "ticket": "BUY TICKET",
+        "door": "BOARD"
       }
     },
     "menu": {
@@ -95,6 +100,13 @@
       "magazines": {
         "look": "Old flyers. All sold out."
       }
+    },
+    "ubahn": {
+      "ticket": "Single ticket 3.50 EUR. You have",
+      "closing": "Zurueckbleiben bitte!",
+      "announce": "U7 nach Rudow",
+      "next": "NEXT STOP: KOTTBUSSER TOR",
+      "soon": "(this part is not built yet)"
     }
   },
   "de": {
@@ -134,6 +146,11 @@
         "fridge": "LOOK",
         "freezer": "LOOK",
         "magazines": "LOOK"
+      },
+      "ubahn": {
+        "exit": "Stairs up",
+        "ticket": "BUY TICKET",
+        "door": "BOARD"
       }
     },
     "menu": {
@@ -193,6 +210,13 @@
       "magazines": {
         "look": "Old flyers. All sold out."
       }
+    },
+    "ubahn": {
+      "ticket": "Single ticket 3.50 EUR. You have",
+      "closing": "Zurueckbleiben bitte!",
+      "announce": "U7 nach Rudow",
+      "next": "NEXT STOP: KOTTBUSSER TOR",
+      "soon": "(this part is not built yet)"
     }
   }
 }

@@ -6,8 +6,8 @@ export const playerState = {
   inventory: [] as string[],
   chapter: 1,
   money: 0, // in cents
-  // Where to put the player when coming back to the street
-  streetX: 200,
+  // Where to put the player when coming back to the street (null = the level's start marker)
+  streetX: null as number | null,
 };
 
 export function resetPlayer() {

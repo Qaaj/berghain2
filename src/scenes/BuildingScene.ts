@@ -3,7 +3,7 @@ import { config, MessageType } from '../config';
 import { Hud } from '../objects/Hud';
 import { Player } from '../objects/Player';
 import { Controls } from '../systems/input';
-import { MessageQueue, PlayerNotification } from '../systems/messages';
+import { MessageQueue, PlayerNotification, SpeechBubble } from '../systems/messages';
 import { playerState } from '../systems/state';
 import { localise } from '../systems/text';
 
@@ -30,6 +30,7 @@ export class BuildingScene extends Phaser.Scene {
   private hud!: Hud;
   private messages!: MessageQueue;
   private notification!: PlayerNotification;
+  private bubble!: SpeechBubble;
   private zones: Zone[] = [];
   private current: Zone | null = null;
   private leaving = false;
@@ -88,6 +89,7 @@ export class BuildingScene extends Phaser.Scene {
     this.hud = new Hud(this);
     this.messages = new MessageQueue(this);
     this.notification = new PlayerNotification(this);
+    this.bubble = new SpeechBubble(this);
     this.messages.show(localise(this, 'building.welcome.spati'), MessageType.MEDIUM);
 
     if (config.debug) this.physics.world.createDebugGraphic();
@@ -117,7 +119,7 @@ export class BuildingScene extends Phaser.Scene {
     this.current =
       this.zones.find((z) => Phaser.Geom.Intersects.RectangleToRectangle(z.rect, new Phaser.Geom.Rectangle(feet.x, feet.y, feet.width, feet.height))) ??
       null;
-    if (this.current && !this.leaving) {
+    if (this.current && !this.leaving && !this.bubble.active) {
       const key = `interactable.object.${this.current.id}`;
       this.notification.show(key, localise(this, key));
     } else {
@@ -136,8 +138,11 @@ export class BuildingScene extends Phaser.Scene {
     }
   }
 
-  private say(key: string) {
-    this.notification.show('say', localise(this, key), 2500);
+  // Reply from the shopkeeper (above the counter) or from the thing the player is facing
+  private say(key: string, fromKeeper = false) {
+    const x = fromKeeper ? 603 : this.player.x + 48;
+    const y = fromKeeper ? 92 : this.player.y - 6;
+    this.bubble.say(localise(this, key), x, y, 2800, 56, 712);
   }
 
   // Action button near something. Returns true when it did something.
@@ -157,7 +162,7 @@ export class BuildingScene extends Phaser.Scene {
       case 'shopkeeper': {
         const has = playerState.inventory.includes('cigarettes');
         const line = has ? 'greet_c' : Phaser.Utils.Array.GetRandom(['greet_a', 'greet_b']);
-        this.say(`spati.shopkeeper.${line}`);
+        this.say(`spati.shopkeeper.${line}`, true);
         return true;
       }
       case 'pfand': {

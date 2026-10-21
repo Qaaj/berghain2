@@ -25,25 +25,31 @@ A gamepad also works (D-pad/left stick, A to interact).
 
 ## Layout
 
-- `src/scenes/` — `Boot` (preload + title), `Street` (the Neukölln level), `Building` (Späti interior from the Tiled map), `Ubahn`
-- `src/objects/` — `Player` (ground/jump/inside/zombie states), `Backdrop` (seeded street generator), `Hud`
-- `src/systems/` — input, seeded random (OG weighted table), message queue + player notifications, localisation, shared player state
-- `src/config.ts` — debug flag, seed, intro toggle, resolution
+- `src/scenes/` — `Boot` (preload + title), `Street` and `Ubahn` (tile levels with a moving train), `Building` (Späti interior)
+- `src/objects/` — `Player` (ground/jump/inside/zombie states), `Hud`
+- `src/systems/` — `tilelevel` (loads editor maps: layers, collision, markers), input, message queue, speech bubbles, localisation, shared player state
+- `src/config.ts` — debug flag, intro toggle, resolution
 - `public/assets/` — the original art, font, tilemap and localisation, copied from `OG/assets`
 
-## Art pipeline
+## Levels and art
 
-The Späti art is drawn in code and pushed to Aseprite through pixel-plugin's `pixel-mcp` server, so every
-asset also exists as an editable `.aseprite` file in `art/`.
+The street and the U-Bahn station are **tile levels you build in the Sprite Fusion tilemap editor**, from two
+16px tilesets drawn for this game. See [art/EDITOR.md](art/EDITOR.md) for the workflow (layers, marker tiles,
+export, `npm run import-map -- street map.zip`). Labelled guides of every tile are in `art/tilesets/`.
+
+Everything is drawn in code and pushed to Aseprite through pixel-plugin's `pixel-mcp` server, so each asset also
+exists as an editable `.aseprite` file in `art/`:
 
 ```bash
-python3 art/scripts/spati_art.py            # redraw all props + tileset -> art/*.aseprite and public/assets/building/spati/*.png (3x)
-python3 art/scripts/spati_art.py counter    # redraw one prop
-python3 art/scripts/build_spati_map.py      # regenerate public/assets/tilemaps/building.json (layout, collisions, interaction zones)
+python3 art/scripts/street_art.py      # Neukölln tileset (facades, windows, shops, props, graffiti, skyline, markers)
+python3 art/scripts/ubahn_art.py       # station tileset + the train sprites
+python3 art/scripts/spati_art.py       # the Späti interior props
+python3 art/scripts/build_street_map.py && python3 art/scripts/build_ubahn_map.py   # regenerate the starter levels
+python3 art/scripts/build_spati_map.py # the Späti interior layout
+python3 art/scripts/tile_guide.py neukoelln_street   # labelled guide image of a tileset
 ```
 
-Requires Aseprite and pixel-plugin (see `art/scripts/pixelmcp.py`). The layout lives in `build_spati_map.py`
-(props are placed by their feet; solids and interaction zones are listed there too).
+Needs Aseprite, pixel-plugin and `pip3 install pillow`.
 
 ## Differences from OG
 
@@ -53,4 +59,4 @@ Requires Aseprite and pixel-plugin (see `art/scripts/pixelmcp.py`). The layout l
 - You can leave the shop again (Space on the doormat); OG had no way out
 - Pickups are remembered. Bottles can be returned at the Pfand machine for money, which completes chapter 2
 - Missing localisation keys that OG referenced (welcome, game over, shop/U-Bahn texts) were added
-- The street layout is still seeded (`config.seed`) but generated with Phaser's RNG, so it differs from OG's
+- The seeded random street generator is gone: the street is a hand-built tile level (starter included), and the U-Bahn is a real station

@@ -39,6 +39,37 @@ export class MessageQueue {
   }
 }
 
+// A short line of dialogue in a dark box above a speaker. Replies stay up for
+// a few seconds; `active` lets scenes hold back their prompts meanwhile.
+export class SpeechBubble {
+  private box: Phaser.GameObjects.Container | null = null;
+  private timer: Phaser.Time.TimerEvent | null = null;
+
+  constructor(private scene: Phaser.Scene) {}
+
+  get active() {
+    return this.box !== null;
+  }
+
+  say(text: string, x: number, y: number, ms = 2800, minX = 0, maxX = Infinity) {
+    this.hide();
+    const label = this.scene.add.bitmapText(0, 0, FONT, text, 10).setOrigin(0.5);
+    const w = label.width + 16;
+    const h = label.height + 12;
+    const bg = this.scene.add.rectangle(0, 0, w, h, 0x000000, 0.82).setStrokeStyle(1, 0xdcd6c6);
+    const bx = Phaser.Math.Clamp(x, minX + w / 2, maxX - w / 2);
+    this.box = this.scene.add.container(bx, y - h / 2, [bg, label]).setDepth(Depth.NOTIFICATION + 50);
+    this.timer = this.scene.time.delayedCall(ms, () => this.hide());
+  }
+
+  hide() {
+    this.timer?.remove();
+    this.timer = null;
+    this.box?.destroy();
+    this.box = null;
+  }
+}
+
 // Port of OG show_player_notification_command + message_view: a small label
 // that follows the player, replaced when a different message comes in.
 export class PlayerNotification {

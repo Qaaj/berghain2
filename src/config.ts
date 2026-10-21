@@ -2,8 +2,6 @@
 export const config = {
   debug: false,
   skipIntro: false,
-  useRandomSeed: false,
-  seed: 868492,
   locale: 'en',
 };
 
@@ -11,8 +9,6 @@ export const config = {
 // logical resolution and scales it to fit.
 export const WIDTH = 1280;
 export const HEIGHT = 720;
-export const GROUND_HEIGHT = 64;
-export const LEVEL_WIDTH = 5120;
 export const FONT = 'carrier_command';
 
 export const MessageType = {

@@ -43,7 +43,19 @@ FONT = {
     'T': ['111', '010', '010', '010', '010'], 'U': ['101', '101', '101', '101', '111'],
     'W': ['101', '101', '111', '111', '101'], 'Y': ['101', '101', '010', '010', '010'],
     ' ': ['0', '0', '0', '0', '0'],
+    'J': ['001', '001', '001', '101', '010'], 'Q': ['010', '101', '101', '111', '011'],
+    'V': ['101', '101', '101', '101', '010'], 'X': ['101', '101', '010', '101', '101'],
+    'Z': ['111', '001', '010', '100', '111'],
+    '0': ['111', '101', '101', '101', '111'], '1': ['010', '110', '010', '010', '111'],
+    '2': ['111', '001', '111', '100', '111'], '3': ['111', '001', '011', '001', '111'],
+    '4': ['101', '101', '111', '001', '001'], '5': ['111', '100', '111', '001', '111'],
+    '6': ['011', '100', '111', '101', '111'], '7': ['111', '001', '010', '010', '010'],
+    '8': ['111', '101', '111', '101', '111'], '9': ['111', '101', '111', '001', '110'],
+    '-': ['000', '000', '111', '000', '000'], '.': ['0', '0', '0', '0', '1'],
+    '/': ['001', '001', '010', '100', '100'], '!': ['1', '1', '1', '0', '1'],
+    'K': ['101', '101', '110', '101', '101'],
 }
+UMLAUT = {'Ä': 'A', 'Ö': 'O', 'Ü': 'U'}
 
 
 def c(name):
@@ -77,14 +89,48 @@ class Sprite:
                 if ch != '.':
                     self.set(x + dx, y + dy, legend[ch])
 
-    def text(self, x, y, s, col):
+    def text(self, x, y, s, col, k=1):
+        """3x5 pixel font, optionally scaled by k. Umlauts put their dots 2k rows above y."""
         for ch in s:
-            glyph = FONT[ch]
+            dots = ch in UMLAUT
+            glyph = FONT[UMLAUT.get(ch, ch)]
             for dy, row in enumerate(glyph):
                 for dx, bit in enumerate(row):
                     if bit == '1':
-                        self.set(x + dx, y + dy, col)
-            x += len(glyph[0]) + 1
+                        self.rect(x + dx * k, y + dy * k, k, k, col)
+            if dots:
+                self.rect(x, y - 2 * k, k, k, col)
+                self.rect(x + 2 * k, y - 2 * k, k, k, col)
+            x += (len(glyph[0]) + 1) * k
+
+    def text_width(self, s, k=1):
+        return sum((len(FONT[UMLAUT.get(ch, ch)][0]) + 1) * k for ch in s) - k
+
+    def line(self, x0, y0, x1, y1, col):
+        dx, dy = abs(x1 - x0), -abs(y1 - y0)
+        sx, sy = (1 if x0 < x1 else -1), (1 if y0 < y1 else -1)
+        err = dx + dy
+        while True:
+            self.set(x0, y0, col)
+            if x0 == x1 and y0 == y1:
+                break
+            e2 = 2 * err
+            if e2 >= dy:
+                err += dy
+                x0 += sx
+            if e2 <= dx:
+                err += dx
+                y0 += sy
+
+    def ellipse(self, cx, cy, rx, ry, col):
+        for y in range(int(cy - ry) - 1, int(cy + ry) + 2):
+            for x in range(int(cx - rx) - 1, int(cx + rx) + 2):
+                if ((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2 <= 1:
+                    self.set(x, y, col)
+
+    def blit(self, other, ox, oy):
+        for (x, y), col in other.p.items():
+            self.set(ox + x, oy + y, col)
 
     def erase(self, x, y, w=1, h=1):
         for yy in range(y, y + h):
@@ -105,6 +151,18 @@ class Sprite:
         return self.w + 2 * pad, self.h + 2 * pad, out
 
 
+def shade(hexcol, f):
+    h = c(hexcol).lstrip('#')
+    r, g, b = (int(h[i:i + 2], 16) for i in (0, 2, 4))
+    return '#%02x%02x%02x' % (min(255, int(r * f)), min(255, int(g * f)), min(255, int(b * f)))
+
+
+def mix(a, b, t):
+    ha, hb = c(a).lstrip('#'), c(b).lstrip('#')
+    out = [int(int(ha[i:i + 2], 16) * (1 - t) + int(hb[i:i + 2], 16) * t) for i in (0, 2, 4)]
+    return '#%02x%02x%02x' % tuple(out)
+
+
 def noise(seed):
     return random.Random(seed)
 
@@ -123,17 +181,20 @@ class Studio:
         path = self.mcp.call('create_canvas', width=w, height=h, color_mode='rgb')['file_path']
         items = [{'x': x, 'y': y, 'color': col} for (x, y), col in sorted(px.items(), key=lambda i: (i[0][1], i[0][0]))]
         corners = [{'x': 0, 'y': 0, 'color': '#00000000'}, {'x': w - 1, 'y': h - 1, 'color': '#00000000'}]
-        for i in range(0, len(items), 600):
-            chunk = items[i:i + 600]
+        for i in range(0, len(items), 2000):
+            chunk = items[i:i + 2000]
             if i == 0:
                 chunk = corners + chunk
             self.mcp.call('draw_pixels', sprite_path=path, layer_name='Layer 1', frame_number=1, pixels=chunk)
         src = os.path.join(ART_DIR, name + '.aseprite')
         self.mcp.call('save_as', sprite_path=path, output_path=src)
+        out = dest if os.path.isabs(dest) else os.path.join(PUBLIC, dest)
+        os.makedirs(os.path.dirname(out), exist_ok=True)
+        if scale == 1:
+            self.mcp.call('export_sprite', sprite_path=src, output_path=out, format='png', frame_number=1)
+            return out
         tmp = os.path.join(TMP, name + '_x%d.aseprite' % scale)
         self.mcp.call('save_as', sprite_path=src, output_path=tmp)
         self.mcp.call('scale_sprite', sprite_path=tmp, scale_x=scale, scale_y=scale, algorithm='nearest')
-        out = os.path.join(PUBLIC, dest)
-        os.makedirs(os.path.dirname(out), exist_ok=True)
         self.mcp.call('export_sprite', sprite_path=tmp, output_path=out, format='png', frame_number=1)
         return out

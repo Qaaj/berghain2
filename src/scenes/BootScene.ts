@@ -2,6 +2,7 @@ import * as Phaser from 'phaser';
 import { config, FONT, MessageType } from '../config';
 import { localise } from '../systems/text';
 import { createPlayerAnimations } from '../objects/Player';
+import { TileLevel } from '../systems/tilelevel';
 
 // Props drawn for the Späti in Aseprite (art/scripts/spati_art.py)
 const SPATI_PROPS = [
@@ -18,6 +19,9 @@ export class BootScene extends Phaser.Scene {
 
   preload() {
     this.load.setPath('assets/');
+    TileLevel.preload(this, 'street');
+    TileLevel.preload(this, 'ubahn');
+    for (const part of ['cab', 'car', 'cab_open', 'car_open']) this.load.image(`ubahn_train_${part}`, `ubahn/train_${part}.png`);
     this.load.json('text', 'localisation/data.json');
     this.load.tilemapTiledJSON('building', 'tilemaps/building.json');
     this.load.image('spati_tiles', 'building/spati/spati_tiles.png');
@@ -26,16 +30,10 @@ export class BootScene extends Phaser.Scene {
     this.load.image('pickup_cigarettes', 'pickups/pickup_cigarettes.png');
     this.load.image('spati_fridge', 'building/inside/spati_fridge.png');
     this.load.bitmapFont(FONT, 'fonts/carrier_command.png', 'fonts/carrier_command.xml');
-    this.load.spritesheet('ground', 'ground.png', { frameWidth: 128, frameHeight: 64 });
     this.load.spritesheet('punker', 'punker.png', { frameWidth: 96, frameHeight: 96 });
     this.load.spritesheet('npc', 'npc.png', { frameWidth: 96, frameHeight: 96 });
     this.load.spritesheet('fire_bin', 'fire_bin.png', { frameWidth: 24, frameHeight: 48 });
-    this.load.spritesheet('shrubbery', 'shrubbery.png', { frameWidth: 144, frameHeight: 144 });
-    this.load.image('moon', 'moon.png');
     this.load.image('logo', 'logo.png');
-    this.load.image('street_lamp', 'street_lamp.png');
-    this.load.image('ubahn', 'ubahn.png');
-    this.load.image('fence', 'fence.png');
   }
 
   create() {

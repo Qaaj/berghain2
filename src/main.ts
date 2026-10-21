@@ -20,5 +20,12 @@ const game = new Phaser.Game({
 });
 
 if (import.meta.env.DEV) {
-  Object.assign(window, { game, playerState });
+  // Dev helpers for scripted play-testing: hold('ArrowRight', 39, 800) presses a key for 800 ms
+  const hold = async (code: string, keyCode: number, ms: number) => {
+    const fire = (type: string) => window.dispatchEvent(new KeyboardEvent(type, { code, key: code, keyCode, bubbles: true }));
+    fire('keydown');
+    await new Promise((r) => setTimeout(r, ms));
+    fire('keyup');
+  };
+  Object.assign(window, { game, playerState, hold });
 }

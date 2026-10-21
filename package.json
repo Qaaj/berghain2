@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "import-map": "python3 art/scripts/import_map.py"
   },
   "dependencies": {
     "phaser": "^4.2.1"
