@@ -1,5 +1,3 @@
 node_modules/
 dist/
 .DS_Store
-# The original 2015 game keeps its own git history
-OG/
