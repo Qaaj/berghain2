@@ -4,6 +4,7 @@ export const playerState = {
   mana: 5,
   isAlive: true,
   inventory: [] as string[],
+  chapter: 1,
   // Where to put the player when coming back to the street
   streetX: 200,
 };

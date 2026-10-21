@@ -41,7 +41,8 @@
       "level1": {
         "name": "Neukolln",
         "chapter1": {
-          "text": "Get some cigarettes"
+          "text": "Get some cigarettes",
+          "done": "Got the cigarettes!"
         },
         "chapter2": {
           "text": "Get some money"
@@ -49,7 +50,8 @@
       }
     },
     "inventory": {
-      "bottle": "An empty beer bottle."
+      "bottle": "An empty beer bottle.",
+      "cigarettes": "A pack of cigarettes."
     },
     "building": {
       "welcome": {
@@ -106,7 +108,8 @@
       "level1": {
         "name": "Neukolln",
         "chapter1": {
-          "text": "Get some cigarettes"
+          "text": "Get some cigarettes",
+          "done": "Got the cigarettes!"
         },
         "chapter2": {
           "text": "Get some money"
@@ -114,7 +117,8 @@
       }
     },
     "inventory": {
-      "bottle": "An empty beer bottle."
+      "bottle": "An empty beer bottle.",
+      "cigarettes": "A pack of cigarettes."
     },
     "building": {
       "welcome": {

@@ -15,6 +15,8 @@ export class BootScene extends Phaser.Scene {
     this.load.tilemapTiledJSON('building', 'tilemaps/building.json');
     this.load.image('gameTiles', 'building/inside/tile_inside_black_tiles.png');
     this.load.image('pickup_bottle', 'pickups/pickup_bottle.png');
+    this.load.image('pickup_cigarettes', 'pickups/pickup_cigarettes.png');
+    this.load.image('spati_fridge', 'building/inside/spati_fridge.png');
     this.load.bitmapFont(FONT, 'fonts/carrier_command.png', 'fonts/carrier_command.xml');
     this.load.spritesheet('ground', 'ground.png', { frameWidth: 128, frameHeight: 64 });
     this.load.spritesheet('punker', 'punker.png', { frameWidth: 96, frameHeight: 96 });

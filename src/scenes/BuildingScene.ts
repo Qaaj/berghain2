@@ -56,6 +56,13 @@ export class BuildingScene extends Phaser.Scene {
     this.player.onAction = () => this.leave();
     this.physics.add.collider(this.player, walls);
 
+    // Solid furniture placed in Tiled
+    const props = this.physics.add.staticGroup();
+    for (const o of objects.filter((o) => prop(o, 'type') === 'prop')) {
+      props.create(o.x!, o.y!, String(prop(o, 'spriteName'))).setOrigin(0, 0).setDepth(Depth.PICKUP).refreshBody();
+    }
+    this.physics.add.collider(this.player, props);
+
     const pickups = this.physics.add.staticGroup();
     for (const o of objects.filter((o) => prop(o, 'type') === 'pickup')) {
       const key = String(prop(o, 'spriteName'));
@@ -67,6 +74,11 @@ export class BuildingScene extends Phaser.Scene {
       playerState.inventory.push(sprite.name);
       this.messages.show(localise(this, `inventory.${sprite.name}`), MessageType.SMALL);
       sprite.destroy();
+      if (sprite.name === 'cigarettes' && playerState.chapter === 1) {
+        playerState.chapter = 2;
+        this.messages.show(localise(this, 'levels.level1.chapter1.done'), MessageType.MEDIUM);
+        this.messages.show(localise(this, 'levels.level1.chapter2.text'), MessageType.LARGE);
+      }
     });
 
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
