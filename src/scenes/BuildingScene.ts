@@ -198,7 +198,8 @@ export class BuildingScene extends Phaser.Scene {
         return true;
       }
       case 'pfand': {
-        const i = playerState.inventory.indexOf('bottle');
+        // The newest bottle, so a stack shrinks in place instead of the HUD slots reshuffling
+        const i = playerState.inventory.lastIndexOf('bottle');
         if (i === -1) {
           this.say('spati.pfand.empty');
         } else {
