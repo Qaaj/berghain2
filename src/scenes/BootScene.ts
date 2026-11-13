@@ -2,6 +2,7 @@ import * as Phaser from 'phaser';
 import { config, FONT, MessageType } from '../config';
 import { localise } from '../systems/text';
 import { createPlayerAnimations } from '../objects/Player';
+import { preloadInspectArt } from '../systems/inspect';
 import { TileLevel } from '../systems/tilelevel';
 
 // Props drawn for the Späti in Aseprite (art/scripts/spati_art.py)
@@ -37,6 +38,7 @@ export class BootScene extends Phaser.Scene {
     for (const name of DJ_PROPS) this.load.image(`dj_${name}`, `building/dj/${name}.png`);
     this.load.image('pickup_bottle', 'pickups/pickup_bottle.png');
     this.load.image('pickup_cigarettes', 'pickups/pickup_cigarettes.png');
+    preloadInspectArt(this);
     this.load.image('spati_fridge', 'building/inside/spati_fridge.png');
     this.load.bitmapFont(FONT, 'fonts/carrier_command.png', 'fonts/carrier_command.xml');
     this.load.spritesheet('punker', 'punker.png', { frameWidth: 96, frameHeight: 96 });

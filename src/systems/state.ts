@@ -6,6 +6,9 @@ export const playerState = {
   mana: 5,
   isAlive: true,
   inventory: [] as string[],
+  // Pickups already taken, one entry per placement ("<place>:<spot>" from close-ups, "<shop>:<item>@x,y" indoors),
+  // so each copy stays taken even after the item leaves the inventory (a returned bottle doesn't respawn)
+  looted: [] as string[],
   chapter: 1,
   money: 0, // in cents
   // Where to put the player when coming back to the street (null = the level's start marker)

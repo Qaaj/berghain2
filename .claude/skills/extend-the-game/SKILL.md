@@ -31,6 +31,22 @@ collision rects and interaction zones), props depth-sorted by their feet (`depth
 to the feet (`Player` mode `'inside'`), camera centred on a small room. Register the scene in `src/main.ts`,
 preload its assets in `BootScene`, and add the door marker behaviour in `StreetScene.interact()`.
 
+## A close-up you can inspect (look into a bin, open a drawer, read a pole)
+
+The `Inspect` scene shows a close-up over the paused scene; `src/systems/inspect.ts` holds the data.
+
+1. Art: add a function to `art/scripts/inspect_art.py` for the background (outline off, about 192x120 native) and
+   one sprite per takeable item (`<view>_<item>`), register them in `VIEWS`, run
+   `python3 art/scripts/inspect_art.py <view>`, and add the names to `INSPECT_ART`.
+2. Data: add an `INSPECT_VIEWS` entry with hotspot rects in the background's native pixels. A spot with `item` is
+   drawn from its sprite at x, y and goes into the inventory when used; the others are only looked at.
+3. Opening it: on the street, map a tile block to the view in `INSPECT_BLOCKS` (every placed copy works, no marker
+   needed). Anywhere else, call `openInspect(this, view, place)` from the scene's `interact()`, e.g. for a Späti
+   interaction zone. `place` must be unique per copy (`'<scene>:<what>@<where>'`): taken items are remembered in
+   `playerState.looted` as `<place>:<spot>`.
+4. Text, under `inspect.<view>`: `prompt`, `title`, `intro`, and per spot `look`, plus `use` (junk; it falls back
+   to `inspect.nothing`) or `take` (items). The item's pickup message is `inventory.<item>` as usual.
+
 ## State and progress
 
 `systems/state.ts` is the single shared object (`health`, `inventory`, `chapter`, `money`, `streetX`). Scenes are
