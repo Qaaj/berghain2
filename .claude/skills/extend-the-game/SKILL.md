@@ -47,6 +47,23 @@ The `Inspect` scene shows a close-up over the paused scene; `src/systems/inspect
 4. Text, under `inspect.<view>`: `prompt`, `title`, `intro`, and per spot `look`, plus `use` (junk; it falls back
    to `inspect.nothing`) or `take` (items). The item's pickup message is `inventory.<item>` as usual.
 
+## An NPC you can have a conversation with
+
+Talkers open the `Talk` overlay (`src/scenes/TalkScene.ts`): their close-up on top, their line typed out under it,
+and your answers to pick from. The conversation is data in `src/systems/dialogue.ts` (the dealer is the example).
+
+1. Art: in `art/scripts/npc_art.py` a street sprite `public/assets/npc/<npc>.png` (96x96 frames: 0 idle, 1 glancing
+   around) and a close-up `public/assets/talk/<npc>.png` (192x120 native, like an inspect view). Add a
+   `marker_<npc>` tile to the street kit and place it in the level.
+2. Data: a `Conversation` in `CONVERSATIONS` keyed by `<npc>`: `start(state)` picks the opening node (use flags to
+   make them remember you), `nodes` each have `choices`. A choice can lead on (`next`; none ends the talk), be
+   offered only `when` something holds, cost a `price` in cents (not enough money goes to the `broke` node),
+   `gives`/`takes` an inventory item, and `sets` a flag in `playerState.flags`. A node without choices is the NPC's
+   last word. Items a conversation gives need an icon (`pickups/pickup_<item>.png`, listed in `TALK_ITEMS`).
+3. Text, under `talk.<npc>`: `name`, and per node `line` (`a|b` picks one at random, `{money}` is the wallet) plus one
+   key per choice id. The prompt is `interactable.npc.<npc>.action`; given items say `inventory.<item>`.
+4. The street spawns every talker that has a marker. Anywhere else, call `openTalk(this, '<npc>')` from `interact()`.
+
 ## State and progress
 
 `systems/state.ts` is the single shared object (`health`, `inventory`, `chapter`, `money`, `streetX`). Scenes are

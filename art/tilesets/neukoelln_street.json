@@ -1,7 +1,7 @@
 {
  "tile": 16,
  "cols": 16,
- "rows": 81,
+ "rows": 82,
  "blocks": {
   "pave_top_a": {
    "x": 0,
@@ -1242,6 +1242,14 @@
    "h": 5,
    "id": 1218,
    "group": "vacant lot"
+  },
+  "marker_dealer": {
+   "x": 0,
+   "y": 81,
+   "w": 1,
+   "h": 1,
+   "id": 1296,
+   "group": "markers"
   }
  }
 }

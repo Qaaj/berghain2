@@ -21,7 +21,9 @@ npm run import-map -- street ~/Downloads/map.zip   # bring in a map exported fro
 
 - `src/scenes/` — `Boot` (preload, title) → `Street` ⇄ `Building` (Späti) and `Street` ⇄ `Ubahn`. `Inspect` is an
   overlay over any of them: the close-up of something you look into (the street container), with hotspots to read or
-  take items from. Views, hotspots and which street blocks open them live in `src/systems/inspect.ts`.
+  take items from. Views, hotspots and which street blocks open them live in `src/systems/inspect.ts`. `Talk` is the
+  same kind of overlay for NPCs you can have a branching conversation with (buy things, get remembered); the
+  conversations live in `src/systems/dialogue.ts`, the first talker is the dealer on the Neukölln street.
   `Street` takes `{district: 'neukoelln' | 'fhain'}` and `Ubahn` takes `{station, arriving}`: boarding the train
   plays a ride inside the carriage and arrives at the other station (Neukölln U7 ⇄ Friedrichshain U5), whose
   stairs lead up to that district's street. Friedrichshain has the Berghain (door marker `berghain`, not enterable yet).
@@ -46,6 +48,7 @@ an editable `.aseprite` in `art/`.
 |---|---|---|
 | `art/tilesets/neukoelln_street.*`, `friedrichshain_street.*`, `ubahn_station.*`, `ubahn_fhain.*`, `art/*.aseprite` | `street_art.py`, `fhain_art.py`, `ubahn_art.py` (both stations, themed), `spati_art.py`, `inspect_art.py` | the PNG/JSON; change the script (or the `.aseprite` and accept a regenerate will overwrite it) |
 | `public/assets/building/spati/*`, `public/assets/ubahn/*`, `public/assets/inspect/*` | same | |
+| `public/assets/npc/dealer.png`, `public/assets/talk/dealer.png`, `public/assets/pickups/pickup_{weed,ketamine,cocaine,heroin,poppers}.png`, `art/npc_*.aseprite` | `npc_art.py` (the street dealer, his conversation close-up, what he sells) | the PNGs |
 | `public/assets/tilemaps/*.json`, `*_sheet.png`, `*_catalog.json` | `build_*_map.py` or `import_map.py` | |
 
 Rules of thumb: reuse the shared palette in `spriteart.P` (OG colours first), keep tile-kit blocks aligned to the 16px

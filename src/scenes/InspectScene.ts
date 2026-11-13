@@ -1,6 +1,7 @@
 import * as Phaser from 'phaser';
 import { FONT, MessageType } from '../config';
 import { MessageQueue } from '../systems/messages';
+import { PAD_KEYS, StickSteps } from '../systems/overlay';
 import { INSPECT_VIEWS, type InspectSpot } from '../systems/inspect';
 import { playerState } from '../systems/state';
 import { localise } from '../systems/text';
@@ -8,11 +9,6 @@ import { localise } from '../systems/text';
 const S = 3; // close-up art is exported at 3x, like everything else
 const CAPTION_W = 560;
 const BRACKET = 4; // corner bracket length, native pixels
-// Standard gamepad buttons: A uses, B closes, the d-pad moves
-const PAD_KEYS: Record<number, string> = { 0: 'Space', 1: 'Escape', 12: 'ArrowUp', 13: 'ArrowDown', 14: 'ArrowLeft', 15: 'ArrowRight' };
-// The stick steps once per push: past STICK_PUSH it moves, and it has to come back under STICK_REST to move again
-const STICK_PUSH = 0.6;
-const STICK_REST = 0.3;
 
 // The close-up overlay (see systems/inspect.ts). It runs on top of a paused scene: the arrows (WASD, d-pad, stick) move a
 // cursor between the hotspots, which describes whatever it lands on; the action button takes items out; Escape,
@@ -30,7 +26,7 @@ export class InspectScene extends Phaser.Scene {
   private hint!: Phaser.GameObjects.BitmapText;
   private messages!: MessageQueue;
   private closing = false;
-  private stickHeld = false;
+  private stick = new StickSteps();
 
   constructor() {
     super('Inspect');
@@ -47,8 +43,7 @@ export class InspectScene extends Phaser.Scene {
     const def = INSPECT_VIEWS[this.view];
     this.closing = false;
     this.selected = 0;
-    // The stick may still be pushed from walking up to the object; wait for it to centre before it moves anything
-    this.stickHeld = true;
+    this.stick = new StickSteps();
 
     this.add.rectangle(0, 0, W, H, 0x000000, 0.78).setOrigin(0, 0).setInteractive().on('pointerdown', () => this.close());
     const bg = this.add.image(W / 2, H / 2 - 30, `inspect_${def.art}`).setInteractive();
@@ -113,19 +108,11 @@ export class InspectScene extends Phaser.Scene {
   }
 
   update() {
-    const pad = this.input.gamepad?.pad1;
-    if (!pad || this.closing) return;
-    const { x, y } = pad.leftStick;
-    const tilt = Math.max(Math.abs(x), Math.abs(y));
-    if (this.stickHeld) {
-      this.stickHeld = tilt > STICK_REST;
-      return;
-    }
-    if (tilt < STICK_PUSH) return;
-    this.stickHeld = true;
+    if (this.closing) return;
+    const step = this.stick.poll(this.input.gamepad?.pad1);
+    if (!step) return;
     this.showHint(true);
-    if (Math.abs(x) > Math.abs(y)) this.move(Math.sign(x), 0);
-    else this.move(0, Math.sign(y));
+    this.move(...step);
   }
 
   private showHint(pad: boolean) {

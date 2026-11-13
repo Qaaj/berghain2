@@ -2,6 +2,7 @@ import * as Phaser from 'phaser';
 import { config, FONT, MessageType } from '../config';
 import { localise } from '../systems/text';
 import { createPlayerAnimations } from '../objects/Player';
+import { preloadTalkArt } from '../systems/dialogue';
 import { preloadInspectArt } from '../systems/inspect';
 import { TileLevel } from '../systems/tilelevel';
 
@@ -41,6 +42,7 @@ export class BootScene extends Phaser.Scene {
     this.load.image('pickup_bottle', 'pickups/pickup_bottle.png');
     this.load.image('pickup_cigarettes', 'pickups/pickup_cigarettes.png');
     preloadInspectArt(this);
+    preloadTalkArt(this);
     this.load.image('spati_fridge', 'building/inside/spati_fridge.png');
     this.load.bitmapFont(FONT, 'fonts/carrier_command.png', 'fonts/carrier_command.xml');
     this.load.spritesheet('punker', 'punker.png', { frameWidth: 96, frameHeight: 96 });

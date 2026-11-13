@@ -15,6 +15,7 @@ and a PNG the game loads. Never edit the generated PNG or tileset JSON by hand: 
 | Neukölln street tileset (facades, windows, balconies, shopfronts, props, graffiti, skyline, markers) | `art/scripts/street_facades.py`, `street_shops.py`, `street_props.py`, assembled by `street_art.py` | `art/tilesets/neukoelln_street.png/.json`, `art/neukoelln_street.aseprite` |
 | U-Bahn station tileset + train sprites | `art/scripts/ubahn_art.py` | `art/tilesets/ubahn_station.*`, `public/assets/ubahn/train_*.png` |
 | Späti interior props and tiles | `art/scripts/spati_art.py` | `art/spati_*.aseprite`, `public/assets/building/spati/*.png` |
+| Street dealer (sprite, talk close-up, drug pickups) | `art/scripts/npc_art.py` | `art/npc_*.aseprite`, `public/assets/npc/dealer.png`, `public/assets/talk/dealer.png`, `public/assets/pickups/pickup_*.png` |
 
 Toolkit: `spriteart.py` (`Sprite`: `rect`, `hline`, `vline`, `line`, `ellipse`, `grid`, `text` with a 3x5 font, `erase`,
 `blit`; `Studio.make` pushes a sprite to Aseprite and exports it), `sheet.py` (`TileSheet`: packs named blocks onto a

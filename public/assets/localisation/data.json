@@ -29,6 +29,9 @@
           "greet2": "Where's the party?",
           "reply1": "burp",
           "reply2": "hiccup"
+        },
+        "dealer": {
+          "action": "TALK"
         }
       },
       "object": {
@@ -79,7 +82,12 @@
     },
     "inventory": {
       "bottle": "An empty beer bottle.",
-      "cigarettes": "A pack of cigarettes."
+      "cigarettes": "A pack of cigarettes.",
+      "weed": "A bag of weed.",
+      "poppers": "A little bottle of poppers.",
+      "ketamine": "A baggie of ketamine.",
+      "heroin": "A wrap of heroin.",
+      "cocaine": "A paper wrap of cocaine."
     },
     "building": {
       "welcome": {
@@ -223,6 +231,101 @@
     },
     "berghain": {
       "bouncer": "Not tonight."
+    },
+    "talk": {
+      "hint": "ARROWS choose   E say   ESC walk away",
+      "hint_pad": "STICK choose   A say   B walk away",
+      "leave": "Walk away",
+      "dealer": {
+        "name": "The guy in the doorway",
+        "hello": {
+          "line": "Psst. Hey. You. Looking for something?",
+          "what": "What have you got?",
+          "who": "Who are you?",
+          "no": "No thanks."
+        },
+        "again": {
+          "line": "You again. Changed your mind?|Back so soon? Thought so.",
+          "what": "What have you got?",
+          "who": "Who are you, again?",
+          "no": "Just passing."
+        },
+        "regular": {
+          "line": "My favourite customer. Same again?|Ah, a returning client. What'll it be?",
+          "what": "Show me the list.",
+          "no": "Not tonight."
+        },
+        "who": {
+          "line": "Nobody. Just a guy standing in a doorway. Lots of doorways in Neukoelln.",
+          "cop": "Are you a cop?",
+          "what": "Fine. What have you got?",
+          "no": "Okay... bye."
+        },
+        "cop": {
+          "line": "Do I look like a cop? The cop's down the road. Wave at him for me.",
+          "what": "Right. So, what have you got?",
+          "no": "Forget I asked."
+        },
+        "menu": {
+          "line": "Cash only. No cards, no Pfand bottles, no questions.",
+          "weed": "Weed",
+          "poppers": "Poppers",
+          "ketamine": "Ketamine",
+          "heroin": "Heroin",
+          "cocaine": "Cocaine",
+          "bottle": "I've got a Pfand bottle...",
+          "nothing": "Nothing, actually."
+        },
+        "weed": {
+          "line": "Gras. Grown on a balcony in Rixdorf, allegedly. A tenner a bag.",
+          "buy": "I'll take it.",
+          "back": "What else?"
+        },
+        "poppers": {
+          "line": "Poppers. Little brown bottle: sniff, giggle, headache. The Spaeti sells them too, but I don't judge.",
+          "buy": "I'll take them.",
+          "back": "What else?"
+        },
+        "ketamine": {
+          "line": "Keta. You'll be having deep talks with the U-Bahn tiles by four in the morning.",
+          "buy": "I'll take it.",
+          "back": "What else?"
+        },
+        "heroin": {
+          "line": "...Heroin? You sure, friend? That's not a party, that's a problem.",
+          "buy": "Yes, I'm sure.",
+          "back": "No. Forget it."
+        },
+        "cocaine": {
+          "line": "Koks. Half the Berghain queue is on it. The bouncer can tell, by the way.",
+          "buy": "I'll take it.",
+          "back": "What else?"
+        },
+        "bottle": {
+          "line": "A Pfand bottle. Wow. Take it to the Spaeti, genius. That's 25 cents.",
+          "back": "Fine. What else?",
+          "no": "Worth a try."
+        },
+        "sold": {
+          "line": "Pleasure doing business. You didn't get it from me.|Nice. Now walk. Slowly. Don't look back.",
+          "more": "Anything else?",
+          "no": "Thanks. Bye."
+        },
+        "broke": {
+          "line": "You've got {money} EUR. That's not money, that's Pfand.|{money} EUR? Come back when your pockets are less sad.",
+          "discount": "Any chance of a discount?",
+          "back": "Let me see the list again.",
+          "no": "Fine, I'm going."
+        },
+        "discount": {
+          "line": "A discount. This is Neukoelln, not Lidl.",
+          "back": "Show me the list again.",
+          "no": "Worth a try."
+        },
+        "bye": {
+          "line": "Stay safe. You never saw me.|Later.|Keep walking. Don't look back."
+        }
+      }
     }
   },
   "de": {
@@ -255,6 +358,9 @@
           "greet2": "Where's the party?",
           "reply1": "burp",
           "reply2": "hiccup"
+        },
+        "dealer": {
+          "action": "TALK"
         }
       },
       "object": {
@@ -305,7 +411,12 @@
     },
     "inventory": {
       "bottle": "An empty beer bottle.",
-      "cigarettes": "A pack of cigarettes."
+      "cigarettes": "A pack of cigarettes.",
+      "weed": "A bag of weed.",
+      "poppers": "A little bottle of poppers.",
+      "ketamine": "A baggie of ketamine.",
+      "heroin": "A wrap of heroin.",
+      "cocaine": "A paper wrap of cocaine."
     },
     "building": {
       "welcome": {
@@ -449,6 +560,101 @@
     },
     "berghain": {
       "bouncer": "Heute nicht."
+    },
+    "talk": {
+      "hint": "ARROWS choose   E say   ESC walk away",
+      "hint_pad": "STICK choose   A say   B walk away",
+      "leave": "Walk away",
+      "dealer": {
+        "name": "The guy in the doorway",
+        "hello": {
+          "line": "Psst. Hey. You. Looking for something?",
+          "what": "What have you got?",
+          "who": "Who are you?",
+          "no": "No thanks."
+        },
+        "again": {
+          "line": "You again. Changed your mind?|Back so soon? Thought so.",
+          "what": "What have you got?",
+          "who": "Who are you, again?",
+          "no": "Just passing."
+        },
+        "regular": {
+          "line": "My favourite customer. Same again?|Ah, a returning client. What'll it be?",
+          "what": "Show me the list.",
+          "no": "Not tonight."
+        },
+        "who": {
+          "line": "Nobody. Just a guy standing in a doorway. Lots of doorways in Neukoelln.",
+          "cop": "Are you a cop?",
+          "what": "Fine. What have you got?",
+          "no": "Okay... bye."
+        },
+        "cop": {
+          "line": "Do I look like a cop? The cop's down the road. Wave at him for me.",
+          "what": "Right. So, what have you got?",
+          "no": "Forget I asked."
+        },
+        "menu": {
+          "line": "Cash only. No cards, no Pfand bottles, no questions.",
+          "weed": "Weed",
+          "poppers": "Poppers",
+          "ketamine": "Ketamine",
+          "heroin": "Heroin",
+          "cocaine": "Cocaine",
+          "bottle": "I've got a Pfand bottle...",
+          "nothing": "Nothing, actually."
+        },
+        "weed": {
+          "line": "Gras. Grown on a balcony in Rixdorf, allegedly. A tenner a bag.",
+          "buy": "I'll take it.",
+          "back": "What else?"
+        },
+        "poppers": {
+          "line": "Poppers. Little brown bottle: sniff, giggle, headache. The Spaeti sells them too, but I don't judge.",
+          "buy": "I'll take them.",
+          "back": "What else?"
+        },
+        "ketamine": {
+          "line": "Keta. You'll be having deep talks with the U-Bahn tiles by four in the morning.",
+          "buy": "I'll take it.",
+          "back": "What else?"
+        },
+        "heroin": {
+          "line": "...Heroin? You sure, friend? That's not a party, that's a problem.",
+          "buy": "Yes, I'm sure.",
+          "back": "No. Forget it."
+        },
+        "cocaine": {
+          "line": "Koks. Half the Berghain queue is on it. The bouncer can tell, by the way.",
+          "buy": "I'll take it.",
+          "back": "What else?"
+        },
+        "bottle": {
+          "line": "A Pfand bottle. Wow. Take it to the Spaeti, genius. That's 25 cents.",
+          "back": "Fine. What else?",
+          "no": "Worth a try."
+        },
+        "sold": {
+          "line": "Pleasure doing business. You didn't get it from me.|Nice. Now walk. Slowly. Don't look back.",
+          "more": "Anything else?",
+          "no": "Thanks. Bye."
+        },
+        "broke": {
+          "line": "You've got {money} EUR. That's not money, that's Pfand.|{money} EUR? Come back when your pockets are less sad.",
+          "discount": "Any chance of a discount?",
+          "back": "Let me see the list again.",
+          "no": "Fine, I'm going."
+        },
+        "discount": {
+          "line": "A discount. This is Neukoelln, not Lidl.",
+          "back": "Show me the list again.",
+          "no": "Worth a try."
+        },
+        "bye": {
+          "line": "Stay safe. You never saw me.|Later.|Keep walking. Don't look back."
+        }
+      }
     }
   }
 }

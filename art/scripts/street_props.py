@@ -463,13 +463,26 @@ MARKERS = [  # name, letter, colour
 ]
 
 
+# Added after the original set, in their own row at the end of the sheet so earlier tile ids stay put
+LATE_MARKERS = [('marker_dealer', 'X', '#8fd18a')]
+
+
+def marker_tile(s, letter, col):
+    s.rect(0, 0, 16, 16, col)
+    s.rect(1, 1, 14, 14, shade(col, 0.55))
+    s.rect(2, 2, 12, 12, col)
+    s.text(6, 5, letter, '#121114')
+    for x in range(0, 16, 2):
+        s.set(x, 0, '#121114'); s.set(x + 1, 15, '#121114')
+
+
 def markers(sheet):
     sheet.group('markers')
     for name, letter, col in MARKERS:
-        s = sheet.add(name)
-        s.rect(0, 0, 16, 16, col)
-        s.rect(1, 1, 14, 14, shade(col, 0.55))
-        s.rect(2, 2, 12, 12, col)
-        s.text(6, 5, letter, '#121114')
-        for x in range(0, 16, 2):
-            s.set(x, 0, '#121114'); s.set(x + 1, 15, '#121114')
+        marker_tile(sheet.add(name), letter, col)
+
+
+def late_markers(sheet):
+    sheet.group('markers')
+    for name, letter, col in LATE_MARKERS:
+        marker_tile(sheet.add(name), letter, col)

@@ -2,6 +2,7 @@ import * as Phaser from 'phaser';
 import { config, Depth, MessageType } from '../config';
 import { Hud } from '../objects/Hud';
 import { Player } from '../objects/Player';
+import { CONVERSATIONS, openTalk } from '../systems/dialogue';
 import { Controls } from '../systems/input';
 import { INSPECT_BLOCKS, openInspect } from '../systems/inspect';
 import { MessageQueue, PlayerNotification, SpeechBubble } from '../systems/messages';
@@ -18,12 +19,14 @@ let introShown = false;
 const LEVEL_KEY: Record<District, string> = { neukoelln: 'street', fhain: 'fhain' };
 
 interface Interactable {
-  type: string; // 'object.door' | 'object.ubahn' | 'object.cat' | 'object.berghain' | 'npc.<role>' | 'inspect.<view>'
+  // 'object.door' | 'object.ubahn' | 'object.cat' | 'object.berghain' | 'npc.<role>' | 'inspect.<view>' | 'npc.<talker>'
+  type: string;
   x: number;
   width: number;
   npc?: Phaser.GameObjects.Sprite;
   at?: Phaser.GameObjects.Sprite;
   place?: string; // for close-ups: which copy of the object, so its contents are remembered
+  talker?: string; // an NPC you can have a conversation with (systems/dialogue.ts)
 }
 
 // A street: Neukölln (public/assets/tilemaps/street.json) or Friedrichshain (fhain.json), both built in the
@@ -38,6 +41,7 @@ export class StreetScene extends Phaser.Scene {
   private bubble!: SpeechBubble;
   weather!: Weather;
   private interactables: Interactable[] = [];
+  private talkers: Phaser.GameObjects.Sprite[] = [];
   private inFrontOf: Interactable | null = null;
   private talking = false;
   private startX = 0;
@@ -55,6 +59,7 @@ export class StreetScene extends Phaser.Scene {
     const { width: W, height: H } = this.scale;
     const home = this.district === 'neukoelln';
     this.interactables = [];
+    this.talkers = [];
     this.talking = false;
 
     // Sky: OG's gradient from black to a dark orange, fixed to the camera
@@ -88,6 +93,22 @@ export class StreetScene extends Phaser.Scene {
           .setDepth(Depth.NPC)
           .setName(role);
         this.interactables.push({ type: `npc.${role}`, x: npc.x - 50, width: npc.width + 50, npc });
+      }
+    }
+    // NPCs with a whole conversation: they glance around now and then while they wait
+    for (const talker of Object.keys(CONVERSATIONS)) {
+      for (const m of level.markersNamed(talker)) {
+        const npc = this.add.sprite(m.x + m.w / 2 - 48, m.y - 96, `npc_${talker}`, 0).setOrigin(0, 0).setDepth(Depth.NPC);
+        this.time.addEvent({
+          delay: 2600,
+          loop: true,
+          callback: () => {
+            npc.setFrame(1);
+            this.time.delayedCall(900, () => npc.setFrame(0));
+          },
+        });
+        this.talkers.push(npc);
+        this.interactables.push({ type: `npc.${talker}`, x: npc.x - 50, width: npc.width + 50, at: npc, talker });
       }
     }
     for (const [block, view] of Object.entries(INSPECT_BLOCKS)) {
@@ -146,6 +167,8 @@ export class StreetScene extends Phaser.Scene {
     this.updateInteractionPrompt();
     this.player.tick(this.controls);
     this.weather.update(delta);
+    // Talkers are drawn facing left; they keep an eye on you
+    for (const npc of this.talkers) npc.setFlipX(this.player.x > npc.x);
     this.notification.follow(this.player.body);
 
     if (this.player.body.y > this.scale.height + 100) playerState.health = 0;
@@ -209,6 +232,11 @@ export class StreetScene extends Phaser.Scene {
 
     if (target.place) {
       openInspect(this, target.type.slice('inspect.'.length), target.place);
+      return true;
+    }
+
+    if (target.talker) {
+      openTalk(this, target.talker);
       return true;
     }
 
