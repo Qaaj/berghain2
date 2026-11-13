@@ -6,13 +6,13 @@ build your own street with the layer names below, export, and run import_map.py 
 Layers, bottom to top:  far (scrolls at half speed) | buildings | details | ground (collider) | props |
                         markers (hidden, spawns things) | front (drawn over the player, e.g. tree crowns)
 Marker tiles (see the 'markers' section of the tileset): P player start, D door into the Späti,
-U U-Bahn entrance, S/W/C smoker/weirdo/cop, F fire bin, K cat. An entity stands on the bottom of its marker tile.
+R door into the record shop, U U-Bahn entrance, S/W/C smoker/weirdo/cop, F fire bin, K cat. An entity stands on the bottom of its marker tile.
 """
 import random
 
 from tilemaplib import Level
 
-W, H = 100, 15
+W, H = 110, 15
 GROUND = 13          # the row the player walks on top of
 PAL = 'abcde'
 
@@ -106,6 +106,7 @@ def build():
     apartment_building(70, 'door_apt_green', 'a')
     shop_building(80, 'shop_friseur', 'e')
     shop_building(90, 'shop_closed', 'b')
+    shop_building(100, 'shop_dj', 'c', door_marker='marker_djdoor')
 
     # ---------------------------------------------------------- graffiti etc
     L.put('details', 'tag_rave', 8, 10)
@@ -122,7 +123,7 @@ def build():
     L.put('details', 'sign_weser', 19, 7)
 
     # -------------------------------------------------- street furniture
-    for x in (8, 28, 46, 66, 86):
+    for x in (8, 28, 46, 66, 86, 101):
         L.put('props', 'lamp', x, 9)
     for x in (19, 39, 69):
         L.put('props', 'bin_orange', x, 11)

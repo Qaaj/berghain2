@@ -21,8 +21,20 @@ interface Zone {
   rect: Phaser.Geom.Rectangle;
 }
 
-// The Späti: a compact top-down shop built from art/scripts/spati_art.py and
-// the generated map in public/assets/tilemaps/building.json. Props are depth
+export type ShopId = 'spati' | 'dj';
+
+// Each interior: its generated map (art/scripts/build_<shop>_map.py), the tileset name inside that map,
+// and where the person behind the counter talks from
+const INTERIORS: Record<ShopId, { map: string; tiles: string; keeper: { x: number; y: number } }> = {
+  spati: { map: 'building', tiles: 'spati_tiles', keeper: { x: 603, y: 92 } },
+  dj: { map: 'dj', tiles: 'dj_tiles', keeper: { x: 384, y: 68 } },
+};
+
+// What a record costs in the DJ shop, in cents
+const RECORD_PRICE = 1500;
+
+// The shop interiors (the Späti and the record shop): compact top-down rooms built from
+// art/scripts/<shop>_art.py and the generated maps in public/assets/tilemaps/. Props are depth
 // sorted by their feet so you can walk behind tall ones.
 export class BuildingScene extends Phaser.Scene {
   private player!: Player;
@@ -34,9 +46,14 @@ export class BuildingScene extends Phaser.Scene {
   private zones: Zone[] = [];
   private current: Zone | null = null;
   private leaving = false;
+  private shop: ShopId = 'spati';
 
   constructor() {
     super({ key: 'Building', physics: { arcade: { gravity: { x: 0, y: 0 } } } });
+  }
+
+  init(data: { shop?: ShopId }) {
+    this.shop = data.shop ?? 'spati';
   }
 
   create() {
@@ -45,8 +62,9 @@ export class BuildingScene extends Phaser.Scene {
     this.current = null;
     this.cameras.main.setBackgroundColor(0x000000);
 
-    const map = this.make.tilemap({ key: 'building' });
-    const tiles = map.addTilesetImage('spati_tiles', 'spati_tiles')!;
+    const interior = INTERIORS[this.shop];
+    const map = this.make.tilemap({ key: interior.map });
+    const tiles = map.addTilesetImage(interior.tiles, interior.tiles)!;
     map.createLayer('roomLayer', tiles)!.setDepth(0);
 
     // Centre the small room in the view instead of following the player
@@ -90,7 +108,7 @@ export class BuildingScene extends Phaser.Scene {
     this.messages = new MessageQueue(this);
     this.notification = new PlayerNotification(this);
     this.bubble = new SpeechBubble(this);
-    this.messages.show(localise(this, 'building.welcome.spati'), MessageType.MEDIUM);
+    this.messages.show(localise(this, `building.welcome.${this.shop}`), MessageType.MEDIUM);
 
     if (config.debug) this.physics.world.createDebugGraphic();
     this.cameras.main.fadeIn(300);
@@ -99,7 +117,7 @@ export class BuildingScene extends Phaser.Scene {
   private placeProp(o: TiledObject, type: string) {
     const img = this.add.image(o.x!, o.y!, String(prop(o, 'spriteName'))).setOrigin(0.5, 1);
     img.setDepth(type === 'decor' ? 1 : type === 'flat' ? 2 : o.y!);
-    if (o.name === 'neon_open') {
+    if (o.name === 'neon_open' || o.name === 'neon_records') {
       // The sign has a loose connection
       this.tweens.add({ targets: img, alpha: 0.7, duration: 90, yoyo: true, repeat: -1, repeatDelay: 1800, hold: 60 });
     }
@@ -140,9 +158,14 @@ export class BuildingScene extends Phaser.Scene {
 
   // Reply from the shopkeeper (above the counter) or from the thing the player is facing
   private say(key: string, fromKeeper = false) {
-    const x = fromKeeper ? 603 : this.player.x + 48;
-    const y = fromKeeper ? 92 : this.player.y - 6;
-    this.bubble.say(localise(this, key), x, y, 2800, 56, 712);
+    this.sayText(localise(this, key), fromKeeper);
+  }
+
+  private sayText(text: string, fromKeeper = false) {
+    const { keeper } = INTERIORS[this.shop];
+    const x = fromKeeper ? keeper.x : this.player.x + 48;
+    const y = fromKeeper ? keeper.y : this.player.y - 6;
+    this.bubble.say(text, x, y, 2800, 56, 712);
   }
 
   // Action button near something. Returns true when it did something.
@@ -150,15 +173,20 @@ export class BuildingScene extends Phaser.Scene {
     const zone = this.current;
     if (this.leaving || !zone || !this.controls.actionJustPressed) return false;
 
-    switch (zone.id) {
-      case 'exit':
-        this.leaving = true;
-        this.notification.hide();
-        this.player.freeze();
-        this.player.body.setVelocity(0, 0);
-        this.cameras.main.fadeOut(400);
-        this.cameras.main.once('camerafadeoutcomplete', () => this.scene.start('Street'));
-        return true;
+    if (zone.id === 'exit') {
+      this.leaving = true;
+      this.notification.hide();
+      this.player.freeze();
+      this.player.body.setVelocity(0, 0);
+      this.cameras.main.fadeOut(400);
+      this.cameras.main.once('camerafadeoutcomplete', () => this.scene.start('Street'));
+      return true;
+    }
+    return this.shop === 'dj' ? this.interactDj(zone.id) : this.interactSpati(zone.id);
+  }
+
+  private interactSpati(id: string): boolean {
+    switch (id) {
       case 'shopkeeper': {
         const has = playerState.inventory.includes('cigarettes');
         const line = has ? 'greet_c' : Phaser.Utils.Array.GetRandom(['greet_a', 'greet_b']);
@@ -185,10 +213,33 @@ export class BuildingScene extends Phaser.Scene {
         return true;
       case 'fridge':
       case 'freezer':
-        this.say(`spati.${zone.id}.look`);
+        this.say(`spati.${id}.look`);
         return true;
       case 'magazines':
         this.say('spati.magazines.look');
+        return true;
+    }
+    return false;
+  }
+
+  private interactDj(id: string): boolean {
+    switch (id) {
+      case 'dj': {
+        const line = Phaser.Utils.Array.GetRandom(['greet_a', 'greet_b', 'greet_c']);
+        this.say(`dj.dj.${line}`, true);
+        return true;
+      }
+      case 'record_bin': {
+        // Digging is free; the price tag is there to show how far Pfand money goes
+        const find = localise(this, `dj.record_bin.find_${Phaser.Math.Between(1, 4)}`);
+        const price = (RECORD_PRICE / 100).toFixed(2);
+        this.sayText(`${find} ${localise(this, 'dj.record_bin.price')} ${price} EUR`);
+        return true;
+      }
+      case 'listening':
+      case 'speaker':
+      case 'sofa':
+        this.say(`dj.${id}.look`);
         return true;
     }
     return false;

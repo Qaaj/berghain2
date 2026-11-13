@@ -35,7 +35,13 @@
         "cat": "PET",
         "fridge": "LOOK",
         "freezer": "LOOK",
-        "magazines": "LOOK"
+        "magazines": "LOOK",
+        "djdoor": "Enter Record Shop",
+        "dj": "TALK",
+        "record_bin": "DIG",
+        "listening": "LISTEN",
+        "speaker": "LOOK",
+        "sofa": "SIT"
       },
       "ubahn": {
         "exit": "Stairs up",
@@ -67,7 +73,8 @@
     },
     "building": {
       "welcome": {
-        "spati": "Welcome to the Spati"
+        "spati": "Welcome to the Spati",
+        "dj": "Plattenladen. Records only"
       },
       "ubahn": {
         "welcome": "U-Bahn. Press any key to go back"
@@ -107,6 +114,29 @@
       "announce": "U7 nach Rudow",
       "next": "NEXT STOP: KOTTBUSSER TOR",
       "soon": "(this part is not built yet)"
+    },
+    "dj": {
+      "dj": {
+        "greet_a": "No requests.",
+        "greet_b": "Vinyl only. Phones in the pocket.",
+        "greet_c": "I played the Panorama Bar once. Sunday, 11 am."
+      },
+      "record_bin": {
+        "find_1": "Minimal techno, white label.",
+        "find_2": "A dub plate. Nobody knows who.",
+        "find_3": "Schlager. Wrong bin.",
+        "find_4": "Detroit, 1993. Mint.",
+        "price": "Price tag:"
+      },
+      "listening": {
+        "look": "Unz. Unz. Unz. Unz."
+      },
+      "speaker": {
+        "look": "Your ribcage is now part of the bassline."
+      },
+      "sofa": {
+        "look": "Someone has been sleeping here since Friday."
+      }
     }
   },
   "de": {
@@ -145,7 +175,13 @@
         "cat": "PET",
         "fridge": "LOOK",
         "freezer": "LOOK",
-        "magazines": "LOOK"
+        "magazines": "LOOK",
+        "djdoor": "Enter Record Shop",
+        "dj": "TALK",
+        "record_bin": "DIG",
+        "listening": "LISTEN",
+        "speaker": "LOOK",
+        "sofa": "SIT"
       },
       "ubahn": {
         "exit": "Stairs up",
@@ -177,7 +213,8 @@
     },
     "building": {
       "welcome": {
-        "spati": "Welcome to the Spati"
+        "spati": "Welcome to the Spati",
+        "dj": "Plattenladen. Records only"
       },
       "ubahn": {
         "welcome": "U-Bahn. Press any key to go back"
@@ -217,6 +254,29 @@
       "announce": "U7 nach Rudow",
       "next": "NEXT STOP: KOTTBUSSER TOR",
       "soon": "(this part is not built yet)"
+    },
+    "dj": {
+      "dj": {
+        "greet_a": "No requests.",
+        "greet_b": "Vinyl only. Phones in the pocket.",
+        "greet_c": "I played the Panorama Bar once. Sunday, 11 am."
+      },
+      "record_bin": {
+        "find_1": "Minimal techno, white label.",
+        "find_2": "A dub plate. Nobody knows who.",
+        "find_3": "Schlager. Wrong bin.",
+        "find_4": "Detroit, 1993. Mint.",
+        "price": "Price tag:"
+      },
+      "listening": {
+        "look": "Unz. Unz. Unz. Unz."
+      },
+      "speaker": {
+        "look": "Your ribcage is now part of the bassline."
+      },
+      "sofa": {
+        "look": "Someone has been sleeping here since Friday."
+      }
     }
   }
 }

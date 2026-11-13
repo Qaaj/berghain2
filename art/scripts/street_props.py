@@ -353,7 +353,8 @@ def far(sheet):
 
 # ----------------------------------------------------------------- markers
 MARKERS = [  # name, letter, colour
-    ('marker_start', 'P', '#2fa84a'), ('marker_door', 'D', '#ff71f0'), ('marker_ubahn', 'U', '#134ae0'),
+    ('marker_start', 'P', '#2fa84a'), ('marker_door', 'D', '#ff71f0'), ('marker_djdoor', 'R', '#9b5cff'),
+    ('marker_ubahn', 'U', '#134ae0'),
     ('marker_smoker', 'S', '#d28c6b'), ('marker_weirdo', 'W', '#d26ba0'), ('marker_cop', 'C', '#5d7a8c'),
     ('marker_fire', 'F', '#ff7a1c'), ('marker_cat', 'K', '#e08a3c'),
 ]

@@ -117,6 +117,59 @@ def paint_apotheke(s, x, y, w, h):
     s.rect(x + w - 11, y + h - 11, 4, 8, '#ffffff'); s.rect(x + w - 13, y + h - 8, 8, 4, '#ffffff')
 
 
+def paint_dj(s, x, y, w, h):
+    interior_gradient(s, x, y, w, h, '#2e1745', '#0c0714')
+    sleeves = [('#ff71f0', '#1a1226'), ('#d2d631', '#121114'), ('#71faff', '#134ae0'), ('#e08a3c', '#4a1612'),
+               ('#dcd6c6', '#be2633')]
+    if w < 20:                                                  # side window: a stack of record spines
+        for i in range(0, h - 4, 3):
+            col = sleeves[(i // 3) % len(sleeves)][0]
+            s.hline(x + 1, y + h - 3 - i, w - 2, shade(col, 0.55 if i % 2 else 0.8))
+        s.set(x + w - 2, y + 2, '#e0a845')
+        return
+    # pendant lamp, its warm light pooling on the deck below
+    s.vline(x + 39, y, 3, '#3c3a3a')
+    s.rect(x + 37, y + 3, 5, 2, '#5b5a5a')
+    s.hline(x + 38, y + 5, 3, '#ffd27a')
+    s.set(x + 37, y + 5, '#6b4a2f'); s.set(x + 41, y + 5, '#6b4a2f')
+    # LP sleeves on a ledge, faced out
+    for i, (fg, bg) in enumerate(sleeves[:3]):
+        sx, sy = x + 3 + i * 11, y + 3 + (i % 2)
+        s.rect(sx, sy, 10, 10, bg)
+        s.hline(sx, sy, 10, shade(bg, 1.6) if bg != '#121114' else '#3c3a3a')
+        if i == 0:                                              # ring
+            s.ellipse(sx + 4.5, sy + 4.5, 3, 3, fg)
+            s.ellipse(sx + 4.5, sy + 4.5, 1.6, 1.6, bg)
+        elif i == 1:                                            # stripes
+            for k in range(2, 9, 3):
+                s.hline(sx + 1, sy + k, 8, fg)
+        else:                                                   # sun over waves
+            s.rect(sx + 3, sy + 2, 4, 3, fg)
+            for k in range(8):
+                s.set(sx + 1 + k, sy + 7 + (k % 2), fg)
+    s.hline(x, y + 15, 36, '#4f4531')
+    s.hline(x, y + 16, 36, '#121114')
+    # deck: table, turntable with a spinning record, tonearm
+    s.rect(x, y + 25, w, 2, '#5b5340')
+    s.hline(x + 30, y + 25, 18, '#8a6240')
+    s.rect(x, y + 27, w, h - 27, '#1a1418')
+    s.rect(x + 27, y + 18, 22, 7, '#3c3a3a')
+    s.hline(x + 27, y + 18, 22, '#807e7e')
+    s.hline(x + 27, y + 24, 22, '#262525')
+    s.ellipse(x + 35, y + 20.5, 6.5, 2, '#121114')
+    s.hline(x + 31, y + 20, 8, '#2e2d2d')
+    s.rect(x + 34, y + 20, 3, 1, '#ff4d5e')
+    s.line(x + 46, y + 18, x + 41, y + 21, '#a9a7a7')
+    s.set(x + 46, y + 17, '#5b5a5a')
+    s.set(x + 29, y + 23, '#12ff00'); s.set(x + 31, y + 23, '#e0a845')
+    # crate of records below the ledge
+    s.rect(x + 4, y + 19, 16, 6, '#4f4531')
+    s.hline(x + 4, y + 19, 16, '#5b5340')
+    for k in range(5):
+        s.vline(x + 6 + k * 3, y + 17, 2, sleeves[k][0] if k % 2 else shade(sleeves[k][0], 0.6))
+    s.hline(x + 4, y + 22, 16, '#362f20')
+
+
 def paint_shutter(s, x, y, w, h):
     for yy in range(h):
         s.hline(x, y + yy, w, '#5b5a5a' if yy % 3 else '#2e2d2d')
@@ -124,7 +177,9 @@ def paint_shutter(s, x, y, w, h):
 
 
 PAINTERS = dict(spati=paint_spati, doener=paint_doener, kneipe=paint_kneipe, friseur=paint_friseur,
-                kiosk=paint_kiosk, handy=paint_handy, apotheke=paint_apotheke, closed=paint_shutter)
+                kiosk=paint_kiosk, handy=paint_handy, apotheke=paint_apotheke, closed=paint_shutter,
+                dj=paint_dj)
+DOOR_GLOW = dict(dj='#6a3a8c')
 
 
 def shopfront(s, kind, sign, sign_bg, sign_fg, awning=None, lit_door=True, tag=None):
@@ -146,11 +201,14 @@ def shopfront(s, kind, sign, sign_bg, sign_fg, awning=None, lit_door=True, tag=N
     if kind == 'closed':
         paint_shutter(s, 66, 18, 12, 38)
     else:
-        gl = '#f0c060' if lit_door else '#16181e'
+        gl = DOOR_GLOW.get(kind, '#f0c060') if lit_door else '#16181e'
         interior_gradient(s, 66, 18, 12, 38, gl, shade(gl, 0.6))
         s.vline(77, 36, 4, '#cfcabd')
         if kind == 'spati':
             neon_text(s, 66, 22, 'OPEN', '#ff4d5e', 1, '#b8782c')
+        if kind == 'dj':                                        # vinyl sticker on the door glass
+            s.ellipse(71.5, 27.5, 3.2, 3.2, '#121114')
+            s.ellipse(71.5, 27.5, 1, 1, '#ff71f0')
     # small side window
     if kind not in ('friseur',):
         window_box(s, 84, 24, 8, 31)
@@ -201,3 +259,4 @@ def shops(sheet):
     shopfront(sheet.add('shop_handy', 6, 4), 'handy', 'HANDY', '#0d1b2a', '#71faff')
     shopfront(sheet.add('shop_apotheke', 6, 4), 'apotheke', 'APOTHEKE', '#16301f', '#12ff00')
     shopfront(sheet.add('shop_closed', 6, 4), 'closed', 'LADEN', '#2a2a2e', '#807e7e', None, False, tag_closed)
+    shopfront(sheet.add('shop_dj', 6, 4), 'dj', 'DJ RECORDS', '#140a1e', '#71faff')

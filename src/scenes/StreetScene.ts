@@ -54,7 +54,7 @@ export class StreetScene extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, level.widthPx, level.heightPx + 200);
     this.cameras.main.setBounds(0, 0, level.widthPx, level.heightPx).setBackgroundColor(0x000000);
 
-    for (const m of [...level.markersNamed('door'), ...level.markersNamed('ubahn')]) {
+    for (const m of [...level.markersNamed('door'), ...level.markersNamed('djdoor'), ...level.markersNamed('ubahn')]) {
       this.interactables.push({ type: `object.${m.name}`, x: m.x, width: m.w });
     }
     for (const role of NPC_ROLES) {
@@ -146,7 +146,7 @@ export class StreetScene extends Phaser.Scene {
     this.notification.hide();
     const p = this.player;
 
-    if (target.type === 'object.door' || target.type === 'object.ubahn') {
+    if (target.type === 'object.door' || target.type === 'object.djdoor' || target.type === 'object.ubahn') {
       const ubahn = target.type === 'object.ubahn';
       p.freeze();
       p.play(ubahn ? 'walk_down' : 'go_inside');
@@ -157,7 +157,8 @@ export class StreetScene extends Phaser.Scene {
         x: ubahn ? p.x + 20 : p.x,
         delay: 250,
         duration: 500,
-        onComplete: () => this.scene.start(ubahn ? 'Ubahn' : 'Building'),
+        onComplete: () =>
+          ubahn ? this.scene.start('Ubahn') : this.scene.start('Building', { shop: target.type === 'object.djdoor' ? 'dj' : 'spati' }),
       });
       return true;
     }

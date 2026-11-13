@@ -11,6 +11,12 @@ const SPATI_PROPS = [
   'doormat', 'cat', 'pfand', 'clock',
 ];
 
+// Props drawn for the record shop (art/scripts/dj_art.py)
+const DJ_PROPS = [
+  'dj_booth', 'dj', 'record_bin', 'record_wall', 'speaker', 'neon_records', 'poster_techno',
+  'disco_ball', 'listening_station', 'sofa', 'doormat_dj',
+];
+
 // Port of OG preload_assets_command + app_boot state (title screen)
 export class BootScene extends Phaser.Scene {
   constructor() {
@@ -26,6 +32,9 @@ export class BootScene extends Phaser.Scene {
     this.load.tilemapTiledJSON('building', 'tilemaps/building.json');
     this.load.image('spati_tiles', 'building/spati/spati_tiles.png');
     for (const name of SPATI_PROPS) this.load.image(`spati_${name}`, `building/spati/${name}.png`);
+    this.load.tilemapTiledJSON('dj', 'tilemaps/dj.json');
+    this.load.image('dj_tiles', 'building/dj/dj_tiles.png');
+    for (const name of DJ_PROPS) this.load.image(`dj_${name}`, `building/dj/${name}.png`);
     this.load.image('pickup_bottle', 'pickups/pickup_bottle.png');
     this.load.image('pickup_cigarettes', 'pickups/pickup_cigarettes.png');
     this.load.image('spati_fridge', 'building/inside/spati_fridge.png');
