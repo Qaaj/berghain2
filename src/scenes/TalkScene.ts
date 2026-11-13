@@ -69,7 +69,8 @@ export class TalkScene extends Phaser.Scene {
       .bitmapText(this.portrait.x + this.portrait.width / 2, this.portrait.y - 6, FONT, '', CHOICE_SIZE)
       .setOrigin(1, 1)
       .setTint(C.Y3);
-    this.line = this.add.bitmapText(W / 2 - LINE_W / 2, bottom + 18, FONT, '', LINE_SIZE).setTint(C.W2);
+    // The font's line height is its glyph height, so wrapped lines touch without extra spacing (in font units, 32px)
+    this.line = this.add.bitmapText(W / 2 - LINE_W / 2, bottom + 18, FONT, '', LINE_SIZE).setTint(C.W2).setLineSpacing(24);
     this.arrow = this.add.bitmapText(0, 0, FONT, '>', CHOICE_SIZE).setTint(C.Y3).setVisible(false);
     this.hint = this.add.bitmapText(W / 2, H - 26, FONT, '', MessageType.LOCK_ON_PLAYER).setOrigin(0.5, 0).setTint(C.K4);
     this.showHint(!!this.input.gamepad?.total);
@@ -180,7 +181,7 @@ export class TalkScene extends Phaser.Scene {
     const top = this.line.y + Math.max(this.line.height, LINE_SIZE) + 22;
     this.labels = this.choices.map((choice, i) => {
       const label = choice === LEAVE ? localise(this, 'talk.leave') : this.text(`${this.node}.${choice.id}`);
-      const price = choice.price ? `  ${euros(choice.price)} EUR` : '';
+      const price = choice.price ? `  ${euros(choice.price)} EUR` : choice.pays ? `  +${euros(choice.pays)} EUR` : '';
       return this.add
         .bitmapText(this.line.x, top + i * CHOICE_GAP, FONT, `${label}${price}`, CHOICE_SIZE)
         .setInteractive({ useHandCursor: true })
@@ -219,6 +220,11 @@ export class TalkScene extends Phaser.Scene {
       if (choice.price > playerState.money) return this.goTo(this.talk.broke);
       playerState.money -= choice.price;
       this.showWallet();
+    }
+    if (choice.pays) {
+      playerState.money += choice.pays;
+      this.showWallet();
+      this.messages.show(this.text('paid').replace('{money}', euros(choice.pays)), MessageType.SMALL);
     }
     if (choice.takes) {
       const i = playerState.inventory.lastIndexOf(choice.takes);
