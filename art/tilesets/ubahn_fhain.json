@@ -1,0 +1,399 @@
+{
+ "tile": 16,
+ "cols": 16,
+ "rows": 13,
+ "blocks": {
+  "wall_clean": {
+   "x": 0,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "id": 0,
+   "group": "walls and floor"
+  },
+  "wall_stained": {
+   "x": 1,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "id": 1,
+   "group": "walls and floor"
+  },
+  "wall_cracked": {
+   "x": 2,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "id": 2,
+   "group": "walls and floor"
+  },
+  "wall_band": {
+   "x": 3,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "id": 3,
+   "group": "walls and floor"
+  },
+  "wall_dado": {
+   "x": 4,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "id": 4,
+   "group": "walls and floor"
+  },
+  "ceiling": {
+   "x": 5,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "id": 5,
+   "group": "walls and floor"
+  },
+  "ceiling_lamp": {
+   "x": 6,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "id": 6,
+   "group": "walls and floor"
+  },
+  "beam": {
+   "x": 7,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "id": 7,
+   "group": "walls and floor"
+  },
+  "floor_top_a": {
+   "x": 8,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "id": 8,
+   "group": "walls and floor"
+  },
+  "floor_top_b": {
+   "x": 9,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "id": 9,
+   "group": "walls and floor"
+  },
+  "floor_top_c": {
+   "x": 10,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "id": 10,
+   "group": "walls and floor"
+  },
+  "floor_edge": {
+   "x": 11,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "id": 11,
+   "group": "walls and floor"
+  },
+  "floor_fill_a": {
+   "x": 12,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "id": 12,
+   "group": "walls and floor"
+  },
+  "floor_fill_b": {
+   "x": 13,
+   "y": 0,
+   "w": 1,
+   "h": 1,
+   "id": 13,
+   "group": "walls and floor"
+  },
+  "track_a": {
+   "x": 0,
+   "y": 1,
+   "w": 1,
+   "h": 1,
+   "id": 16,
+   "group": "tracks"
+  },
+  "track_b": {
+   "x": 1,
+   "y": 1,
+   "w": 1,
+   "h": 1,
+   "id": 17,
+   "group": "tracks"
+  },
+  "track_c": {
+   "x": 2,
+   "y": 1,
+   "w": 1,
+   "h": 1,
+   "id": 18,
+   "group": "tracks"
+  },
+  "track_pit": {
+   "x": 3,
+   "y": 1,
+   "w": 1,
+   "h": 1,
+   "id": 19,
+   "group": "tracks"
+  },
+  "pillar_cap": {
+   "x": 0,
+   "y": 2,
+   "w": 1,
+   "h": 1,
+   "id": 32,
+   "group": "pillars"
+  },
+  "pillar_mid_a": {
+   "x": 1,
+   "y": 2,
+   "w": 1,
+   "h": 1,
+   "id": 33,
+   "group": "pillars"
+  },
+  "pillar_mid_b": {
+   "x": 2,
+   "y": 2,
+   "w": 1,
+   "h": 1,
+   "id": 34,
+   "group": "pillars"
+  },
+  "pillar_base": {
+   "x": 3,
+   "y": 2,
+   "w": 1,
+   "h": 1,
+   "id": 35,
+   "group": "pillars"
+  },
+  "station_sign_fhain": {
+   "x": 0,
+   "y": 3,
+   "w": 6,
+   "h": 1,
+   "id": 48,
+   "group": "signs and boards"
+  },
+  "station_sign_hoenow": {
+   "x": 6,
+   "y": 3,
+   "w": 4,
+   "h": 1,
+   "id": 54,
+   "group": "signs and boards"
+  },
+  "departure_board": {
+   "x": 10,
+   "y": 3,
+   "w": 3,
+   "h": 1,
+   "id": 58,
+   "group": "signs and boards"
+  },
+  "clock": {
+   "x": 13,
+   "y": 3,
+   "w": 1,
+   "h": 1,
+   "id": 61,
+   "group": "signs and boards"
+  },
+  "sign_u5": {
+   "x": 14,
+   "y": 3,
+   "w": 1,
+   "h": 1,
+   "id": 62,
+   "group": "signs and boards"
+  },
+  "sign_exit": {
+   "x": 0,
+   "y": 4,
+   "w": 2,
+   "h": 1,
+   "id": 64,
+   "group": "signs and boards"
+  },
+  "lamp_hang": {
+   "x": 2,
+   "y": 4,
+   "w": 1,
+   "h": 2,
+   "id": 66,
+   "group": "signs and boards"
+  },
+  "timetable": {
+   "x": 3,
+   "y": 4,
+   "w": 1,
+   "h": 2,
+   "id": 67,
+   "group": "signs and boards"
+  },
+  "network_map": {
+   "x": 4,
+   "y": 4,
+   "w": 2,
+   "h": 2,
+   "id": 68,
+   "group": "signs and boards"
+  },
+  "ad_film": {
+   "x": 6,
+   "y": 4,
+   "w": 1,
+   "h": 2,
+   "id": 70,
+   "group": "signs and boards"
+  },
+  "ad_sale": {
+   "x": 7,
+   "y": 4,
+   "w": 1,
+   "h": 2,
+   "id": 71,
+   "group": "signs and boards"
+  },
+  "ad_bier": {
+   "x": 8,
+   "y": 4,
+   "w": 1,
+   "h": 2,
+   "id": 72,
+   "group": "signs and boards"
+  },
+  "ticket_machine": {
+   "x": 0,
+   "y": 6,
+   "w": 2,
+   "h": 3,
+   "id": 96,
+   "group": "platform furniture"
+  },
+  "vending_snack": {
+   "x": 2,
+   "y": 6,
+   "w": 1,
+   "h": 2,
+   "id": 98,
+   "group": "platform furniture"
+  },
+  "vending_drink": {
+   "x": 3,
+   "y": 6,
+   "w": 1,
+   "h": 2,
+   "id": 99,
+   "group": "platform furniture"
+  },
+  "bench": {
+   "x": 4,
+   "y": 6,
+   "w": 2,
+   "h": 1,
+   "id": 100,
+   "group": "platform furniture"
+  },
+  "bin": {
+   "x": 6,
+   "y": 6,
+   "w": 1,
+   "h": 1,
+   "id": 102,
+   "group": "platform furniture"
+  },
+  "stairs_exit": {
+   "x": 7,
+   "y": 6,
+   "w": 3,
+   "h": 5,
+   "id": 103,
+   "group": "platform furniture"
+  },
+  "tag_kotti": {
+   "x": 0,
+   "y": 11,
+   "w": 3,
+   "h": 1,
+   "id": 176,
+   "group": "graffiti"
+  },
+  "tag_rave": {
+   "x": 3,
+   "y": 11,
+   "w": 2,
+   "h": 1,
+   "id": 179,
+   "group": "graffiti"
+  },
+  "tag_toy": {
+   "x": 5,
+   "y": 11,
+   "w": 2,
+   "h": 1,
+   "id": 181,
+   "group": "graffiti"
+  },
+  "marker_start": {
+   "x": 0,
+   "y": 12,
+   "w": 1,
+   "h": 1,
+   "id": 192,
+   "group": "markers"
+  },
+  "marker_exit": {
+   "x": 1,
+   "y": 12,
+   "w": 1,
+   "h": 1,
+   "id": 193,
+   "group": "markers"
+  },
+  "marker_train": {
+   "x": 2,
+   "y": 12,
+   "w": 1,
+   "h": 1,
+   "id": 194,
+   "group": "markers"
+  },
+  "marker_ticket": {
+   "x": 3,
+   "y": 12,
+   "w": 1,
+   "h": 1,
+   "id": 195,
+   "group": "markers"
+  },
+  "marker_smoker": {
+   "x": 4,
+   "y": 12,
+   "w": 1,
+   "h": 1,
+   "id": 196,
+   "group": "markers"
+  },
+  "marker_weirdo": {
+   "x": 5,
+   "y": 12,
+   "w": 1,
+   "h": 1,
+   "id": 197,
+   "group": "markers"
+  }
+ }
+}
