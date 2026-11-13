@@ -1,6 +1,5 @@
 import * as Phaser from 'phaser';
 import { Depth, MessageType } from '../config';
-import type { Player } from '../objects/Player';
 import type { MessageQueue } from './messages';
 import { playerState, type WeatherKind } from './state';
 import { localise } from './text';
@@ -17,8 +16,6 @@ const TINT: Record<WeatherKind, { color: number; alpha: number }> = {
   snow: { color: 0xb0bac8, alpha: 0.12 }, // P.B4
   wind: { color: 0x000000, alpha: 0.08 },
 };
-// How much of the wind reaches the player while walking or in the air
-const PUSH = 0.5;
 
 // A handful of 1-3 native pixel shapes, drawn here rather than through the art pipeline because they are too
 // small to be worth an .aseprite each. Colours come from spriteart.P.
@@ -221,12 +218,6 @@ export class Weather {
       playerState.weatherLeft = Phaser.Math.Between(SPELL_MS.min, SPELL_MS.max);
       this.set(Phaser.Utils.Array.GetRandom(KINDS.filter((k) => k !== this.kind)));
     }
-  }
-
-  /** Lean on the player: walking into the wind is slower, jumps drift downwind. Call after Player.tick(). */
-  push(player: Player) {
-    const moving = player.mode === 'jump' || (player.mode === 'ground' && player.body.velocity.x !== 0);
-    if (moving) player.body.velocity.x += this.wind * PUSH;
   }
 
   // Top of the solid tiles per column, so rain splashes and snow settles on the pavement (and on platforms)

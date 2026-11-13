@@ -117,7 +117,6 @@ export class StreetScene extends Phaser.Scene {
     this.updateInteractionPrompt();
     this.player.tick(this.controls);
     this.weather.update(delta);
-    this.weather.push(this.player);
     this.notification.follow(this.player.body);
 
     if (this.player.body.y > this.scale.height + 100) playerState.health = 0;
