@@ -47,9 +47,12 @@ function makeTextures(scene: Phaser.Scene) {
     px(0xdcd6c6, 3, 0, 3, 2);
     px(0x807e7e, 4, 1);
   });
-  tex('wx_gust', 10, 1, () => {
-    px(0xdcd6c6, 0, 0, 3, 1, 0.3);
-    px(0xdcd6c6, 3, 0, 7, 1, 0.55);
+  // A wisp of moving air, faint at both ends so it never reads as a solid dash
+  tex('wx_gust', 8, 1, () => {
+    px(0xdcd6c6, 0, 0, 2, 1, 0.15);
+    px(0xdcd6c6, 2, 0, 3, 1, 0.4);
+    px(0xdcd6c6, 5, 0, 2, 1, 0.55);
+    px(0xdcd6c6, 7, 0, 1, 1, 0.25);
   });
   g.destroy();
 
@@ -59,6 +62,18 @@ function makeTextures(scene: Phaser.Scene) {
   };
   add('wx_snow', [['big', 0, 2, 2], ['small', 2, 1, 1]]);
   add('wx_debris', [['leaf', 0, 3, 2], ['flyer', 3, 3, 2]]);
+}
+
+type Particle = Phaser.GameObjects.Particles.Particle;
+
+// How a wind-borne particle moves: it is dragged towards `mult` times the current wind (so it speeds up and slows
+// down with the gusts instead of flying at its launch speed) and bobs on a sine of `amp` px at `freq` rad/s.
+interface Drift {
+  mult: number;
+  drag: number;
+  amp: number;
+  freq: number;
+  phase: number;
 }
 
 // Street weather: clear, rain, snow or wind. Particles live in world space (emitters at 0,0) but spawn across
@@ -72,6 +87,8 @@ export class Weather {
   private t = 0;
   private nextFlash = 0;
   private ground: number[] = [];
+  // Particles are pooled, so this is refilled on every emit
+  private drift = new WeakMap<Particle, Drift>();
   private tileW = 48;
   private tint: Phaser.GameObjects.Rectangle;
   private rain: Phaser.GameObjects.Particles.ParticleEmitter;
@@ -140,22 +157,47 @@ export class Weather {
       frequency: 40,
       quantity: 2,
     });
+    // Anywhere in view between the rooftops and the pavement; wisps fade in, so they can start mid-screen
+    const inView = (minHeight: number) => ({
+      getRandomPoint: (p: Phaser.Types.Math.Vector2Like) => {
+        p.x = cam.scrollX + Math.random() * W;
+        const g = this.groundAt(p.x);
+        p.y = g - 20 - Math.random() * (g - 20 - minHeight);
+      },
+    });
     this.gusts = scene.add.particles(0, 0, 'wx_gust', {
       emitting: false,
-      emitZone: { type: 'random', source: upwind(200) },
-      speedX: { onEmit: () => this.wind * Phaser.Math.FloatBetween(4, 6) },
-      speedY: { min: -8, max: 8 },
-      alpha: { start: 1, end: 0 },
-      lifespan: 1800,
-      frequency: 60,
+      emitZone: { type: 'random', source: inView(200) },
+      ...this.drifting(() => ({
+        mult: Phaser.Math.FloatBetween(1.6, 2.2),
+        drag: 3,
+        amp: Phaser.Math.FloatBetween(4, 12),
+        freq: Phaser.Math.FloatBetween(3, 6),
+        phase: Math.random() * Math.PI * 2,
+      })),
+      // Lie along the direction of travel, so the wisp tilts as it rides the wave
+      rotate: { onEmit: () => 0, onUpdate: (p: Particle) => Phaser.Math.RadToDeg(Math.atan2(p.velocityY, p.velocityX)) },
+      alpha: { onEmit: () => 0, onUpdate: (_p: Particle, _k: string, t: number) => 0.8 * Math.sin(Math.PI * t) },
+      scaleX: { onEmit: () => 0.5, onUpdate: (_p: Particle, _k: string, t: number) => 0.5 + 0.7 * Math.sin(Math.PI * t) },
+      scaleY: 1,
+      lifespan: { min: 1200, max: 2000 },
+      frequency: 110,
     });
     this.debris = scene.add.particles(0, 0, 'wx_debris', {
       emitting: false,
       frame: ['leaf', 'leaf', 'flyer'],
       emitZone: { type: 'random', source: upwind(380) },
       deathZone: landed,
-      speedX: { onEmit: () => this.wind * Phaser.Math.FloatBetween(1.8, 3) },
-      speedY: { min: -90, max: 30 },
+      ...this.drifting(
+        () => ({
+          mult: Phaser.Math.FloatBetween(1.1, 1.7),
+          drag: 1.2,
+          amp: Phaser.Math.FloatBetween(10, 30),
+          freq: Phaser.Math.FloatBetween(2, 4.5),
+          phase: Math.random() * Math.PI * 2,
+        }),
+        () => Phaser.Math.Between(-60, 10),
+      ),
       gravityY: 70,
       rotate: { start: 0, end: 540 },
       lifespan: 6000,
@@ -218,6 +260,33 @@ export class Weather {
       playerState.weatherLeft = Phaser.Math.Between(SPELL_MS.min, SPELL_MS.max);
       this.set(Phaser.Utils.Array.GetRandom(KINDS.filter((k) => k !== this.kind)));
     }
+  }
+
+  // Emitter ops that move a particle with the wind (see Drift). speedX runs before speedY on emit, so it rolls the
+  // particle's drift and speedY reads it back.
+  private drifting(roll: () => Drift, speedY = () => 0) {
+    const d = (p: Particle) => this.drift.get(p)!;
+    return {
+      speedX: {
+        onEmit: (p?: Particle) => {
+          const drift = roll();
+          this.drift.set(p!, drift);
+          return this.wind * drift.mult;
+        },
+      },
+      speedY: { onEmit: (p?: Particle) => speedY() + d(p!).amp * d(p!).freq * Math.cos(d(p!).phase) },
+      accelerationX: {
+        onEmit: () => 0,
+        onUpdate: (p: Particle) => (this.wind * d(p).mult - p.velocityX) * d(p).drag,
+      },
+      accelerationY: {
+        onEmit: () => 0,
+        onUpdate: (p: Particle, _k: string, t: number) => {
+          const { amp, freq, phase } = d(p);
+          return -amp * freq * freq * Math.sin(freq * ((t * p.life) / 1000) + phase);
+        },
+      },
+    };
   }
 
   // Top of the solid tiles per column, so rain splashes and snow settles on the pavement (and on platforms)
