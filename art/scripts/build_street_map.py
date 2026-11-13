@@ -4,7 +4,7 @@ It is only a starting point: open art/tilesets/neukoelln_street.png in the Sprit
 build your own street with the layer names below, export, and run import_map.py to replace it.
 
 Layers, bottom to top:  far (scrolls at half speed) | buildings | details | ground (collider) | props |
-                        markers (hidden, spawns things) | front (drawn over the player, e.g. trees)
+                        markers (hidden, spawns things) | front (drawn over the player, e.g. trees, bins)
 Marker tiles (see the 'markers' section of the tileset): P player start, D door into the Späti,
 R door into the record shop, U U-Bahn entrance, S/W/C smoker/weirdo/cop, F fire bin, K cat. An entity stands on the bottom of its marker tile.
 """
@@ -143,6 +143,14 @@ def build():
     L.put('props', 'litfass', 50, 9)
     L.put('props', 'ubahn_entrance', 52, 8)
     L.put('front', 'tree', 97, 6)
+    # rubbish out for collection, in front of the player (kept clear of doors, markers and NPCs)
+    L.put('front', 'bin_black_full', 33, 11)
+    L.put('front', 'trash_bags', 35, 12)
+    L.put('front', 'bin_black', 63, 11)
+    L.put('front', 'trash_bag', 65, 12)
+    L.put('front', 'bin_black', 87, 11)
+    L.put('front', 'trash_bags', 93, 12)
+    L.put('front', 'trash_bag', 95, 12)
 
     # ---------------------------------------------------------------- far
     L.layers['far']['data'] = [-1] * (W * H)

@@ -27,7 +27,7 @@ Create these, bottom to top. Anything with the **collision** flag turned on beco
 | `ground` | Pavement, curb, road. **Collision on.** The player walks on the top edge of the first row. |
 | `props` | Lamps, bins, bikes, benches, the U-Bahn entrance, traffic lights. |
 | `markers` | Marker tiles (see below). Never drawn in the game. |
-| `front` | Drawn **over** the player: trees (the `tree` block is crown and trunk in one, so you walk behind all of it). |
+| `front` | Drawn **over** the player: trees (the `tree` block is crown and trunk in one, so you walk behind all of it), the black `bin_black` / `bin_black_full` containers and `trash_bags` / `trash_bag`. |
 
 | U-Bahn layer | What goes in it |
 |---|---|

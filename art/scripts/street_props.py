@@ -112,6 +112,75 @@ def bin_orange(s, fire=False):
             s.rect(x, 9 - h // 2, 2, h // 2, '#ffd23c')
 
 
+def bag(s, cx, base, rx, ry, col):
+    """A tied rubbish bag sitting on `base`: a lumpy body, a knot with two ears, a sheen on its upper left."""
+    hi, lo = shade(col, 1.6), shade(col, 0.6)
+    cy = base - ry
+    s.ellipse(cx, cy, rx, ry, col)
+    s.ellipse(cx - 1, cy + ry * 0.45, rx * 0.95, ry * 0.55, col)     # sags at the bottom
+    for (x, y) in list(s.p):
+        if s.p[(x, y)] == col and y >= cy and x > cx + rx * 0.35:
+            s.set(x, y, lo)
+    s.hline(int(cx - rx * 0.6), base - 1, int(rx * 1.4), lo)
+    s.line(int(cx - rx * 0.5), int(cy - ry * 0.4), int(cx - rx * 0.15), int(cy - ry * 0.7), hi)
+    s.set(int(cx - rx * 0.55), int(cy - ry * 0.1), hi)
+    top = int(cy - ry)
+    s.rect(cx - 1, top - 2, 3, 3, col)                         # neck and knot
+    s.set(cx - 2, top - 4, col); s.set(cx - 2, top - 3, col)
+    s.set(cx + 2, top - 4, lo); s.set(cx + 2, top - 3, lo)
+    s.set(cx, top - 1, lo)
+
+
+BAG_BLACK, BAG_WHITE, BAG_YELLOW = '#363234', '#c9c3b3', '#b8b23a'   # yellow = Gelber Sack
+
+
+def trash_bags(s):
+    bag(s, 24, 16, 7, 5, BAG_BLACK)
+    bag(s, 8, 16, 7, 6, BAG_WHITE)
+    bag(s, 16, 16, 6, 4, BAG_YELLOW)
+
+
+def trash_bag(s):
+    bag(s, 8, 16, 6, 5, BAG_BLACK)
+
+
+def bin_black(s, full=False):
+    """The big black 1100-litre street container on castors, 2x2 tiles. `full` props the lid open on bags."""
+    body, hi, lo, rim = '#1d1b1b', '#3c3a3a', '#121114', '#2c2929'
+    for y in range(9, 27):                                    # body tapers slightly towards the bottom
+        inset = (y - 9) // 9
+        s.hline(3 + inset, y, 26 - 2 * inset, body)
+        s.set(3 + inset, y, hi); s.set(4 + inset, y, hi)
+        s.set(28 - inset, y, lo)
+    for y in (15, 21):                                        # moulded ribs
+        s.hline(5, y, 22, lo); s.hline(5, y + 1, 22, rim)
+    s.rect(2, 8, 28, 2, rim); s.hline(2, 8, 28, '#47433c')     # rim under the lid
+    s.rect(0, 10, 3, 4, rim); s.rect(29, 10, 3, 4, rim)       # side grips
+    s.rect(9, 11, 9, 3, '#dcd6c6')                            # collection sticker
+    s.hline(9, 11, 9, '#e08a3c'); s.hline(10, 13, 5, '#807e7e')
+    s.rect(20, 23, 6, 2, '#47433c')                           # pedal for the lid
+    s.rect(4, 27, 24, 2, IRON)                                # chassis
+    for wx in (7, 24):
+        s.rect(wx - 1, 27, 3, 2, rim)
+        s.ellipse(wx, 30, 2, 1.6, lo)
+        s.set(wx, 30, '#5b5a5a')
+    if full:
+        for cx, cy, rx, ry, col in ((9, 7, 5, 3, BAG_BLACK), (16, 6, 5, 4, BAG_WHITE), (22, 6, 4, 3, BAG_YELLOW),
+                                    (26, 7, 3, 2, BAG_BLACK)):  # bags bulging over the rim
+            s.ellipse(cx, cy, rx, ry, col)
+            s.set(cx - rx // 2, cy - ry + 1, shade(col, 1.45))
+        for x in range(1, 31):                                # lid propped open, hinged at the back
+            y = round(4 - (x - 1) * 4 / 29)
+            s.vline(x, y - 1, 3, rim)
+            s.set(x, y - 1, '#47433c')
+        s.rect(0, 3, 2, 5, rim)                               # its front lip hangs down
+    else:
+        s.rect(1, 4, 30, 4, rim)                              # lid with a handle lip at the front
+        s.hline(1, 4, 30, '#47433c')
+        s.hline(1, 7, 30, lo)
+        s.rect(12, 7, 8, 2, IRON)
+
+
 def bike(s, x, y, col):
     for wx in (x + 6, x + 25):
         s.ellipse(wx, y + 18, 6.5, 6.5, '#121114')
@@ -241,6 +310,10 @@ def furniture(sheet):
     ubahn_entrance(sheet.add('ubahn_entrance', 4, 5))
     bin_orange(sheet.add('bin_orange', 1, 2))
     bin_orange(sheet.add('fire_bin_art', 1, 2), fire=True)
+    bin_black(sheet.add('bin_black', 2, 2))
+    bin_black(sheet.add('bin_black_full', 2, 2), full=True)
+    trash_bags(sheet.add('trash_bags', 2, 1))
+    trash_bag(sheet.add('trash_bag'))
     s = sheet.add('bike_rack', 2, 1)
     for x in (4, 14, 24):
         s.ellipse(x + 2, 9, 3, 7, '#a7a5a5')
