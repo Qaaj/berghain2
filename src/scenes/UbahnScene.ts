@@ -4,7 +4,7 @@ import { Hud } from '../objects/Hud';
 import { Player } from '../objects/Player';
 import { Controls } from '../systems/input';
 import { MessageQueue, PlayerNotification, SpeechBubble } from '../systems/messages';
-import { playerState } from '../systems/state';
+import { playerState, type District } from '../systems/state';
 import { localise } from '../systems/text';
 import { TileLevel } from '../systems/tilelevel';
 
@@ -24,6 +24,13 @@ const DOOR_W = 20;
 
 type TrainState = 'away' | 'arriving' | 'open' | 'leaving';
 
+// One train line with two stops; boarding at either one rides to the other
+const STATIONS: Record<District, { level: string; next: District }> = {
+  neukoelln: { level: 'ubahn', next: 'fhain' },
+  fhain: { level: 'ubahn_fhain', next: 'neukoelln' },
+};
+const RIDE_MS = 4200;
+
 interface Zone {
   type: 'exit' | 'ticket' | 'door' | 'npc';
   x: number;
@@ -31,8 +38,9 @@ interface Zone {
   npc?: Phaser.GameObjects.Sprite;
 }
 
-// The Neukölln U-Bahn platform. The station comes from public/assets/tilemaps/ubahn.json (built in the Sprite
-// Fusion editor); the train is an entity that drives in, opens its doors, leaves, and repeats.
+// A U-Bahn platform: Neukölln (public/assets/tilemaps/ubahn.json) or Friedrichshain (ubahn_fhain.json), built in
+// the Sprite Fusion editor or by art/scripts/build_ubahn_map.py. The train is an entity that drives in, opens its
+// doors, leaves, and repeats; boarding it rides to the other station.
 export class UbahnScene extends Phaser.Scene {
   private player!: Player;
   private controls!: Controls;
@@ -48,9 +56,16 @@ export class UbahnScene extends Phaser.Scene {
   private trainState: TrainState = 'open';
   private leaving = false;
   private talking = false;
+  private station: District = 'neukoelln';
+  private arriving = false;
 
   constructor() {
     super('Ubahn');
+  }
+
+  init(data: { station?: District; arriving?: boolean }) {
+    this.station = data?.station ?? 'neukoelln';
+    this.arriving = !!data?.arriving;
   }
 
   create() {
@@ -62,7 +77,7 @@ export class UbahnScene extends Phaser.Scene {
     this.cars = [];
 
     this.add.rectangle(0, 0, W, H, 0x0d0c12).setOrigin(0, 0).setScrollFactor(0).setDepth(-1);
-    const level = new TileLevel(this, 'ubahn');
+    const level = new TileLevel(this, STATIONS[this.station].level);
     this.physics.world.setBounds(0, 0, level.widthPx, level.heightPx + 200);
     this.cameras.main.setBounds(0, 0, level.widthPx, level.heightPx).setBackgroundColor(0x0d0c12);
 
@@ -83,8 +98,12 @@ export class UbahnScene extends Phaser.Scene {
     if (stop) this.buildTrain(stop.x, stop.y + 30, level.widthPx);
 
     const start = level.markersNamed('start')[0];
-    const startX = (start ? start.x + start.w / 2 : 150) - 48;
+    let startX = (start ? start.x + start.w / 2 : 150) - 48;
+    // Off the train: step out of the second car's first door
+    const door = this.arriving ? this.doorZones()[2] : undefined;
+    if (door) startX = door.x + door.width / 2 - 48;
     this.player = new Player(this, startX, (start ? start.y : level.heightPx - 96) - 100, 'jump');
+    if (door) this.tweens.add({ targets: this.player, alpha: { from: 0, to: 1 }, duration: 500 });
     this.player.onAction = () => this.interact();
     this.physics.add.collider(this.player, level.solid);
     this.cameras.main.startFollow(this.player, true, 0.12, 0, -48, 0).setDeadzone(W / 3, H);
@@ -94,7 +113,7 @@ export class UbahnScene extends Phaser.Scene {
     this.messages = new MessageQueue(this);
     this.notification = new PlayerNotification(this);
     this.bubble = new SpeechBubble(this);
-    this.messages.show(localise(this, 'building.ubahn.welcome'), MessageType.SMALL);
+    this.messages.show(localise(this, `ubahn.${this.station}.name`), this.arriving ? MessageType.MEDIUM : MessageType.SMALL);
 
     if (config.debug) this.physics.world.createDebugGraphic();
     this.cameras.main.fadeIn(300);
@@ -142,7 +161,7 @@ export class UbahnScene extends Phaser.Scene {
   private arrive() {
     this.moveTrain(this.train.awayX);
     this.trainState = 'arriving';
-    this.messages.show(localise(this, 'ubahn.announce'), MessageType.MEDIUM);
+    this.messages.show(localise(this, `ubahn.${this.station}.announce`), MessageType.MEDIUM);
     this.cameras.main.shake(900, 0.002);
     this.tweenTrain(this.train.stopX, 5000, 'Cubic.easeOut', () => {
       this.setDoors(true);
@@ -200,7 +219,7 @@ export class UbahnScene extends Phaser.Scene {
         this.leaving = true;
         p.freeze();
         this.cameras.main.fadeOut(400);
-        this.cameras.main.once('camerafadeoutcomplete', () => this.scene.start('Street'));
+        this.cameras.main.once('camerafadeoutcomplete', () => this.scene.start('Street', { district: this.station }));
         return true;
       case 'ticket': {
         const euros = (playerState.money / 100).toFixed(2);
@@ -219,28 +238,53 @@ export class UbahnScene extends Phaser.Scene {
     return false;
   }
 
-  // Stepping on is as far as it goes for now: the next stop does not exist yet
   private board() {
     this.leaving = true;
     this.player.freeze();
+    this.tweens.add({ targets: this.player, alpha: 0, duration: 400 });
     this.cameras.main.fadeOut(900);
-    this.cameras.main.once('camerafadeoutcomplete', () => {
-      const { width: W, height: H } = this.scale;
-      this.add
-        .bitmapText(W / 2, H / 2 - 12, FONT, localise(this, 'ubahn.next'), MessageType.MEDIUM)
-        .setOrigin(0.5)
-        .setScrollFactor(0)
-        .setDepth(Depth.HUD);
-      this.add
-        .bitmapText(W / 2, H / 2 + 22, FONT, localise(this, 'ubahn.soon'), MessageType.SMALL)
-        .setOrigin(0.5)
-        .setScrollFactor(0)
-        .setDepth(Depth.HUD);
-      this.cameras.main.fadeIn(300);
-      this.time.delayedCall(2800, () => {
-        this.cameras.main.fadeOut(400);
-        this.cameras.main.once('camerafadeoutcomplete', () => this.scene.start('Street'));
-      });
+    this.cameras.main.once('camerafadeoutcomplete', () => this.ride());
+  }
+
+  // The view from inside the carriage: tunnel lamps race past the windows under the next-stop display, then
+  // the other station's scene starts with the train standing at the platform.
+  private ride() {
+    const { width: W, height: H } = this.scale;
+    const next = STATIONS[this.station].next;
+    const top = 170;
+    const bottom = 400;
+    const ui = (o: Phaser.GameObjects.Components.ScrollFactor & Phaser.GameObjects.Components.Depth, depth: number) =>
+      o.setScrollFactor(0).setDepth(Depth.HUD + depth);
+
+    ui(this.add.rectangle(0, 0, W, H, 0x07080c).setOrigin(0, 0), 0);
+    for (let i = 0; i < 6; i++) {
+      // tunnel lamps at two heights, and the dark ribs of the tunnel wall
+      const lamp = ui(this.add.rectangle(W + 60, i % 2 ? top + 40 : top + 150, 46, 8, 0xffd27a).setOrigin(0, 0), 1);
+      const rib = ui(this.add.rectangle(W + 60, top, 30, bottom - top, 0x16171e).setOrigin(0, 0), 1);
+      this.tweens.add({ targets: lamp, x: -80, duration: 520, delay: i * 190, repeat: -1 });
+      this.tweens.add({ targets: rib, x: -80, duration: 380, delay: i * 140 + 60, repeat: -1 });
+    }
+    ui(this.add.rectangle(0, top + 108, W, 3, 0x1e2028).setOrigin(0, 0), 1); // cables along the wall
+
+    // carriage interior around three windows
+    const wall = 0xcfc6ac;
+    ui(this.add.rectangle(0, 0, W, top, wall).setOrigin(0, 0), 2);
+    ui(this.add.rectangle(0, bottom, W, H - bottom, wall).setOrigin(0, 0), 2);
+    for (const [x, w] of [[0, 80], [420, 50], [810, 50], [1200, 80]]) ui(this.add.rectangle(x, top, w, bottom - top, wall).setOrigin(0, 0), 2);
+    ui(this.add.rectangle(0, top - 30, W, 6, 0x9a9aa0).setOrigin(0, 0), 3); // grab rail
+    ui(this.add.rectangle(0, bottom + 60, W, H - bottom - 60, 0x2a3d5a).setOrigin(0, 0), 3); // seat backs
+    for (let x = 0; x < W; x += 24) ui(this.add.rectangle(x, bottom + 80 + ((x / 24) % 2) * 30, 8, 8, 0xd6a90e).setOrigin(0, 0), 3);
+
+    // next-stop display
+    ui(this.add.rectangle(W / 2, 40, 760, 74, 0x0d0c10).setOrigin(0.5, 0).setStrokeStyle(4, 0x3c3a3a), 3);
+    ui(this.add.bitmapText(W / 2, 56, FONT, localise(this, 'ubahn.nextstop'), MessageType.SMALL).setOrigin(0.5, 0).setTint(0xffb000), 4);
+    ui(this.add.bitmapText(W / 2, 84, FONT, localise(this, `ubahn.${next}.name`), MessageType.SMALL).setOrigin(0.5, 0).setTint(0xffb000), 4);
+
+    this.cameras.main.fadeIn(400);
+    this.cameras.main.shake(RIDE_MS, 0.0015);
+    this.time.delayedCall(RIDE_MS - 600, () => {
+      this.cameras.main.fadeOut(600);
+      this.cameras.main.once('camerafadeoutcomplete', () => this.scene.start('Ubahn', { station: next, arriving: true }));
     });
   }
 }

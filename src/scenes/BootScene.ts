@@ -27,6 +27,8 @@ export class BootScene extends Phaser.Scene {
     this.load.setPath('assets/');
     TileLevel.preload(this, 'street');
     TileLevel.preload(this, 'ubahn');
+    TileLevel.preload(this, 'ubahn_fhain');
+    TileLevel.preload(this, 'fhain');
     for (const part of ['cab', 'car', 'cab_open', 'car_open']) this.load.image(`ubahn_train_${part}`, `ubahn/train_${part}.png`);
     this.load.json('text', 'localisation/data.json');
     this.load.tilemapTiledJSON('building', 'tilemaps/building.json');
