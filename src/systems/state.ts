@@ -11,6 +11,8 @@ export const playerState = {
   // Pickups already taken, one entry per placement ("<place>:<spot>" from close-ups, "<shop>:<item>@x,y" indoors),
   // so each copy stays taken even after the item leaves the inventory (a returned bottle doesn't respawn)
   looted: [] as string[],
+  // Things NPCs remember about you, set by conversation answers (systems/dialogue.ts), e.g. "dealer.met"
+  flags: [] as string[],
   chapter: 1,
   money: 0, // in cents
   // Where to put the player when coming back to the street (null = the level's start marker)

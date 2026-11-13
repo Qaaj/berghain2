@@ -1,4 +1,5 @@
 import * as Phaser from 'phaser';
+import { openOverlay } from './overlay';
 
 // Close-up views: what you see when you look into a container, open a drawer or read a pole full of flyers.
 // A view is a background drawn by art/scripts/inspect_art.py plus hotspots in its native pixels. A hotspot either
@@ -52,8 +53,5 @@ export function preloadInspectArt(scene: Phaser.Scene) {
 // Opens `view` over the calling scene, which pauses until the close-up is closed. `place` identifies this copy of
 // the object (e.g. "street:bin_black_full@30,11") so what you take from it stays taken.
 export function openInspect(scene: Phaser.Scene, view: string, place: string) {
-  scene.scene.pause();
-  scene.scene.launch('Inspect', { view, place, from: scene.scene.key });
-  // Keys released while paused never reach this scene; without a reset the player would keep walking
-  scene.events.once(Phaser.Scenes.Events.RESUME, () => scene.input.keyboard?.resetKeys());
+  openOverlay(scene, 'Inspect', { view, place });
 }
