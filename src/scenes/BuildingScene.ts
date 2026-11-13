@@ -93,12 +93,15 @@ export class BuildingScene extends Phaser.Scene {
 
     const pickups = this.physics.add.staticGroup();
     for (const o of objects.filter((o) => prop(o, 'type') === 'pickup')) {
-      if (playerState.inventory.includes(o.name!)) continue;
+      // Remembered per placement, not by name: you can carry a bottle from the street and still find this one
+      const place = `${this.shop}:${o.name}@${o.x},${o.y}`;
+      if (playerState.looted.includes(place)) continue;
       pickups
         .create(o.x!, o.y!, String(prop(o, 'spriteName')))
         .setOrigin(0, 0)
         .setDepth(o.y! + o.height!)
         .setName(o.name!)
+        .setData('place', place)
         .refreshBody();
     }
     this.physics.add.overlap(this.player, pickups, (_p, item) => this.pickUp(item as Phaser.Physics.Arcade.Sprite));
@@ -147,6 +150,7 @@ export class BuildingScene extends Phaser.Scene {
 
   private pickUp(sprite: Phaser.Physics.Arcade.Sprite) {
     playerState.inventory.push(sprite.name);
+    playerState.looted.push(sprite.getData('place'));
     this.messages.show(localise(this, `inventory.${sprite.name}`), MessageType.SMALL);
     sprite.destroy();
     if (sprite.name === 'cigarettes' && playerState.chapter === 1) {

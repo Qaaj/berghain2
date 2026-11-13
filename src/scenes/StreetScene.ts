@@ -3,6 +3,7 @@ import { config, Depth, MessageType } from '../config';
 import { Hud } from '../objects/Hud';
 import { Player } from '../objects/Player';
 import { Controls } from '../systems/input';
+import { INSPECT_BLOCKS, openInspect } from '../systems/inspect';
 import { MessageQueue, PlayerNotification, SpeechBubble } from '../systems/messages';
 import { playerState, resetPlayer, type District } from '../systems/state';
 import { lightLamps } from '../systems/lamplight';
@@ -17,11 +18,12 @@ let introShown = false;
 const LEVEL_KEY: Record<District, string> = { neukoelln: 'street', fhain: 'fhain' };
 
 interface Interactable {
-  type: string; // 'object.door' | 'object.ubahn' | 'object.cat' | 'object.berghain' | 'npc.<role>'
+  type: string; // 'object.door' | 'object.ubahn' | 'object.cat' | 'object.berghain' | 'npc.<role>' | 'inspect.<view>'
   x: number;
   width: number;
   npc?: Phaser.GameObjects.Sprite;
   at?: Phaser.GameObjects.Sprite;
+  place?: string; // for close-ups: which copy of the object, so its contents are remembered
 }
 
 // A street: Neukölln (public/assets/tilemaps/street.json) or Friedrichshain (fhain.json), both built in the
@@ -88,6 +90,11 @@ export class StreetScene extends Phaser.Scene {
         this.interactables.push({ type: `npc.${role}`, x: npc.x - 50, width: npc.width + 50, npc });
       }
     }
+    for (const [block, view] of Object.entries(INSPECT_BLOCKS)) {
+      for (const b of level.blocksNamed(block)) {
+        this.interactables.push({ type: `inspect.${view}`, x: b.x, width: b.w, place: `street:${block}@${b.tx},${b.ty}` });
+      }
+    }
     for (const m of level.markersNamed('cat')) {
       const cat = this.add.sprite(m.x + m.w / 2, m.y, 'spati_cat').setOrigin(0.5, 1).setDepth(Depth.NPC);
       this.interactables.push({ type: 'object.cat', x: cat.x - 50, width: 100, at: cat });
@@ -152,9 +159,12 @@ export class StreetScene extends Phaser.Scene {
     this.inFrontOf = this.interactables.find((o) => x > o.x + 5 && x < o.x + o.width - 5) ?? null;
     if (this.talking || this.bubble.active) return;
     if (this.inFrontOf) {
-      const key = this.inFrontOf.type.startsWith('npc')
-        ? `interactable.${this.inFrontOf.type}.action`
-        : `interactable.${this.inFrontOf.type}`;
+      const { type } = this.inFrontOf;
+      const key = type.startsWith('npc')
+        ? `interactable.${type}.action`
+        : type.startsWith('inspect')
+          ? `${type}.prompt`
+          : `interactable.${type}`;
       this.notification.show(key, localise(this, key));
     } else {
       this.notification.hide();
@@ -194,6 +204,11 @@ export class StreetScene extends Phaser.Scene {
     // Not tonight: the club can't be entered yet
     if (target.type === 'object.berghain') {
       this.bubble.say(localise(this, 'berghain.bouncer'), target.x + target.width / 2 + 60, p.y - 10, 2600);
+      return true;
+    }
+
+    if (target.place) {
+      openInspect(this, target.type.slice('inspect.'.length), target.place);
       return true;
     }
 
