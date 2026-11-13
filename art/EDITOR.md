@@ -24,8 +24,9 @@ Create these, bottom to top. Anything with the **collision** flag turned on beco
 | `far` | Skyline, Fernsehturm, moon, stars. Scrolls at **half speed**, so it only needs to be about half as wide as the street. |
 | `buildings` | Plaster, windows, cornices, roofs, **shopfronts** and doors. |
 | `details` | Balconies, graffiti, posters, signs, dishes. |
+| `yard` | Optional. Things on an empty lot behind a fence: `weeds_a/b`, `lot_mound`, `rubble`, `birch`, `mattress`, `shopping_cart`, `tyres`, `pallet`. |
 | `ground` | Pavement, curb, road. **Collision on.** The player walks on the top edge of the first row. |
-| `props` | Lamps, bins, bikes, benches, the U-Bahn entrance, traffic lights. |
+| `props` | Lamps, bins, bikes, benches, the U-Bahn entrance, traffic lights, the chain-link fence. |
 | `markers` | Marker tiles (see below). Never drawn in the game. |
 | `front` | Drawn **over** the player: trees (the `tree` block is crown and trunk in one, so you walk behind all of it), the black `bin_black` / `bin_black_full` containers and `trash_bags` / `trash_bag`. |
 
@@ -42,6 +43,14 @@ Create these, bottom to top. Anything with the **collision** flag turned on beco
 Both levels are 15 tiles tall. Put the ground on rows 13 (top, walked on) and 14. Big things are laid out as
 blocks in the tileset (a window is 2x3 tiles, a shopfront 6x4): select the whole block in the tileset panel
 and paint it, or build it once and copy/paste it in the map.
+
+**Chain-link fence** (section `chain-link fence`): every piece is 1x3 tiles (the sign is 2x3) and goes in `props`
+on rows 10-12, so it stands on the pavement. Paint `fence_end_l`, then any mix of `fence_mesh_a` (plain),
+`fence_mesh_b` (bag caught at the bottom), `fence_mesh_torn`, `fence_sign` and a `fence_post` every few tiles,
+then `fence_end_r`. The mesh tiles seamlessly. From a script: `fence(L, x, width, {offset: 'fence_sign'})` in
+`build_street_map.py`. The `vacant lot` section is an empty lot with nothing built on it: leave `buildings`
+empty there so the sky shows, paint the earth (`lot_dirt_top_a/b` on row 11, `lot_dirt` on row 12) in `details`,
+and put the junk and plants in `yard`.
 
 ## 3. Marker tiles
 
