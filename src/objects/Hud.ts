@@ -18,6 +18,14 @@ const HEART = ['.rr.rr.', 'rwrrrrr', 'rrrrrrd', '.rrrrd.', '..rrd..', '...d...']
 const COIN = ['..ooo..', '.oyyyo.', 'oylyyyo', 'oylyyyo', 'oyyyyyo', '.oyyyo.', '..ooo..'];
 // 3x5 letters from the art toolkit's font, so the label sits on the 3x grid
 const EUR = ['ggg.g.g.gg.', 'g...g.g.g.g', 'gg..g.g.gg.', 'g...g.g.g.g', 'ggg.ggg.g.g'];
+// 3x5 digits from the same font, for the stack count on an item slot
+const DIGITS = [
+  ['www', 'w.w', 'w.w', 'w.w', 'www'], ['.w.', 'ww.', '.w.', '.w.', 'www'],
+  ['www', '..w', 'www', 'w..', 'www'], ['www', '..w', '.ww', '..w', 'www'],
+  ['w.w', 'w.w', 'www', '..w', '..w'], ['www', 'w..', 'www', '..w', 'www'],
+  ['.ww', 'w..', 'www', 'w.w', 'www'], ['www', '..w', '.w.', '.w.', '.w.'],
+  ['www', 'w.w', 'www', 'w.w', 'www'], ['www', 'w.w', 'www', '..w', 'ww.'],
+];
 const ICON_COLOURS: Record<string, number> = {
   r: C.R3, d: C.R2, w: C.W2, o: C.O1, y: C.Y3, l: C.W2, g: C.K4,
 };
@@ -31,6 +39,8 @@ const COIN_W = 7;
 const EUR_W = EUR[0].length;
 // Square item slots, big enough for the tallest pickup (the bottle, 17 native) without scaling
 const SLOT = { size: 21, gap: 2, count: 3 };
+// Stack-count badge: a 9px round pill (outline included) hanging off the slot's top-right corner
+const BADGE = { h: 9, overhang: 2 };
 // The bitmap font is 32px with 4px font pixels; at 16px they are a whole 2px and the glyphs
 // are about as tall as the 3x5 "EUR". Its advance (38) is wider than a glyph cell (32), so trim it.
 const TEXT_SIZE = 16;
@@ -46,7 +56,7 @@ export class Hud {
   private wallet: Phaser.GameObjects.Graphics;
   private money: Phaser.GameObjects.BitmapText;
   private moneyShadow: Phaser.GameObjects.BitmapText;
-  private items: Phaser.GameObjects.Image[] = [];
+  private items: Phaser.GameObjects.GameObject[] = [];
   private shownHealth = -1;
   private shownMoney = -1;
   private shownItems = '';
@@ -95,7 +105,7 @@ export class Hud {
       if (gained) this.celebrate();
     }
 
-    const items = playerState.inventory.slice(0, SLOT.count).join(',');
+    const items = this.stacks().map(([name, n]) => `${name}x${n}`).join(',');
     if (items !== this.shownItems) {
       this.shownItems = items;
       this.drawItems();
@@ -124,8 +134,9 @@ export class Hud {
     g.fillStyle(colour, alpha).fillRect(x * S, y * S, w * S, h * S);
   }
 
-  private icon(g: Phaser.GameObjects.Graphics, rows: string[], x: number, y: number) {
-    for (const [colour, dy] of [[C.K0, 1], [undefined, 0]] as const) {
+  private icon(g: Phaser.GameObjects.Graphics, rows: string[], x: number, y: number, shadow = true) {
+    const passes = shadow ? ([[C.K0, 1], [undefined, 0]] as const) : ([[undefined, 0]] as const);
+    for (const [colour, dy] of passes) {
       rows.forEach((row, j) =>
         [...row].forEach((ch, i) => {
           if (ICON_COLOURS[ch] !== undefined) this.rect(g, x + i, y + j + dy, 1, 1, colour ?? ICON_COLOURS[ch]);
@@ -169,16 +180,43 @@ export class Hud {
     this.moneyShadow.setPosition(this.money.x, this.money.y + TEXT_SHADOW);
   }
 
+  // Identical items share a slot, in the order they were first picked up
+  private stacks(): [string, number][] {
+    const counts = new Map<string, number>();
+    for (const name of playerState.inventory) counts.set(name, (counts.get(name) ?? 0) + 1);
+    return [...counts].slice(0, SLOT.count);
+  }
+
   private drawItems() {
     this.items.forEach((i) => i.destroy());
     const x0 = this.slotsX();
-    this.items = playerState.inventory.slice(0, SLOT.count).flatMap((name, i) => {
+    const y0 = this.slotsY();
+    this.items = this.stacks().flatMap(([name, count], i) => {
       const key = `pickup_${name}`;
       if (!this.scene.textures.exists(key)) return [];
-      const cx = x0 + (i * (SLOT.size + SLOT.gap) + SLOT.size / 2) * S;
-      const cy = this.slotsY() + (SLOT.size / 2) * S;
-      return [this.fixed(this.scene.add.image(cx, cy, key))];
+      const sx = x0 + i * (SLOT.size + SLOT.gap) * S;
+      const icon = this.fixed(this.scene.add.image(sx + (SLOT.size / 2) * S, y0 + (SLOT.size / 2) * S, key));
+      return count > 1 ? [icon, this.badge(sx, y0, count)] : [icon];
     });
+  }
+
+  // A pill that is a circle for one digit and stretches for two; 99+ is beyond anything you can carry
+  private badge(slotX: number, slotY: number, count: number) {
+    const digits = [...String(Math.min(count, 99))].map(Number);
+    const w = digits.length * 4 + 5;
+    const g = this.fixed(this.scene.add.graphics()).setPosition(
+      slotX + (SLOT.size + BADGE.overhang - w) * S,
+      slotY - BADGE.overhang * S,
+    );
+    // Rounded ends: rows 0/8 inset 2px, rows 1/7 inset 1px
+    const inset = (y: number) => Math.max(0, 2 - Math.min(y, BADGE.h - 1 - y));
+    for (let y = 0; y < BADGE.h; y++) {
+      this.rect(g, inset(y), y, w - 2 * inset(y), 1, C.K0);
+      // The fill is the outline shrunk by a pixel, with a lighter top row
+      if (y > 0 && y < BADGE.h - 1) this.rect(g, inset(y) + 1, y, w - 2 * inset(y) - 2, 1, y === 1 ? C.O3 : C.R3);
+    }
+    digits.forEach((d, i) => this.icon(g, DIGITS[d], 3 + i * 4, 2, false));
+    return g;
   }
 
   // A one-pixel hop and a gold flash; scaling would smear the pixels and push into "EUR"
