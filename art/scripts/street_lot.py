@@ -1,4 +1,4 @@
-"""Neukölln street kit, part 4: a galvanised chain-link fence (a reusable kit) and a vacant lot (Baulücke).
+"""Neukölln street kit, part 4: a galvanised chain-link fence (a reusable kit) and an empty, rubbish-strewn lot.
 
 Fence pieces are all 3 tiles tall and stand on the pavement (bottom of the block = top of the ground row), so any
 run of them lines up: fence_end_l, then fence_mesh_* / fence_post / fence_sign in any order, then fence_end_r.
@@ -101,69 +101,13 @@ def fences(sheet):
 
 
 # -------------------------------------------------------------- vacant lot
-WALL, WALL_LO, WALL_HI = '#3f3c35', '#2f2c27', '#4b4740'     # the bare firewall at the back of the lot
 BRICK, MORTAR = '#5b3a2c', '#3a2a22'
 DIRT, DIRT_LO, DIRT_HI = '#3a2f22', '#2a2219', '#4f4130'
 WEED, WEED_HI, WEED_LO = '#2f5a24', '#4f8a32', '#1c3a16'
 
 
-def firewall(s, rng, bricks=False):
-    for y in range(16):
-        for x in range(16):
-            r = rng.random()
-            s.set(x, y, WALL_LO if r < 0.10 else WALL_HI if r < 0.16 else WALL)
-    if bricks:                                                # plaster fallen off, bricks showing through
-        for y in range(3, 14):
-            for x in range(2, 14):
-                if ((x - 8) / 6) ** 2 + ((y - 8) / 5.2) ** 2 <= 1:
-                    s.set(x, y, MORTAR if y % 3 == 0 or (x + (y // 3) * 3) % 6 == 0 else BRICK)
-
-
-def firewall_top(s, rng):
-    """The coping of the firewall: a sky-coloured gap above (transparent), a dark capping row, then wall."""
-    for y in range(5, 16):
-        for x in range(16):
-            r = rng.random()
-            s.set(x, y, WALL_LO if r < 0.10 else WALL_HI if r < 0.16 else WALL)
-    s.rect(0, 4, 16, 2, '#262525'); s.hline(0, 4, 16, '#47433c')
-    for x in (3, 11):                                         # rain streaks under the coping
-        s.vline(x, 6, 5 + x % 4, WALL_LO)
-
-
-def ghost_house(s):
-    """The imprint a demolished side wing leaves on a Berlin firewall: a pitched roofline, the floors as
-    lighter bands, scraps of wallpaper and tiles, and the zig-zag of the old staircase. 6x6 tiles."""
-    W, H = 96, 96
-    roof = lambda x: 18 + abs(x - 48) * 18 // 48             # gable peak at the middle
-    for x in range(4, W - 4):
-        s.set(x, roof(x), '#5a554c')                          # roofline scar
-        s.set(x, roof(x) + 1, '#2f2c27')
-    s.vline(4, roof(4), H - roof(4), '#4f4b43'); s.vline(W - 5, roof(W - 5), H - roof(W - 5), '#4f4b43')
-    floors = (40, 64, 88)
-    for fy in floors:                                         # where the ceilings were keyed into the wall
-        s.hline(5, fy, W - 10, '#2a2722'); s.hline(5, fy + 1, W - 10, '#4f4b43')
-    rooms = ((8, 42, 30, 20, '#57464a'), (44, 42, 18, 20, '#454e43'), (8, 66, 22, 20, '#4f4a3c'),
-             (64, 66, 24, 20, '#434a52'), (40, 24, 18, 14, '#4f4436'))
-    rng = noise(61)
-    for x0, y0, w, h, col in rooms:                           # faded wallpaper, half scraped off
-        for y in range(y0, y0 + h):
-            for x in range(x0, x0 + w):
-                if rng.random() < 0.9:
-                    pat = (x // 3 + y // 4) % 2 == 0 and (x + y) % 5 == 0
-                    s.set(x, y, shade(col, 1.15) if pat else col)
-    for y in range(68, 84, 3):                                # a bathroom: white tiles in a grid
-        for x in range(34, 56, 3):
-            if rng.random() < 0.8:
-                s.rect(x, y, 2, 2, '#7d7a72')
-    for i in range(6):                                        # the staircase climbing between the floors
-        s.line(66 + i * 4, 62 - i * 3, 70 + i * 4, 62 - i * 3, '#2a2722')
-        s.vline(70 + i * 4, 59 - i * 3, 3, '#2a2722')
-    s.line(64, 88, 88, 66, '#2a2722')
-    s.rect(46, 30, 6, 6, '#2a2722'); s.rect(47, 31, 4, 4, '#1d1b1b')   # a bricked-up hole for a stove pipe
-
-
 def lot_dirt_top(s, rng, v):
-    """Trodden earth reaching back to the firewall: top edge uneven, with grass along it."""
+    """The far edge of the lot's trodden earth: uneven, with grass along it; open sky above."""
     edge = [4 + int(2 * rng.random()) + (1 if (x + ord(v)) % 7 < 2 else 0) for x in range(16)]
     for x in range(16):
         for y in range(edge[x], 16):
@@ -232,19 +176,73 @@ def cart(s):
         s.rect(wx, 14, 2, 2, '#121114')
 
 
+def mound(s, rng):
+    """A heap of dumped earth, 3 tiles wide, grassed over on top, a bit of brick poking out."""
+    top = {}
+    for x in range(48):
+        h = 11 * (1 - ((x - 24) / 24) ** 2) + rng.random() * 1.5
+        top[x] = 16 - max(1, int(h))
+        for y in range(top[x], 16):
+            r = rng.random()
+            s.set(x, y, DIRT_LO if r < 0.14 or x > 30 and r < 0.4 else DIRT_HI if r < 0.24 else DIRT)
+    for x in range(2, 46):
+        for k in range(rng.randint(0, 3)):
+            s.set(x, top[x] - k, WEED if k < 2 else WEED_HI)
+    s.rect(14, 10, 4, 2, BRICK); s.rect(30, 11, 3, 2, '#8a847b')
+
+
+def birch(s, rng):
+    """A young birch, the first tree to grow on any Berlin waste ground: white trunk, black marks, light crown.
+    2x5 tiles; its foot is a little above the bottom so it stands in the earth of lot_dirt_top."""
+    for cx, cy, rx, ry in ((16, 20, 12, 15), (10, 30, 8, 9), (23, 28, 8, 10), (16, 9, 7, 7)):
+        s.ellipse(cx, cy, rx, ry, '#1f4a22')
+    for (x, y), col in list(s.p.items()):
+        r = rng.random()
+        if r < 0.25:
+            s.set(x, y, '#2f6a2a')
+        elif r < 0.30 and y < 26:
+            s.set(x, y, '#5a8a3a')
+        elif r < 0.36:
+            s.set(x, y, '#143418')
+    for y in range(14, 74):                                   # trunk, leaning slightly
+        x = 15 + (y - 14) // 30
+        s.set(x, y, '#d8d4c8'); s.set(x + 1, y, '#bdb8aa'); s.set(x + 2, y, '#8a867c')
+        if y % 7 in (0, 3) and y > 30:
+            s.set(x + (y % 2), y, '#121114')                  # the black bark marks
+    s.line(16, 40, 9, 32, '#bdb8aa'); s.line(17, 34, 23, 28, '#bdb8aa')
+
+
+def tyres(s):
+    """Two dumped car tyres, one leaning on the other."""
+    for cx, cy, rx in ((5, 12, 5), (11, 11, 5)):
+        s.ellipse(cx, cy, rx, 4.5, '#1d1b1b')
+        s.ellipse(cx, cy, rx - 2.5, 2, '#121114')
+        s.hline(cx - rx + 2, cy - 4, rx * 2 - 4, '#3c3a3a')
+
+
+def pallet(s):
+    """A broken wooden pallet lying in the weeds, 2x1."""
+    for x0 in (1, 9, 17, 25):
+        s.rect(x0, 8, 6, 2, '#8a6240'); s.hline(x0, 8, 6, '#a97b4f')
+    s.rect(1, 10, 30, 2, '#6b4a2f')
+    for x0 in (2, 15, 28):
+        s.rect(x0, 12, 3, 3, '#4a321f')
+    s.erase(19, 8, 4, 2)                                      # a slat snapped off
+    s.line(20, 9, 24, 5, '#8a6240')
+
+
 def vacant_lot(sheet):
     sheet.group('vacant lot')
     rng = noise(71)
-    firewall_top(sheet.add('firewall_top'), rng)
-    firewall(sheet.add('firewall_a'), rng)
-    firewall(sheet.add('firewall_b'), rng)
-    firewall(sheet.add('firewall_brick'), rng, bricks=True)
     lot_dirt_top(sheet.add('lot_dirt_top_a'), rng, 'a')
     lot_dirt_top(sheet.add('lot_dirt_top_b'), rng, 'b')
     lot_dirt(sheet.add('lot_dirt'), rng)
     weeds(sheet.add('weeds_a'), rng, False)
     weeds(sheet.add('weeds_b'), rng, True)
     rubble(sheet.add('rubble', 2, 1), rng)
+    mound(sheet.add('lot_mound', 3, 1), rng)
     mattress(sheet.add('mattress', 2, 1))
     cart(sheet.add('shopping_cart', 2, 1))
-    ghost_house(sheet.add('firewall_ghost', 6, 6))
+    tyres(sheet.add('tyres'))
+    pallet(sheet.add('pallet', 2, 1))
+    birch(sheet.add('birch', 2, 5), rng)

@@ -1,7 +1,7 @@
 {
  "tile": 16,
  "cols": 16,
- "rows": 82,
+ "rows": 81,
  "blocks": {
   "pave_top_a": {
    "x": 0,
@@ -1147,7 +1147,7 @@
    "id": 1158,
    "group": "chain-link fence"
   },
-  "firewall_top": {
+  "lot_dirt_top_a": {
    "x": 0,
    "y": 75,
    "w": 1,
@@ -1155,7 +1155,7 @@
    "id": 1200,
    "group": "vacant lot"
   },
-  "firewall_a": {
+  "lot_dirt_top_b": {
    "x": 1,
    "y": 75,
    "w": 1,
@@ -1163,7 +1163,7 @@
    "id": 1201,
    "group": "vacant lot"
   },
-  "firewall_b": {
+  "lot_dirt": {
    "x": 2,
    "y": 75,
    "w": 1,
@@ -1171,7 +1171,7 @@
    "id": 1202,
    "group": "vacant lot"
   },
-  "firewall_brick": {
+  "weeds_a": {
    "x": 3,
    "y": 75,
    "w": 1,
@@ -1179,7 +1179,7 @@
    "id": 1203,
    "group": "vacant lot"
   },
-  "lot_dirt_top_a": {
+  "weeds_b": {
    "x": 4,
    "y": 75,
    "w": 1,
@@ -1187,68 +1187,60 @@
    "id": 1204,
    "group": "vacant lot"
   },
-  "lot_dirt_top_b": {
+  "rubble": {
    "x": 5,
    "y": 75,
-   "w": 1,
+   "w": 2,
    "h": 1,
    "id": 1205,
    "group": "vacant lot"
   },
-  "lot_dirt": {
-   "x": 6,
-   "y": 75,
-   "w": 1,
-   "h": 1,
-   "id": 1206,
-   "group": "vacant lot"
-  },
-  "weeds_a": {
+  "lot_mound": {
    "x": 7,
    "y": 75,
-   "w": 1,
+   "w": 3,
    "h": 1,
    "id": 1207,
    "group": "vacant lot"
   },
-  "weeds_b": {
-   "x": 8,
-   "y": 75,
-   "w": 1,
-   "h": 1,
-   "id": 1208,
-   "group": "vacant lot"
-  },
-  "rubble": {
-   "x": 9,
-   "y": 75,
-   "w": 2,
-   "h": 1,
-   "id": 1209,
-   "group": "vacant lot"
-  },
   "mattress": {
-   "x": 11,
+   "x": 10,
    "y": 75,
    "w": 2,
    "h": 1,
-   "id": 1211,
+   "id": 1210,
    "group": "vacant lot"
   },
   "shopping_cart": {
-   "x": 13,
+   "x": 12,
    "y": 75,
    "w": 2,
    "h": 1,
-   "id": 1213,
+   "id": 1212,
    "group": "vacant lot"
   },
-  "firewall_ghost": {
+  "tyres": {
+   "x": 14,
+   "y": 75,
+   "w": 1,
+   "h": 1,
+   "id": 1214,
+   "group": "vacant lot"
+  },
+  "pallet": {
    "x": 0,
    "y": 76,
-   "w": 6,
-   "h": 6,
+   "w": 2,
+   "h": 1,
    "id": 1216,
+   "group": "vacant lot"
+  },
+  "birch": {
+   "x": 2,
+   "y": 76,
+   "w": 2,
+   "h": 5,
+   "id": 1218,
    "group": "vacant lot"
   }
  }

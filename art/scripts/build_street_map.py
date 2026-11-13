@@ -3,7 +3,7 @@
 It is only a starting point: open art/tilesets/neukoelln_street.png in the Sprite Fusion tilemap editor,
 build your own street with the layer names below, export, and run import_map.py to replace it.
 
-Layers, bottom to top:  far (scrolls at half speed) | buildings | details | yard (things inside the vacant lot) |
+Layers, bottom to top:  far (scrolls at half speed) | buildings | details | yard (things on the empty lot) |
                         ground (collider) | props (incl. the chain-link fence) |
                         markers (hidden, spawns things) | front (drawn over the player, e.g. trees, bins)
 Marker tiles (see the 'markers' section of the tileset): P player start, D door into the Späti,
@@ -195,25 +195,17 @@ def build():
 
 
 def vacant_lot(L, x0, w, rng):
-    """A Baulücke: the bare firewall of the back house with the imprint of the demolished wing, trodden earth,
-    weeds and dumped stuff, all behind a chain-link fence along the pavement."""
+    """An empty lot between the houses: no building, open sky (the far skyline shows through), trodden earth,
+    weeds, a birch and dumped rubbish, behind a chain-link fence along the pavement."""
     for x in range(x0, x0 + w):
-        L.put('buildings', 'firewall_top', x, 3)
-        for y in range(4, GROUND):
-            L.put('buildings', rng.choice(['firewall_a', 'firewall_b']), x, y)
         L.put('details', 'lot_dirt_top_' + rng.choice('aab'), x, 11)
         L.put('details', 'lot_dirt', x, 12)
-    for dx, y in ((1, 5), (10, 4), (11, 9)):
-        L.put('buildings', 'firewall_brick', x0 + dx, y)
-    L.put('details', 'firewall_ghost', x0 + 3, 4)
-    L.put('details', 'tag_spiral', x0 + 1, 7)
-    L.put('details', 'tag_rave', x0 + 9, 8)
-    for dx, name in ((0, 'weeds_b'), (1, 'weeds_a'), (4, 'weeds_a'), (7, 'weeds_b'), (8, 'weeds_a'), (11, 'weeds_b')):
+    for dx, name in ((0, 'lot_mound'), (3, 'weeds_b'), (4, 'rubble'), (6, 'weeds_a'), (9, 'mattress'), (11, 'weeds_b')):
         L.put('yard', name, x0 + dx, 11)
-    L.put('yard', 'rubble', x0 + 2, 11)
-    L.put('yard', 'bush', x0 + 5, 11)
-    L.put('yard', 'mattress', x0 + 9, 11)
-    L.put('yard', 'shopping_cart', x0 + 5, 12)
+    L.put('yard', 'birch', x0 + 7, 7)
+    L.put('yard', 'tyres', x0 + 1, 12)
+    L.put('yard', 'shopping_cart', x0 + 3, 12)
+    L.put('yard', 'pallet', x0 + 8, 12)
     fence(L, x0, w, {2: 'fence_mesh_b', 5: 'fence_sign', 9: 'fence_mesh_torn'})
 
 
