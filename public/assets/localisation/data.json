@@ -156,6 +156,7 @@
     },
     "inspect": {
       "hint": "ARROWS choose   E use   ESC close",
+      "hint_pad": "STICK choose   A use   B close",
       "nothing": "Nothing useful.",
       "container": {
         "cup": {
@@ -381,6 +382,7 @@
     },
     "inspect": {
       "hint": "ARROWS choose   E use   ESC close",
+      "hint_pad": "STICK choose   A use   B close",
       "nothing": "Nothing useful.",
       "container": {
         "cup": {
