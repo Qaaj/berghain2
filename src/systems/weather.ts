@@ -8,6 +8,10 @@ import type { TileLevel } from './tilelevel';
 const PX = 3; // one native pixel at the game's 3x scale
 const KINDS: WeatherKind[] = ['clear', 'rain', 'snow', 'wind'];
 const SPELL_MS = { min: 60_000, max: 120_000 };
+// How long a kind takes to fade fully in or out; the old one thins out while the new one builds up
+const FADE_MS = 7000;
+// Time constant (ms) of the wind easing towards the new spell's strength and direction
+const WIND_EASE_MS = 2500;
 // Steady wind (px/s, before gusts) for each kind; the direction is rolled per spell
 const BASE_WIND: Record<WeatherKind, number> = { clear: 10, rain: 50, snow: 30, wind: 170 };
 const TINT: Record<WeatherKind, { color: number; alpha: number }> = {
@@ -84,6 +88,11 @@ export class Weather {
   /** Current wind in px/s, positive blows to the right. */
   wind = 0;
   private dir = 1;
+  /** Steady wind before gusts; eases towards dir * BASE_WIND[kind] so a new spell doesn't yank the particles. */
+  private baseWind = 0;
+  /** How far each kind is faded in, 0..1. */
+  private level: Record<WeatherKind, number> = { clear: 0, rain: 0, snow: 0, wind: 0 };
+  private layers!: { kind: WeatherKind; emitters: Phaser.GameObjects.Particles.ParticleEmitter[]; freq: number[] }[];
   private t = 0;
   private nextFlash = 0;
   private ground: number[] = [];
@@ -204,6 +213,18 @@ export class Weather {
       frequency: 90,
     });
     for (const e of [this.splash, this.rain, this.snow, this.gusts, this.debris]) e.setDepth(Depth.WEATHER);
+    // Splashes come from raindrops, so they only need to dim with them, not be emitted at a rate
+    const layer = (kind: WeatherKind, ...emitters: Phaser.GameObjects.Particles.ParticleEmitter[]) => ({
+      kind,
+      emitters,
+      freq: emitters.map((e) => e.frequency),
+    });
+    this.layers = [
+      layer('rain', this.rain),
+      { kind: 'rain', emitters: [this.splash], freq: [0] },
+      layer('snow', this.snow),
+      layer('wind', this.gusts, this.debris),
+    ];
 
     this.tint = scene.add
       .rectangle(0, 0, W, scene.scale.height, 0x000000, 1)
@@ -219,36 +240,36 @@ export class Weather {
     this.set(playerState.weather, false);
   }
 
-  /** Switch the weather now; `announce` shows the change as a title message and fades it in. */
+  /** Switch the weather; with `announce` the change is shown as a title message and crossfades over FADE_MS,
+   *  without it (entering the street) the weather is simply there. */
   set(kind: WeatherKind, announce = true) {
     this.kind = kind;
     playerState.weather = kind;
     this.dir = Math.random() < 0.5 ? -1 : 1;
     this.nextFlash = this.t + Phaser.Math.Between(4000, 12000);
-
-    const on = (e: Phaser.GameObjects.Particles.ParticleEmitter, active: boolean) => {
-      if (active && !e.emitting) e.start();
-      if (!active && e.emitting) e.stop(); // particles already in the air finish their fall
-    };
-    on(this.rain, kind === 'rain');
-    on(this.snow, kind === 'snow');
-    on(this.gusts, kind === 'wind');
-    on(this.debris, kind === 'wind');
-
-    const tint = TINT[kind];
-    this.scene.tweens.killTweensOf(this.tint);
-    if (tint.alpha > 0) this.tint.setFillStyle(tint.color, 1);
-    this.scene.tweens.add({ targets: this.tint, alpha: tint.alpha, duration: announce ? 3000 : 0 });
+    if (!announce) {
+      for (const k of KINDS) this.level[k] = k === kind ? 1 : 0;
+      this.baseWind = this.dir * BASE_WIND[kind];
+    }
+    this.applyLevels();
     if (announce) this.messages.show(localise(this.scene, `weather.${kind}`), MessageType.SMALL);
   }
 
   update(delta: number) {
     this.t += delta;
+    const step = delta / FADE_MS;
+    for (const k of KINDS) {
+      this.level[k] = Phaser.Math.Clamp(this.level[k] + (k === this.kind ? step : -step), 0, 1);
+    }
+    this.applyLevels();
+
+    this.baseWind += (this.dir * BASE_WIND[this.kind] - this.baseWind) * (1 - Math.exp(-delta / WIND_EASE_MS));
     // Two slow sines make irregular gusts between roughly 20% and 120% of the base wind
     const gust = 0.7 + 0.3 * Math.sin(this.t / 1700) + 0.2 * Math.sin(this.t / 530);
-    this.wind = this.dir * BASE_WIND[this.kind] * gust;
+    this.wind = this.baseWind * gust;
 
-    if (this.kind === 'rain' && this.t >= this.nextFlash) {
+    // No lightning until the storm has properly rolled in
+    if (this.kind === 'rain' && this.level.rain > 0.7 && this.t >= this.nextFlash) {
       this.nextFlash = this.t + Phaser.Math.Between(8000, 20000);
       const cam = this.scene.cameras.main;
       cam.flash(90, 190, 200, 225);
@@ -260,6 +281,40 @@ export class Weather {
       playerState.weatherLeft = Phaser.Math.Between(SPELL_MS.min, SPELL_MS.max);
       this.set(Phaser.Utils.Array.GetRandom(KINDS.filter((k) => k !== this.kind)));
     }
+  }
+
+  // Drive the emitters and the tint from the fade levels. A fading kind emits fewer particles and dims the ones
+  // still in the air, so it thins out instead of cutting off; at zero it stops and drops what's left (invisible).
+  private applyLevels() {
+    for (const { kind, emitters, freq } of this.layers) {
+      const l = this.level[kind];
+      const eased = l * l * (3 - 2 * l);
+      emitters.forEach((e, i) => {
+        e.setAlpha(eased);
+        if (!freq[i]) return;
+        if (l <= 0) {
+          if (e.emitting || e.getAliveParticleCount()) e.stop(true);
+          return;
+        }
+        // Assigned directly: setFrequency would restart the flow timer every frame. Capped so a barely-there
+        // kind doesn't leave a huge countdown behind when it starts building up again.
+        e.frequency = freq[i] / Math.max(eased, 0.05);
+        if (!e.emitting) e.start();
+      });
+    }
+
+    // Blend the tints by how faded-in each kind is, so the colour shifts instead of jumping
+    let alpha = 0;
+    const rgb = [0, 0, 0];
+    for (const k of KINDS) {
+      const w = this.level[k] * TINT[k].alpha;
+      alpha += w;
+      rgb[0] += w * ((TINT[k].color >> 16) & 0xff);
+      rgb[1] += w * ((TINT[k].color >> 8) & 0xff);
+      rgb[2] += w * (TINT[k].color & 0xff);
+    }
+    if (alpha > 0) this.tint.setFillStyle(Phaser.Display.Color.GetColor(rgb[0] / alpha, rgb[1] / alpha, rgb[2] / alpha), 1);
+    this.tint.setAlpha(alpha);
   }
 
   // Emitter ops that move a particle with the wind (see Drift). speedX runs before speedY on emit, so it rolls the
