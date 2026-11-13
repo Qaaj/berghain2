@@ -1,7 +1,7 @@
 {
  "tile": 16,
  "cols": 16,
- "rows": 72,
+ "rows": 82,
  "blocks": {
   "pave_top_a": {
    "x": 0,
@@ -1090,6 +1090,166 @@
    "h": 1,
    "id": 1144,
    "group": "markers"
+  },
+  "fence_mesh_a": {
+   "x": 0,
+   "y": 72,
+   "w": 1,
+   "h": 3,
+   "id": 1152,
+   "group": "chain-link fence"
+  },
+  "fence_mesh_b": {
+   "x": 1,
+   "y": 72,
+   "w": 1,
+   "h": 3,
+   "id": 1153,
+   "group": "chain-link fence"
+  },
+  "fence_mesh_torn": {
+   "x": 2,
+   "y": 72,
+   "w": 1,
+   "h": 3,
+   "id": 1154,
+   "group": "chain-link fence"
+  },
+  "fence_post": {
+   "x": 3,
+   "y": 72,
+   "w": 1,
+   "h": 3,
+   "id": 1155,
+   "group": "chain-link fence"
+  },
+  "fence_end_l": {
+   "x": 4,
+   "y": 72,
+   "w": 1,
+   "h": 3,
+   "id": 1156,
+   "group": "chain-link fence"
+  },
+  "fence_end_r": {
+   "x": 5,
+   "y": 72,
+   "w": 1,
+   "h": 3,
+   "id": 1157,
+   "group": "chain-link fence"
+  },
+  "fence_sign": {
+   "x": 6,
+   "y": 72,
+   "w": 2,
+   "h": 3,
+   "id": 1158,
+   "group": "chain-link fence"
+  },
+  "firewall_top": {
+   "x": 0,
+   "y": 75,
+   "w": 1,
+   "h": 1,
+   "id": 1200,
+   "group": "vacant lot"
+  },
+  "firewall_a": {
+   "x": 1,
+   "y": 75,
+   "w": 1,
+   "h": 1,
+   "id": 1201,
+   "group": "vacant lot"
+  },
+  "firewall_b": {
+   "x": 2,
+   "y": 75,
+   "w": 1,
+   "h": 1,
+   "id": 1202,
+   "group": "vacant lot"
+  },
+  "firewall_brick": {
+   "x": 3,
+   "y": 75,
+   "w": 1,
+   "h": 1,
+   "id": 1203,
+   "group": "vacant lot"
+  },
+  "lot_dirt_top_a": {
+   "x": 4,
+   "y": 75,
+   "w": 1,
+   "h": 1,
+   "id": 1204,
+   "group": "vacant lot"
+  },
+  "lot_dirt_top_b": {
+   "x": 5,
+   "y": 75,
+   "w": 1,
+   "h": 1,
+   "id": 1205,
+   "group": "vacant lot"
+  },
+  "lot_dirt": {
+   "x": 6,
+   "y": 75,
+   "w": 1,
+   "h": 1,
+   "id": 1206,
+   "group": "vacant lot"
+  },
+  "weeds_a": {
+   "x": 7,
+   "y": 75,
+   "w": 1,
+   "h": 1,
+   "id": 1207,
+   "group": "vacant lot"
+  },
+  "weeds_b": {
+   "x": 8,
+   "y": 75,
+   "w": 1,
+   "h": 1,
+   "id": 1208,
+   "group": "vacant lot"
+  },
+  "rubble": {
+   "x": 9,
+   "y": 75,
+   "w": 2,
+   "h": 1,
+   "id": 1209,
+   "group": "vacant lot"
+  },
+  "mattress": {
+   "x": 11,
+   "y": 75,
+   "w": 2,
+   "h": 1,
+   "id": 1211,
+   "group": "vacant lot"
+  },
+  "shopping_cart": {
+   "x": 13,
+   "y": 75,
+   "w": 2,
+   "h": 1,
+   "id": 1213,
+   "group": "vacant lot"
+  },
+  "firewall_ghost": {
+   "x": 0,
+   "y": 76,
+   "w": 6,
+   "h": 6,
+   "id": 1216,
+   "group": "vacant lot"
   }
  }
 }
