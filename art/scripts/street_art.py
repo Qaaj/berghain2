@@ -32,6 +32,7 @@ def build():
     # appended after the markers so the tile ids of everything above stay stable for existing editor projects
     V.fences(sheet)
     V.vacant_lot(sheet)
+    P.late_markers(sheet)
     return sheet
 
 
