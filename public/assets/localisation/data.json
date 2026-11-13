@@ -143,6 +143,72 @@
       "sofa": {
         "look": "Someone has been sleeping here since Friday."
       }
+    },
+    "inspect": {
+      "hint": "ARROWS choose   E use   ESC close",
+      "nothing": "Nothing useful.",
+      "container": {
+        "cup": {
+          "look": "A coffee to go. It went.",
+          "use": "Cold dregs. No thanks."
+        },
+        "banana": {
+          "look": "A banana peel.",
+          "use": "Classic. Not falling for it."
+        },
+        "pizza": {
+          "look": "A pizza box, greasy.",
+          "use": "Empty. Not even a crust."
+        },
+        "paper": {
+          "look": "Yesterday's Berliner Kurier.",
+          "use": "Horoscope says: look in the bin."
+        },
+        "bag_white": {
+          "look": "A tied bin bag.",
+          "use": "Squishy. Better not."
+        },
+        "bag_yellow": {
+          "look": "A Gelber Sack. Plastic only.",
+          "use": "Yoghurt pots, all licked clean."
+        },
+        "prompt": "Look inside",
+        "title": "The container",
+        "intro": "It smells like the inside of a kebab.",
+        "bottle": {
+          "look": "An empty beer bottle! Worth 25 cents Pfand.",
+          "take": "Pfand secured."
+        }
+      },
+      "container_closed": {
+        "cup": {
+          "look": "A coffee to go. It went.",
+          "use": "Cold dregs. No thanks."
+        },
+        "banana": {
+          "look": "A banana peel.",
+          "use": "Classic. Not falling for it."
+        },
+        "pizza": {
+          "look": "A pizza box, greasy.",
+          "use": "Empty. Not even a crust."
+        },
+        "paper": {
+          "look": "Yesterday's Berliner Kurier.",
+          "use": "Horoscope says: look in the bin."
+        },
+        "bag_white": {
+          "look": "A tied bin bag.",
+          "use": "Squishy. Better not."
+        },
+        "bag_yellow": {
+          "look": "A Gelber Sack. Plastic only.",
+          "use": "Yoghurt pots, all licked clean."
+        },
+        "prompt": "Look inside",
+        "title": "The container",
+        "intro": "Someone already went through this one."
+      }
     }
   },
   "de": {
@@ -288,6 +354,72 @@
       },
       "sofa": {
         "look": "Someone has been sleeping here since Friday."
+      }
+    },
+    "inspect": {
+      "hint": "ARROWS choose   E use   ESC close",
+      "nothing": "Nothing useful.",
+      "container": {
+        "cup": {
+          "look": "A coffee to go. It went.",
+          "use": "Cold dregs. No thanks."
+        },
+        "banana": {
+          "look": "A banana peel.",
+          "use": "Classic. Not falling for it."
+        },
+        "pizza": {
+          "look": "A pizza box, greasy.",
+          "use": "Empty. Not even a crust."
+        },
+        "paper": {
+          "look": "Yesterday's Berliner Kurier.",
+          "use": "Horoscope says: look in the bin."
+        },
+        "bag_white": {
+          "look": "A tied bin bag.",
+          "use": "Squishy. Better not."
+        },
+        "bag_yellow": {
+          "look": "A Gelber Sack. Plastic only.",
+          "use": "Yoghurt pots, all licked clean."
+        },
+        "prompt": "Look inside",
+        "title": "The container",
+        "intro": "It smells like the inside of a kebab.",
+        "bottle": {
+          "look": "An empty beer bottle! Worth 25 cents Pfand.",
+          "take": "Pfand secured."
+        }
+      },
+      "container_closed": {
+        "cup": {
+          "look": "A coffee to go. It went.",
+          "use": "Cold dregs. No thanks."
+        },
+        "banana": {
+          "look": "A banana peel.",
+          "use": "Classic. Not falling for it."
+        },
+        "pizza": {
+          "look": "A pizza box, greasy.",
+          "use": "Empty. Not even a crust."
+        },
+        "paper": {
+          "look": "Yesterday's Berliner Kurier.",
+          "use": "Horoscope says: look in the bin."
+        },
+        "bag_white": {
+          "look": "A tied bin bag.",
+          "use": "Squishy. Better not."
+        },
+        "bag_yellow": {
+          "look": "A Gelber Sack. Plastic only.",
+          "use": "Yoghurt pots, all licked clean."
+        },
+        "prompt": "Look inside",
+        "title": "The container",
+        "intro": "Someone already went through this one."
       }
     }
   }

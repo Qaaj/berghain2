@@ -19,7 +19,9 @@ npm run import-map -- street ~/Downloads/map.zip   # bring in a map exported fro
 
 ## How it fits together
 
-- `src/scenes/` — `Boot` (preload, title) → `Street` ⇄ `Building` (Späti) and `Street` ⇄ `Ubahn`.
+- `src/scenes/` — `Boot` (preload, title) → `Street` ⇄ `Building` (Späti) and `Street` ⇄ `Ubahn`. `Inspect` is an
+  overlay over any of them: the close-up of something you look into (the street container), with hotspots to read or
+  take items from. Views, hotspots and which street blocks open them live in `src/systems/inspect.ts`.
 - `src/systems/tilelevel.ts` loads levels made in the **Sprite Fusion tilemap editor**: layer names decide
   behaviour (`far` half-speed parallax, `ground` etc. with the `collider` flag are solid, `markers` spawn entities,
   `front*` draws over the player). See `art/EDITOR.md`.
@@ -39,8 +41,8 @@ an editable `.aseprite` in `art/`.
 
 | Generated | By | Don't edit by hand |
 |---|---|---|
-| `art/tilesets/neukoelln_street.*`, `ubahn_station.*`, `art/*.aseprite` | `street_art.py`, `ubahn_art.py`, `spati_art.py` | the PNG/JSON; change the script (or the `.aseprite` and accept a regenerate will overwrite it) |
-| `public/assets/building/spati/*`, `public/assets/ubahn/*` | same | |
+| `art/tilesets/neukoelln_street.*`, `ubahn_station.*`, `art/*.aseprite` | `street_art.py`, `ubahn_art.py`, `spati_art.py`, `inspect_art.py` | the PNG/JSON; change the script (or the `.aseprite` and accept a regenerate will overwrite it) |
+| `public/assets/building/spati/*`, `public/assets/ubahn/*`, `public/assets/inspect/*` | same | |
 | `public/assets/tilemaps/*.json`, `*_sheet.png`, `*_catalog.json` | `build_*_map.py` or `import_map.py` | |
 
 Rules of thumb: reuse the shared palette in `spriteart.P` (OG colours first), keep tile-kit blocks aligned to the 16px

@@ -3,6 +3,7 @@ import { config, Depth, MessageType } from '../config';
 import { Hud } from '../objects/Hud';
 import { Player } from '../objects/Player';
 import { Controls } from '../systems/input';
+import { INSPECT_BLOCKS, openInspect } from '../systems/inspect';
 import { MessageQueue, PlayerNotification, SpeechBubble } from '../systems/messages';
 import { playerState, resetPlayer } from '../systems/state';
 import { localise } from '../systems/text';
@@ -13,11 +14,12 @@ const NPC_ROLES = ['smoker', 'weirdo', 'cop'] as const;
 let introShown = false;
 
 interface Interactable {
-  type: string; // 'object.door' | 'object.ubahn' | 'object.cat' | 'npc.<role>'
+  type: string; // 'object.door' | 'object.ubahn' | 'object.cat' | 'npc.<role>' | 'inspect.<view>'
   x: number;
   width: number;
   npc?: Phaser.GameObjects.Sprite;
   at?: Phaser.GameObjects.Sprite;
+  place?: string; // for close-ups: which copy of the object, so its contents are remembered
 }
 
 // The Neukölln street. The level comes from public/assets/tilemaps/street.json (built in the Sprite Fusion
@@ -74,6 +76,11 @@ export class StreetScene extends Phaser.Scene {
           .setDepth(Depth.NPC)
           .setName(role);
         this.interactables.push({ type: `npc.${role}`, x: npc.x - 50, width: npc.width + 50, npc });
+      }
+    }
+    for (const [block, view] of Object.entries(INSPECT_BLOCKS)) {
+      for (const b of level.blocksNamed(block)) {
+        this.interactables.push({ type: `inspect.${view}`, x: b.x, width: b.w, place: `street:${block}@${b.tx},${b.ty}` });
       }
     }
     for (const m of level.markersNamed('cat')) {
@@ -137,9 +144,12 @@ export class StreetScene extends Phaser.Scene {
     this.inFrontOf = this.interactables.find((o) => x > o.x + 5 && x < o.x + o.width - 5) ?? null;
     if (this.talking || this.bubble.active) return;
     if (this.inFrontOf) {
-      const key = this.inFrontOf.type.startsWith('npc')
-        ? `interactable.${this.inFrontOf.type}.action`
-        : `interactable.${this.inFrontOf.type}`;
+      const { type } = this.inFrontOf;
+      const key = type.startsWith('npc')
+        ? `interactable.${type}.action`
+        : type.startsWith('inspect')
+          ? `${type}.prompt`
+          : `interactable.${type}`;
       this.notification.show(key, localise(this, key));
     } else {
       this.notification.hide();
@@ -171,6 +181,11 @@ export class StreetScene extends Phaser.Scene {
         onComplete: () =>
           ubahn ? this.scene.start('Ubahn') : this.scene.start('Building', { shop: target.type === 'object.djdoor' ? 'dj' : 'spati' }),
       });
+      return true;
+    }
+
+    if (target.place) {
+      openInspect(this, target.type.slice('inspect.'.length), target.place);
       return true;
     }
 

@@ -48,7 +48,6 @@ INTERACTS = [
 
 PICKUPS = [
     ('cigarettes', 530, 272, 27, 39, 'pickup_cigarettes'),
-    ('bottle', 172, 388, 21, 51, 'pickup_bottle'),
 ]
 
 

@@ -2,6 +2,7 @@ import * as Phaser from 'phaser';
 import { HEIGHT, WIDTH } from './config';
 import { BootScene } from './scenes/BootScene';
 import { BuildingScene } from './scenes/BuildingScene';
+import { InspectScene } from './scenes/InspectScene';
 import { StreetScene } from './scenes/StreetScene';
 import { UbahnScene } from './scenes/UbahnScene';
 import { playerState, type WeatherKind } from './systems/state';
@@ -16,7 +17,7 @@ const game = new Phaser.Game({
   scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
   input: { gamepad: true },
   physics: { default: 'arcade', arcade: { gravity: { x: 0, y: 2500 } } },
-  scene: [BootScene, StreetScene, BuildingScene, UbahnScene],
+  scene: [BootScene, StreetScene, BuildingScene, UbahnScene, InspectScene],
 });
 
 if (import.meta.env.DEV) {

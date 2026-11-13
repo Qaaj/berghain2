@@ -113,6 +113,20 @@ export class TileLevel {
     show(0);
   }
 
+  // Every placed copy of a catalog block, found by its top-left tile, in pixels (x, y = top-left) and tiles
+  blocksNamed(name: string): { x: number; y: number; w: number; h: number; tx: number; ty: number }[] {
+    const b = this.catalog[name];
+    if (!b) return [];
+    const t = this.map.tileWidth;
+    const out: { x: number; y: number; w: number; h: number; tx: number; ty: number }[] = [];
+    for (const layer of this.layers) {
+      layer.forEachTile((tile) => {
+        if (tile.index - 1 === b.id) out.push({ x: tile.x * t, y: tile.y * t, w: b.w * t, h: b.h * t, tx: tile.x, ty: tile.y });
+      });
+    }
+    return out;
+  }
+
   markersNamed(name: string) {
     return this.markers.filter((m) => m.name === name);
   }

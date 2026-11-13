@@ -6,6 +6,8 @@ export const playerState = {
   mana: 5,
   isAlive: true,
   inventory: [] as string[],
+  // Items taken out of close-up views, as "<place>:<spot>" (see systems/inspect.ts), so they stay taken
+  looted: [] as string[],
   chapter: 1,
   money: 0, // in cents
   // Where to put the player when coming back to the street (null = the level's start marker)
