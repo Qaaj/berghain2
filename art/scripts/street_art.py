@@ -8,6 +8,7 @@ Writes  art/tilesets/neukoelln_street.png  (native 16px tiles, import this into 
 import os
 
 import street_facades as F
+import street_lot as V
 import street_props as P
 import street_shops as S
 from sheet import TileSheet
@@ -28,6 +29,9 @@ def build():
     P.graffiti(sheet)
     P.far(sheet)
     P.markers(sheet)
+    # appended after the markers so the tile ids of everything above stay stable for existing editor projects
+    V.fences(sheet)
+    V.vacant_lot(sheet)
     return sheet
 
 
