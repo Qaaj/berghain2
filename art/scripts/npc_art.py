@@ -1,9 +1,11 @@
-"""Draws the street dealer through pixel-mcp: his street sprite, his conversation close-up and what he sells.
+"""Draws the talking NPCs through pixel-mcp: the street dealer (street sprite, conversation close-up, what he sells)
+and Jule, the neighbour who sends you to him (street sprite and close-up).
 
-Run:  python3 art/scripts/npc_art.py [name ...]      (names: dealer, talk, pickups, or one pickup like weed)
+Run:  python3 art/scripts/npc_art.py [name ...]      (names: dealer, talk, jule, jule_talk, pickups, or one pickup)
 Writes  public/assets/npc/dealer.png       street sheet, 2 frames of 32x32 native side by side (idle, glancing),
                                             exported at 3x (192x96), feet on the bottom row like public/assets/npc.png
         public/assets/talk/dealer.png      the close-up shown while you talk to him, 192x120 native at 3x
+        public/assets/npc/jule.png, talk/jule.png   the same two for Jule
         public/assets/pickups/pickup_*.png HUD icons for what you can buy (weed, ketamine, cocaine, heroin, poppers)
 and an editable art/npc_*.aseprite for each.
 """
@@ -451,9 +453,237 @@ def poppers():
     return outlined(s)
 
 
+# ================================================================ Jule
+# A tired neighbour on the stoop of her building: auburn hair in a messy bun, a big mustard cardigan over a striped
+# shirt, black leggings, pink slippers, a red mug of tea. She wants a bag of weed and won't buy it herself.
+HAIR, HAIR_HI, HAIR_LO = '#8a3b2a', '#b4553a', '#5a2419'
+J_SKIN, J_SKIN_HI, J_SKIN_LO, J_SKIN_DK = '#e0b08f', '#ecc4a4', '#b7826a', '#8f5f4c'
+CARDI, CARDI_HI, CARDI_LO = '#a8812f', '#c99e45', '#7a5b1f'
+SHIRT, SHIRT_STRIPE = '#dcd6c6', '#3c4a6b'
+MUG, MUG_HI, MUG_LO = '#d93532', '#f07a6a', '#8f1f22'
+SLIPPER, SLIPPER_LO = '#d26ba0', '#a8507e'
+
+
+def jule_frame(glance):
+    """32x32, facing left like the dealer. `glance`: head turned to look down the street behind her."""
+    s = Sprite(32, 32, outline=False)
+    L = {'r': HAIR, 'R': HAIR_HI, 'q': HAIR_LO, 's': J_SKIN, 'S': J_SKIN_HI, 'z': J_SKIN_LO, 'e': '#121114',
+         'l': '#b4553a', 'c': CARDI, 'C': CARDI_HI, 'd': CARDI_LO, 't': SHIRT, 'T': SHIRT_STRIPE,
+         'm': MUG, 'M': MUG_HI, 'n': MUG_LO, 'j': '#262525', 'J': '#1a1919', 'p': SLIPPER, 'P': SLIPPER_LO}
+    head = [
+        '.....qRRq.....',   # 3 the bun
+        '....qRrrrq....',
+        '...RRRrrrrq...',
+        '..RrrrrrrrRq..',
+        '..RsSssrrrrq..',
+        '..sessSsrrrq..',
+        '.sssssszrrrq..',
+        '..slssszrrrq..',
+        '...sszzrrrq...',
+        '....zzsrrq....',   # 12 neck, hair down her back
+    ]
+    if glance:
+        head = [row[::-1] for row in head]
+    s.grid(9, 3, head, L)
+    body = [
+        '...CcttcccCd..',   # 13 shoulders, cardigan open at the front
+        '..CCcTTccccd..',
+        '..Ccctttcccd..',
+        '..CccTTTcccd..',
+        '.MmCctttcccd..',   # 17 the mug, held in front
+        'nmmsctTTcccd..',
+        '.mmsctttcccd..',
+        '..CcctTTcccd..',
+        '..Cccttttccd..',
+        '..dddcccdddd..',   # 22 the cardigan hangs long
+        '...jjjjjjjj...',
+        '...jjjjJjjj...',
+        '...jjj..Jjj...',
+        '...jjj..jjj...',
+        '...jjj..jjj...',
+        '...Jjj..jjJ...',
+        '...jjj..jjj...',
+        '..pppP.pppP...',   # 30 slippers
+        '..PPPP.PPPP...',
+    ]
+    s.grid(9, 13, body, L)
+    return s
+
+
+def jule():
+    s = Sprite(64, 32, outline=False)
+    s.blit(jule_frame(False), 0, 0)
+    s.blit(jule_frame(True), 32, 0)
+    return s
+
+
+J_WALL, J_WALL_LO = '#4a4840', '#3f3c35'                   # the grey-brown plaster of her building ('c')
+WOOD, WOOD_HI, WOOD_LO = '#5a3a24', '#7a5236', '#3a2416'
+GLASS = '#e0a845'
+
+
+def jule_background(s):
+    W, H = TALK_W, TALK_H
+    rng = noise(57)
+    for y in range(H):
+        for x in range(W):
+            s.set(x, y, lit(J_WALL if rng.random() > 0.14 else J_WALL_LO, x, y))
+    # her front door: a tall wooden Altbau door to our right, its glass panel lit by the stairwell light behind it
+    x0, x1, top = 112, 184, 6
+    for y in range(top - 4, H):
+        for x in range(x0 - 5, x1 + 5):
+            s.set(x, y, lit('#5b5a5a', x, y, 0.9))           # the stone surround
+    s.hline(x0 - 5, top - 4, x1 - x0 + 10, lit('#807e7e', x0, top))
+    for y in range(top, H):
+        for x in range(x0, x1):
+            px = (x - x0) % 36                              # two door leaves
+            col = WOOD
+            if px in (0, 35):
+                col = WOOD_LO
+            elif px == 1:
+                col = WOOD_HI
+            elif 5 <= px <= 30 and top + 6 <= y <= top + 46:
+                col = mix(GLASS, '#f0ece0', 0.25) if (px + y) % 9 else '#c99e45'   # frosted glass, lit
+                if px in (5, 30) or y in (top + 6, top + 46):
+                    col = WOOD_LO
+                elif px == 17:
+                    col = WOOD_LO                          # glazing bar
+            elif 5 <= px <= 30 and top + 54 <= y <= top + 104 and (px in (5, 30) or y in (top + 54, top + 104)):
+                col = WOOD_LO                              # the lower panel's moulding
+            s.set(x, y, col)
+    s.rect(x0 + 32, 70, 2, 8, '#c6c754'); s.set(x0 + 32, 70, '#f0ece0')   # brass handles
+    s.rect(x0 + 38, 70, 2, 8, '#c6c754')
+    # the doorbell panel beside the door: name tags in two columns, one of them hers
+    bx, by = 90, 44
+    s.rect(bx, by, 14, 34, '#a9a7a7'); s.rect(bx + 1, by + 1, 12, 32, '#807e7e')
+    for i in range(6):
+        for j in range(2):
+            tx, ty = bx + 2 + j * 6, by + 3 + i * 5
+            s.rect(tx, ty, 4, 3, '#f0ece0' if (i, j) != (2, 1) else '#ff71f0')
+            s.set(tx + 4, ty + 1, '#3c3a3a')               # the button
+    s.rect(bx + 3, by + 33 - 2, 8, 1, '#3c3a3a')            # speaker grille
+    # house number, a sticker or two, a scrawled tag
+    s.text(94, 30, '44', '#f0ece0', 2)
+    for x, y, col in ((14, 20, '#d2d631'), (24, 26, '#71faff'), (8, 96, '#ff71f0')):
+        s.rect(x, y, 6, 4, lit(col, x, y, 1.2))
+        s.hline(x + 1, y + 2, 4, lit(shade(col, 0.6), x, y))
+    tag(s, [(10, 70), (16, 60), (20, 70), (26, 58), (30, 68), (36, 62)], '#a9a7a7', 1)
+
+
+def jule_portrait(s):
+    """Her from the chest up, turned 3/4 towards us, mug of tea in both hands, tired eyes."""
+    cx = 62
+    # shoulders: the big cardigan, then the striped shirt in its open front
+    for y in range(70, TALK_H):
+        half = min(60, 20 + (y - 70) * 2.2)
+        for x in range(int(cx - half), int(cx + half) + 1):
+            u = (x - cx) / max(half, 1)
+            f = 1.08 - 0.4 * (u + 1) / 2
+            if u < -0.88:
+                f = 1.3
+            col = shade(CARDI, f + 0.12 * lamp_light(x, y))
+            if (x + y * 2) % 5 == 0:
+                col = shade(col, 0.9)                      # knit texture
+            if abs(x - cx + 2) < 3 + (y - 70) * 0.35:
+                col = SHIRT if (y // 3) % 2 else SHIRT_STRIPE
+            s.set(x, y, col)
+    # hair behind the head and shoulders
+    rng = noise(23)
+    for y in range(12, 84):
+        for x in range(cx - 30, cx + 32):
+            u, v = (x - cx - 1) / 29, (y - 46) / 36
+            if u * u + v * v <= 1:
+                f = 1.0 - 0.3 * u
+                s.set(x, y, shade(HAIR, f) if rng.random() > 0.1 else HAIR_LO)
+    # the bun, on top and a bit to our right
+    bx, by = cx + 8, 10
+    for y in range(by - 9, by + 9):
+        for x in range(bx - 11, bx + 11):
+            u, v = (x - bx) / 10.5, (y - by) / 8.5
+            if u * u + v * v <= 1:
+                s.set(x, y, HAIR_HI if (u < -0.3 and v < 0) else HAIR if rng.random() > 0.15 else HAIR_LO)
+    for x, y in ((bx + 9, by - 6), (bx + 11, by - 4), (bx + 12, by - 2), (bx - 10, by - 7)):   # stray hairs
+        s.set(x, y, HAIR_HI)
+    # face
+    fx, fy = cx - 4, 46
+    for y in range(fy - 22, fy + 24):
+        for x in range(fx - 17, fx + 17):
+            u, v = (x - fx) / 16, (y - fy) / 22.5
+            if v > 0.35:
+                u *= 1 + (v - 0.35) * 1.0
+            if u * u + v * v > 1:
+                continue
+            light = -0.8 * u - 0.3 * v
+            col = J_SKIN_HI if light > 0.45 else J_SKIN if light > -0.2 else J_SKIN_LO if light > -0.8 else J_SKIN_DK
+            s.set(x, y, col)
+    # fringe falling over the forehead, sweeping to our right
+    for y in range(fy - 24, fy - 10):
+        for x in range(fx - 17, fx + 18):
+            edge = fy - 12 - (x - fx + 17) * 0.18 - (2 if (x // 3) % 2 else 0)
+            if y < edge and (x - fx) ** 2 / 17 ** 2 + (y - fy) ** 2 / 23 ** 2 <= 1.05:
+                s.set(x, y, HAIR_HI if x < fx - 6 else HAIR)
+    ey = fy - 3
+    s.hline(fx - 12, ey - 5, 7, HAIR_LO); s.hline(fx + 4, ey - 5, 7, HAIR_LO)        # brows, raised in the middle
+    s.set(fx - 6, ey - 6, HAIR_LO); s.set(fx + 4, ey - 6, HAIR_LO)
+    for ex in (fx - 12, fx + 4):
+        s.hline(ex, ey - 1, 7, J_SKIN_DK)                  # heavy lids: she hasn't slept
+        s.hline(ex + 1, ey, 5, '#f0ece0')
+        s.rect(ex + 2, ey, 2, 2, '#3a6b4a'); s.set(ex + 2, ey, '#121114')   # green eyes
+        s.hline(ex, ey + 2, 7, shade(J_SKIN_LO, 0.85))     # dark circles
+        s.hline(ex + 1, ey + 3, 5, shade(J_SKIN_LO, 0.95))
+    s.set(fx - 9, ey, '#ffffff')
+    for x, y in ((fx - 13, ey + 6), (fx - 10, ey + 7), (fx - 7, ey + 6), (fx + 6, ey + 6), (fx + 9, ey + 7)):
+        s.set(x, y, shade(J_SKIN, 0.85))                   # freckles
+    for y in range(ey + 1, ey + 10):
+        s.set(fx - 1, y, J_SKIN_HI if y < ey + 8 else J_SKIN)
+        s.set(fx, y, J_SKIN_LO)
+    s.hline(fx - 3, ey + 10, 3, J_SKIN_LO); s.set(fx + 1, ey + 10, J_SKIN_DK)
+    my = ey + 15                                           # mouth: a tired, lopsided half-smile
+    s.hline(fx - 6, my, 10, '#9a4a3a')
+    s.set(fx - 7, my - 1, '#9a4a3a')
+    s.hline(fx - 5, my + 1, 8, '#c86a5a')
+    s.hline(fx - 4, my + 2, 6, J_SKIN_LO)
+    s.rect(fx + 13, ey + 4, 2, 3, '#d2d631'); s.set(fx + 13, ey + 4, '#f0ece0')       # a gold earring
+    # neck
+    for y in range(fy + 20, fy + 28):
+        for x in range(fx - 7, fx + 8):
+            if (x, y) not in s.p or s.p[(x, y)] in (HAIR, HAIR_LO, HAIR_HI) or y > fy + 22:
+                s.set(x, y, J_SKIN_LO if x > fx else J_SKIN)
+    # the mug, held up in front of her chest in both hands, steam curling off it
+    mx, my0, mw, mh = 66, 86, 22, 24
+    for y in range(my0, my0 + mh):
+        for x in range(mx, mx + mw):
+            u = (x - mx) / mw
+            s.set(x, y, MUG_HI if u < 0.2 else MUG if u < 0.75 else MUG_LO)
+    s.hline(mx, my0, mw, '#5a1a1c'); s.hline(mx + 1, my0 + 1, mw - 2, '#3a2416')       # rim and the tea in it
+    for y in range(my0 + 6, my0 + 18):                     # the handle
+        s.set(mx + mw, y, MUG_LO); s.set(mx + mw + 4, y, MUG_LO)
+    s.hline(mx + mw, my0 + 6, 5, MUG_LO); s.hline(mx + mw, my0 + 17, 5, MUG_LO)
+    s.text(mx + 4, my0 + 9, 'NK', '#f0ece0')
+    for hx in (mx - 6, mx + mw - 4):                       # hands wrapped round it
+        s.rect(hx, my0 + 8, 10, 10, J_SKIN)
+        s.hline(hx, my0 + 8, 10, J_SKIN_HI)
+        for k in range(1, 4):
+            s.hline(hx + 1, my0 + 8 + k * 2 + 1, 8, J_SKIN_LO)
+        s.rect(hx - 1 if hx < mx else hx + 8, my0 + 12, 3, 12, CARDI_LO)     # cuffs of the sleeves
+    for i in range(16):                                    # steam
+        x = mx + 8 + int(3 * __import__('math').sin(i / 2.2))
+        s.set(x, my0 - 3 - i, mix('#f0ece0', J_WALL, i / 18))
+
+
+def jule_talk():
+    s = Sprite(TALK_W, TALK_H, outline=False)
+    jule_background(s)
+    jule_portrait(s)
+    frame(s)
+    return s
+
+
 ASSETS = {  # key: (aseprite name, draw, output under public/assets)
     'dealer': ('npc_dealer', dealer, 'npc/dealer.png'),
     'talk': ('npc_dealer_talk', talk, 'talk/dealer.png'),
+    'jule': ('npc_jule', jule, 'npc/jule.png'),
+    'jule_talk': ('npc_jule_talk', jule_talk, 'talk/jule.png'),
     'weed': ('npc_pickup_weed', weed, 'pickups/pickup_weed.png'),
     'ketamine': ('npc_pickup_ketamine', ketamine, 'pickups/pickup_ketamine.png'),
     'cocaine': ('npc_pickup_cocaine', cocaine, 'pickups/pickup_cocaine.png'),

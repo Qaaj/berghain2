@@ -8,6 +8,7 @@ import { playerState } from './state';
 //   talk.<npc>.name                the NPC's name, shown over the close-up
 //   talk.<npc>.<node>.line         what they say; "a|b|c" picks one at random, {money} is your wallet
 //   talk.<npc>.<node>.<choice id>  what you answer
+//   talk.<npc>.paid                 shown when they hand you money ({money}), for NPCs with `pays` answers
 // To add a talking NPC: art in art/scripts/npc_art.py (street sprite npc/<npc>.png, close-up talk/<npc>.png), an
 // entry here, a marker_<npc> tile on the street, and the text.
 
@@ -18,6 +19,7 @@ export interface Choice {
   next?: string; // node it leads to; without one the conversation ends after this answer
   when?: (s: State) => boolean; // only offered when this holds
   price?: number; // cents; shown with the answer, paid when picked. Short of money: goes to the `broke` node instead
+  pays?: number; // cents the NPC hands you when you pick it
   gives?: string; // inventory item you get
   takes?: string; // inventory item you hand over (only offer the choice `when` you have it)
   sets?: string; // flag remembered in playerState.flags (e.g. what you already know or did)
@@ -101,7 +103,55 @@ const dealer: Conversation = {
   },
 };
 
-export const CONVERSATIONS: Record<string, Conversation> = { dealer };
+// Jule, on the stoop of her building near the Späti. Wants a bag of weed but won't buy from the dealer herself: she
+// fronts you the tenner it costs and pays a fiver when you bring it back. Already carrying weed? She buys it outright.
+const WEED_PRICE = DRUGS.find((d) => d.id === 'weed')!.price;
+const TIP = 500;
+const jule: Conversation = {
+  start: (s) =>
+    s.flags.includes('jule.done')
+      ? 'after'
+      : s.flags.includes('jule.errand')
+        ? 'waiting'
+        : s.flags.includes('jule.met')
+          ? 'again'
+          : 'hello',
+  broke: 'bye', // she never asks you for money
+  nodes: {
+    hello: { choices: [{ id: 'sure', next: 'ask', sets: 'jule.met' }, { id: 'no', next: 'bye' }] },
+    again: { choices: [{ id: 'sure', next: 'ask' }, { id: 'no', next: 'bye' }] },
+    ask: {
+      choices: [
+        { id: 'have', when: has('weed'), takes: 'weed', pays: WEED_PRICE + TIP, sets: 'jule.done', next: 'thanks' },
+        { id: 'deal', next: 'deal' },
+        { id: 'why', next: 'why', when: not(flag('jule.asked_why')), sets: 'jule.asked_why' },
+        { id: 'no', next: 'bye' },
+      ],
+    },
+    why: { choices: [{ id: 'deal', next: 'deal' }, { id: 'no', next: 'bye' }] },
+    deal: {
+      choices: [
+        { id: 'take', pays: WEED_PRICE, sets: 'jule.errand', next: 'go' },
+        { id: 'no', next: 'bye' },
+      ],
+    },
+    go: {},
+    waiting: {
+      choices: [
+        { id: 'give', when: has('weed'), takes: 'weed', pays: TIP, sets: 'jule.done', next: 'thanks' },
+        { id: 'spent', when: (s) => !s.inventory.includes('weed') && s.money < WEED_PRICE, next: 'spent' },
+        { id: 'notyet', next: 'notyet' },
+      ],
+    },
+    spent: {},
+    notyet: {},
+    thanks: {},
+    after: {},
+    bye: {},
+  },
+};
+
+export const CONVERSATIONS: Record<string, Conversation> = { dealer, jule };
 
 // Items you can come away with from a conversation; their HUD icons are pickups/pickup_<item>.png
 export const TALK_ITEMS = DRUGS.map((d) => d.id);

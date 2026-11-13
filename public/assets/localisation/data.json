@@ -32,6 +32,9 @@
         },
         "dealer": {
           "action": "TALK"
+        },
+        "jule": {
+          "action": "TALK"
         }
       },
       "object": {
@@ -325,6 +328,61 @@
         "bye": {
           "line": "Stay safe. You never saw me.|Later.|Keep walking. Don't look back."
         }
+      },
+      "jule": {
+        "name": "Jule, on the stoop",
+        "paid": "Jule hands you {money} EUR.",
+        "hello": {
+          "line": "Hey. You. You look like you know the area. Can I ask you something weird?",
+          "sure": "Sure, go on.",
+          "no": "Not really, sorry."
+        },
+        "again": {
+          "line": "Oh, it's you. Still not something weird to ask?|You again. Did you think about my weird question?",
+          "sure": "Ask away.",
+          "no": "Just passing."
+        },
+        "ask": {
+          "line": "I need a little weed. Just a bag, so I can sleep. There's a guy in a doorway down the street, past the U-Bahn, but he looks at me like I'm a cop.",
+          "have": "I've got a bag on me, actually.",
+          "deal": "I'll get it for you.",
+          "why": "Why not just go yourself?",
+          "no": "Can't help, sorry."
+        },
+        "why": {
+          "line": "Last time I bought from a guy like that, it was oregano. Twenty euros of oregano. You look like someone who'd notice.",
+          "deal": "Fine. I'll get it.",
+          "no": "I'll pass."
+        },
+        "deal": {
+          "line": "Really? Okay. Here's a tenner, that's what a bag costs. Bring it back and there's a fiver in it for you.",
+          "take": "Deal.",
+          "no": "Actually, I can't."
+        },
+        "go": {
+          "line": "I'll be right here. Not like I'm going anywhere."
+        },
+        "waiting": {
+          "line": "Any luck? He's the guy in the doorway past the U-Bahn.|Back already? Tell me you've got it.",
+          "give": "Here's your bag.",
+          "spent": "I... kind of spent your tenner.",
+          "notyet": "Not yet."
+        },
+        "spent": {
+          "line": "You WHAT. ...Fine. Whatever. Just get me the bag, okay? Please?"
+        },
+        "notyet": {
+          "line": "Okay. I'll wait. Again.|Take your time. I'll just sit here. Awake."
+        },
+        "thanks": {
+          "line": "Oh, you angel. Here, that's yours. Tonight I'm finally sleeping."
+        },
+        "after": {
+          "line": "Thanks again. I slept like a baby. Well, a baby in Neukoelln.|My hero of the doorway. Don't tell my mum."
+        },
+        "bye": {
+          "line": "Okay. Never mind.|Sure. Forget I asked."
+        }
       }
     }
   },
@@ -360,6 +418,9 @@
           "reply2": "hiccup"
         },
         "dealer": {
+          "action": "TALK"
+        },
+        "jule": {
           "action": "TALK"
         }
       },
@@ -653,6 +714,61 @@
         },
         "bye": {
           "line": "Stay safe. You never saw me.|Later.|Keep walking. Don't look back."
+        }
+      },
+      "jule": {
+        "name": "Jule, on the stoop",
+        "paid": "Jule hands you {money} EUR.",
+        "hello": {
+          "line": "Hey. You. You look like you know the area. Can I ask you something weird?",
+          "sure": "Sure, go on.",
+          "no": "Not really, sorry."
+        },
+        "again": {
+          "line": "Oh, it's you. Still not something weird to ask?|You again. Did you think about my weird question?",
+          "sure": "Ask away.",
+          "no": "Just passing."
+        },
+        "ask": {
+          "line": "I need a little weed. Just a bag, so I can sleep. There's a guy in a doorway down the street, past the U-Bahn, but he looks at me like I'm a cop.",
+          "have": "I've got a bag on me, actually.",
+          "deal": "I'll get it for you.",
+          "why": "Why not just go yourself?",
+          "no": "Can't help, sorry."
+        },
+        "why": {
+          "line": "Last time I bought from a guy like that, it was oregano. Twenty euros of oregano. You look like someone who'd notice.",
+          "deal": "Fine. I'll get it.",
+          "no": "I'll pass."
+        },
+        "deal": {
+          "line": "Really? Okay. Here's a tenner, that's what a bag costs. Bring it back and there's a fiver in it for you.",
+          "take": "Deal.",
+          "no": "Actually, I can't."
+        },
+        "go": {
+          "line": "I'll be right here. Not like I'm going anywhere."
+        },
+        "waiting": {
+          "line": "Any luck? He's the guy in the doorway past the U-Bahn.|Back already? Tell me you've got it.",
+          "give": "Here's your bag.",
+          "spent": "I... kind of spent your tenner.",
+          "notyet": "Not yet."
+        },
+        "spent": {
+          "line": "You WHAT. ...Fine. Whatever. Just get me the bag, okay? Please?"
+        },
+        "notyet": {
+          "line": "Okay. I'll wait. Again.|Take your time. I'll just sit here. Awake."
+        },
+        "thanks": {
+          "line": "Oh, you angel. Here, that's yours. Tonight I'm finally sleeping."
+        },
+        "after": {
+          "line": "Thanks again. I slept like a baby. Well, a baby in Neukoelln.|My hero of the doorway. Don't tell my mum."
+        },
+        "bye": {
+          "line": "Okay. Never mind.|Sure. Forget I asked."
         }
       }
     }
