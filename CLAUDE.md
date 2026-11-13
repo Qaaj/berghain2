@@ -13,7 +13,7 @@ npm run dev            # http://localhost:5173 (Vite)
 npm run build          # typecheck + production build; run before committing
 npm run doctor         # checks Node, Pillow, Aseprite, pixel-plugin, Sprite Fusion
 npm run art            # redraw every tileset/prop through pixel-mcp (needs Aseprite + pixel-plugin)
-npm run maps           # regenerate the starter levels (street, U-Bahn, Späti)
+npm run maps           # regenerate the starter levels (streets, U-Bahn stations, Späti)
 npm run import-map -- street ~/Downloads/map.zip   # bring in a map exported from Sprite Fusion (or: ubahn)
 ```
 
@@ -22,6 +22,9 @@ npm run import-map -- street ~/Downloads/map.zip   # bring in a map exported fro
 - `src/scenes/` — `Boot` (preload, title) → `Street` ⇄ `Building` (Späti) and `Street` ⇄ `Ubahn`. `Inspect` is an
   overlay over any of them: the close-up of something you look into (the street container), with hotspots to read or
   take items from. Views, hotspots and which street blocks open them live in `src/systems/inspect.ts`.
+  `Street` takes `{district: 'neukoelln' | 'fhain'}` and `Ubahn` takes `{station, arriving}`: boarding the train
+  plays a ride inside the carriage and arrives at the other station (Neukölln U7 ⇄ Friedrichshain U5), whose
+  stairs lead up to that district's street. Friedrichshain has the Berghain (door marker `berghain`, not enterable yet).
 - `src/systems/tilelevel.ts` loads levels made in the **Sprite Fusion tilemap editor**: layer names decide
   behaviour (`far` half-speed parallax, `ground` etc. with the `collider` flag are solid, `markers` spawn entities,
   `front*` draws over the player). See `art/EDITOR.md`.
@@ -41,7 +44,7 @@ an editable `.aseprite` in `art/`.
 
 | Generated | By | Don't edit by hand |
 |---|---|---|
-| `art/tilesets/neukoelln_street.*`, `ubahn_station.*`, `art/*.aseprite` | `street_art.py`, `ubahn_art.py`, `spati_art.py`, `inspect_art.py` | the PNG/JSON; change the script (or the `.aseprite` and accept a regenerate will overwrite it) |
+| `art/tilesets/neukoelln_street.*`, `friedrichshain_street.*`, `ubahn_station.*`, `ubahn_fhain.*`, `art/*.aseprite` | `street_art.py`, `fhain_art.py`, `ubahn_art.py` (both stations, themed), `spati_art.py`, `inspect_art.py` | the PNG/JSON; change the script (or the `.aseprite` and accept a regenerate will overwrite it) |
 | `public/assets/building/spati/*`, `public/assets/ubahn/*`, `public/assets/inspect/*` | same | |
 | `public/assets/tilemaps/*.json`, `*_sheet.png`, `*_catalog.json` | `build_*_map.py` or `import_map.py` | |
 

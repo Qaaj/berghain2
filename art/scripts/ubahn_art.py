@@ -1,7 +1,12 @@
-"""U-Bahn station tile kit (for the Sprite Fusion editor) and train sprites (entities).
+"""U-Bahn station tile kits (for the Sprite Fusion editor) and train sprites (entities).
 
-Run:  python3 art/scripts/ubahn_art.py
-Writes  art/tilesets/ubahn_station.png/.json (+ .aseprite), and public/assets/ubahn/train_*.png (3x).
+Run:  python3 art/scripts/ubahn_art.py            (both stations and the train)
+      python3 art/scripts/ubahn_art.py fhain      (only some of: neukoelln fhain train)
+Writes  art/tilesets/ubahn_station.png/.json (Neukölln, U7), art/tilesets/ubahn_fhain.png/.json (Friedrichshain,
+U5) (+ .aseprite), and public/assets/ubahn/train_*.png (3x).
+
+Both stations share block names (wall_clean, pillar_mid_a, bench...) so the map scripts lay them out the same
+way; a THEME decides how they look.
 """
 import os
 import sys
@@ -17,9 +22,29 @@ LINE = '#528dba'          # U7
 DARK_BLUE = '#1f3a5f'
 YELLOW = '#e2b514'
 
+# Neukölln: beige brick-bond tiles, a blue U7 band, tiled pillars. Friedrichshain: glossy green square tiles,
+# a brown U5 band, oxblood dado and riveted steel columns, so you can tell at a glance you got off elsewhere.
+THEMES = {
+    'neukoelln': dict(
+        kit='ubahn_station', pattern='brick', wall=WALL, grout=GROUT, band=BLUE, dado=DARK_BLUE,
+        line='U7', line_col=LINE, pillar='tiled', ceiling='#2c2c33',
+        signs=(('station_sign_neukoelln', 'NEUKOELLN', 4), ('station_sign_rudow', 'RUDOW', 4)),
+        board=('U7 RUDOW 2', 'U7 RUDOW 7'),
+    ),
+    'fhain': dict(
+        kit='ubahn_fhain', pattern='square', wall='#5fa58f', grout='#2f6a5a', band='#7e5330', dado='#5a2426',
+        line='U5', line_col='#7e5330', pillar='steel', ceiling='#3a3632',
+        signs=(('station_sign_fhain', 'FRIEDRICHSHAIN', 6), ('station_sign_hoenow', 'HOENOW', 4)),
+        board=('U5 HOENOW 4', 'U5 HOENOW 9'),
+    ),
+}
+T = THEMES['neukoelln']   # the theme being drawn; build() sets it
+
 
 # ------------------------------------------------------------- structure
 def wall_tile(s, rng, variant):
+    if T['pattern'] == 'square':
+        return square_tile(s, rng, variant)
     for y in range(16):
         for x in range(16):
             row = y // 4
@@ -41,39 +66,69 @@ def wall_tile(s, rng, variant):
             s.set(x, y, '#5f5a4a')
 
 
+def square_tile(s, rng, variant):
+    """Glossy 8px square tiles with a bevel: light top-left, dark grout bottom-right."""
+    wall, grout = T['wall'], T['grout']
+    hi, lo = shade(wall, 1.25), shade(wall, 0.85)
+    for y in range(16):
+        for x in range(16):
+            tx, ty = x % 8, y % 8
+            col = wall
+            if tx == 7 or ty == 7:
+                col = grout
+            elif tx == 0 or ty == 0:
+                col = hi
+            elif tx == 6 or ty == 6:
+                col = lo
+            elif (tx, ty) in ((2, 1), (1, 2), (2, 2)):
+                col = '#d8f0e6'                       # the shine on each tile
+            elif rng.random() < 0.04:
+                col = lo
+            s.set(x, y, col)
+    if variant == 'stained':
+        for x0, ln in ((3, 15), (12, 10)):
+            for y in range(ln):
+                s.set(x0, y, '#3f6a5a')
+    elif variant == 'cracked':                        # a missing tile showing the concrete behind
+        s.rect(8, 8, 7, 7, '#6d6a66'); s.rect(9, 9, 5, 5, '#5a5753'); s.set(10, 11, '#3a3836')
+
+
 def station_structure(sheet):
     sheet.group('walls and floor')
     rng = noise(61)
     for v in ('clean', 'stained', 'cracked'):
         wall_tile(sheet.add('wall_' + v), rng, v)
-    s = sheet.add('wall_band')                     # the U7 blue stripe
+    s = sheet.add('wall_band')                     # the line-coloured stripe
     wall_tile(s, rng, 'clean')
-    s.rect(0, 3, 16, 10, BLUE)
-    s.hline(0, 3, 16, shade(BLUE, 1.5)); s.hline(0, 12, 16, shade(BLUE, 0.5))
+    s.rect(0, 3, 16, 10, T['band'])
+    s.hline(0, 3, 16, shade(T['band'], 1.5)); s.hline(0, 12, 16, shade(T['band'], 0.5))
     s.hline(0, 7, 16, '#ffffff')
     s = sheet.add('wall_dado')                     # dark tiles along the foot of the wall
     for y in range(16):
         for x in range(16):
-            col = DARK_BLUE
+            col = T['dado']
             if y % 8 == 7 or x % 8 == 7:
-                col = shade(DARK_BLUE, 0.6)
+                col = shade(T['dado'], 0.6)
             elif y % 8 == 0 or x % 8 == 0:
-                col = shade(DARK_BLUE, 1.3)
+                col = shade(T['dado'], 1.3)
             s.set(x, y, col)
     for name, lamp in (('ceiling', False), ('ceiling_lamp', True)):
         s = sheet.add(name)
         for y in range(16):
             for x in range(16):
-                s.set(x, y, '#2c2c33' if y < 14 else '#1a1a20')
+                s.set(x, y, T['ceiling'] if y < 14 else '#1a1a20')
         s.hline(0, 14, 16, '#41414d')
-        if lamp:
+        if lamp and T['pillar'] == 'steel':           # a long fluorescent tube instead of a lamp box
+            s.rect(0, 9, 16, 2, '#e8fff4'); s.hline(0, 11, 16, '#7a8a84')
+            s.rect(0, 8, 2, 4, '#5b5a5a'); s.rect(14, 8, 2, 4, '#5b5a5a')
+        elif lamp:
             s.rect(2, 8, 12, 3, '#f4f1d0')
             s.hline(2, 8, 12, '#ffffff')
             for x in (1, 14):
                 s.rect(x, 7, 1, 5, '#8a8a90')
             s.set(0, 15, '#5a5638'); s.set(15, 15, '#5a5638')
     s = sheet.add('beam')
-    s.rect(0, 0, 16, 10, '#2c2c33')
+    s.rect(0, 0, 16, 10, T['ceiling'])
     s.hline(0, 0, 16, '#41414d'); s.rect(0, 10, 16, 2, '#1a1a20')
     for x in range(2, 16, 5):
         s.set(x, 4, '#41414d')
@@ -134,6 +189,8 @@ def station_structure(sheet):
             s.set(x, y, '#1a1a20' if y > 3 else '#2c2c33')
 
     sheet.group('pillars')
+    if T['pillar'] == 'steel':
+        return steel_pillars(sheet)
     s = sheet.add('pillar_cap')
     s.rect(0, 0, 16, 5, '#41414d'); s.rect(1, 5, 14, 11, WALL)
     s.hline(0, 0, 16, '#5a5a68')
@@ -156,13 +213,43 @@ def station_structure(sheet):
     s.rect(0, 10, 16, 6, DARK_BLUE); s.hline(0, 10, 16, shade(DARK_BLUE, 1.5)); s.hline(0, 15, 16, '#121114')
 
 
+def steel_pillars(sheet):
+    """Riveted steel columns (an I-beam with a flange either side), the older Berlin station look."""
+    steel, hi, lo = '#3d5a4c', '#5d8270', '#22362c'
+
+    def column(s, y0, y1):
+        s.rect(4, y0, 8, y1 - y0, steel)              # web
+        s.rect(2, y0, 2, y1 - y0, hi); s.rect(12, y0, 2, y1 - y0, lo)   # flanges
+        s.vline(6, y0, y1 - y0, shade(steel, 1.15))
+        for y in range(y0 + 2, y1, 5):
+            s.set(3, y, '#a7c4b4'); s.set(12, y, '#8aa898')
+
+    s = sheet.add('pillar_cap')
+    s.rect(0, 0, 16, 4, T['ceiling']); s.hline(0, 0, 16, '#5a5a68')
+    s.rect(1, 4, 14, 3, lo); s.hline(1, 4, 14, hi)   # capital plate
+    for x in (2, 5, 10, 13):
+        s.set(x, 5, '#a7c4b4')
+    column(s, 7, 16)
+    for v in 'ab':
+        s = sheet.add('pillar_mid_' + v)
+        column(s, 0, 16)
+        if v == 'b':                                  # a line plate bolted to the column
+            s.rect(1, 4, 14, 8, T['band']); s.hline(1, 4, 14, '#ffffff'); s.hline(1, 11, 14, '#ffffff')
+            s.text(4, 5, T['line'], '#ffffff')
+    s = sheet.add('pillar_base')
+    column(s, 0, 10)
+    s.rect(1, 8, 14, 2, lo); s.hline(1, 8, 14, hi)
+    s.rect(0, 10, 16, 6, T['dado']); s.hline(0, 10, 16, shade(T['dado'], 1.5)); s.hline(0, 15, 16, '#121114')
+
+
 # --------------------------------------------------------------- props
-def station_sign(s, name):
-    s.rect(0, 2, 64, 14, DARK_BLUE)
-    s.hline(0, 2, 64, '#ffffff'); s.hline(0, 15, 64, '#ffffff')
-    s.rect(0, 0, 2, 3, '#5b5a5a'); s.rect(62, 0, 2, 3, '#5b5a5a')
-    s.rect(3, 4, 14, 10, LINE)
-    s.text(5, 7, 'U7', '#ffffff')
+def station_sign(s, name, w=4):
+    px = w * 16
+    s.rect(0, 2, px, 14, DARK_BLUE)
+    s.hline(0, 2, px, '#ffffff'); s.hline(0, 15, px, '#ffffff')
+    s.rect(0, 0, 2, 3, '#5b5a5a'); s.rect(px - 2, 0, 2, 3, '#5b5a5a')
+    s.rect(3, 4, 14, 10, T['line_col'])
+    s.text(5, 7, T['line'], '#ffffff')
     s.text(21, 7, name, '#ffffff')
 
 
@@ -210,8 +297,8 @@ def clock(s):
 def departure_board(s):
     s.rect(1, 1, 46, 14, '#121114')
     s.hline(1, 1, 46, '#5b5a5a'); s.hline(1, 14, 46, '#2c2929')
-    s.text(4, 3, 'U7 RUDOW 2', '#ffb000')
-    s.text(4, 9, 'U7 RUDOW 7', '#cc8a00')
+    s.text(4, 3, T['board'][0], '#ffb000')
+    s.text(4, 9, T['board'][1], '#cc8a00')
 
 
 def network_map(s):
@@ -228,8 +315,8 @@ def network_map(s):
 
 def timetable(s):
     s.rect(2, 1, 12, 30, '#f0ece0')
-    s.rect(2, 1, 12, 5, LINE)
-    s.text(4, 1, 'U7', '#ffffff')
+    s.rect(2, 1, 12, 5, T['line_col'])
+    s.text(4, 1, T['line'], '#ffffff')
     for y in range(8, 29, 4):
         s.hline(3, y, 10, '#a7a5a5')
         s.hline(3, y + 2, 6, '#3c3a3a')
@@ -292,10 +379,10 @@ def sign_ausgang(s):
     s.line(22, 8, 28, 8, '#ffffff'); s.line(26, 6, 28, 8, '#ffffff'); s.line(26, 10, 28, 8, '#ffffff')
 
 
-def sign_u7(s):
-    s.ellipse(8, 8, 7, 7, LINE)
-    s.ellipse(8, 8, 6, 6, '#ffffff'); s.ellipse(8, 8, 5, 5, LINE)
-    s.text(4, 6, 'U7', '#ffffff')
+def sign_line(s):
+    s.ellipse(8, 8, 7, 7, T['line_col'])
+    s.ellipse(8, 8, 6, 6, '#ffffff'); s.ellipse(8, 8, 5, 5, T['line_col'])
+    s.text(4, 6, T['line'], '#ffffff')
 
 
 MARKERS = [('marker_start', 'P', '#2fa84a'), ('marker_exit', 'E', '#127a2a'), ('marker_train', 'T', '#e3b81a'),
@@ -304,11 +391,11 @@ MARKERS = [('marker_start', 'P', '#2fa84a'), ('marker_exit', 'E', '#127a2a'), ('
 
 def station_props(sheet):
     sheet.group('signs and boards')
-    station_sign(sheet.add('station_sign_neukoelln', 4, 1), 'NEUKOELLN')
-    station_sign(sheet.add('station_sign_rudow', 4, 1), 'RUDOW')
+    for name, text, w in T['signs']:
+        station_sign(sheet.add(name, w, 1), text, w)
     departure_board(sheet.add('departure_board', 3, 1))
     clock(sheet.add('clock'))
-    sign_u7(sheet.add('sign_u7'))
+    sign_line(sheet.add('sign_' + T['line'].lower()))
     sign_ausgang(sheet.add('sign_exit', 2, 1))
     lamp_hang(sheet.add('lamp_hang', 1, 2))
     timetable(sheet.add('timetable', 1, 2))
@@ -338,7 +425,9 @@ def station_props(sheet):
             s.set(x, 0, '#121114'); s.set(x + 1, 15, '#121114')
 
 
-def build():
+def build(theme='neukoelln'):
+    global T
+    T = THEMES[theme]
     sheet = TileSheet(cols=16)
     station_structure(sheet)
     station_props(sheet)
@@ -350,7 +439,7 @@ CAR_W, CAR_H = 128, 80
 BODY, BODY_HI, BODY_LO = '#d6a90e', '#f1c93a', '#a88108'
 
 
-def train_car(open_doors, cab=False):
+def train_car(open_doors, cab=False, line='U7'):
     s = Sprite(CAR_W, CAR_H, outline=True)
     x0 = 14 if cab else 1
     # body, with a nose on the cab
@@ -410,7 +499,7 @@ def train_car(open_doors, cab=False):
             left = 14 - int((y - 6) * 14 / 34) + 2
             for x in range(left, 24):
                 s.set(x, y, '#0b1a22')
-        s.rect(26, 8, 10, 6, '#121114'); s.text(27, 9, 'U7', '#ffb000')
+        s.rect(26, 8, 10, 6, '#121114'); s.text(27, 9, line, '#ffb000')
         s.rect(1, 46, 3, 3, '#f6f2d0'); s.rect(1, 53, 3, 3, '#f6f2d0')
         s.rect(0, 58, 12, 3, '#3c3a3a')
     # bogies
@@ -424,22 +513,28 @@ def train_car(open_doors, cab=False):
 
 
 def make_train(studio):
-    for name, open_doors, cab in (('train_car', False, False), ('train_car_open', True, False),
-                                  ('train_cab', False, True), ('train_cab_open', True, True)):
-        studio.make('ubahn_' + name, train_car(open_doors, cab), 'ubahn/%s.png' % name)
+    # The cab's destination display shows the line: U7 in Neukölln, U5 in Friedrichshain (the cars are shared)
+    for name, open_doors, cab, line in (('train_car', False, False, 'U7'), ('train_car_open', True, False, 'U7'),
+                                        ('train_cab', False, True, 'U7'), ('train_cab_open', True, True, 'U7'),
+                                        ('train_cab_u5', False, True, 'U5'), ('train_cab_u5_open', True, True, 'U5')):
+        studio.make('ubahn_' + name, train_car(open_doors, cab, line), 'ubahn/%s.png' % name)
         print('drew', name)
 
 
 if __name__ == '__main__':
-    only_train = 'train' in sys.argv[1:]
+    only = sys.argv[1:] or [*THEMES, 'train']
     studio = Studio()
     try:
-        if not only_train:
-            sheet = build()
+        for theme in THEMES:
+            if theme not in only:
+                continue
+            sheet = build(theme)
             master = sheet.compose()
-            sheet.write_catalog(os.path.join(ART_DIR, 'tilesets', 'ubahn_station.json'))
-            studio.make('ubahn_station', master, os.path.join(ART_DIR, 'tilesets', 'ubahn_station.png'), scale=1)
-            print('station tiles: %dx%d' % (sheet.cols, sheet.rows), len(sheet.blocks), 'blocks')
-        make_train(studio)
+            kit = THEMES[theme]['kit']
+            sheet.write_catalog(os.path.join(ART_DIR, 'tilesets', kit + '.json'))
+            studio.make(kit, master, os.path.join(ART_DIR, 'tilesets', kit + '.png'), scale=1)
+            print('%s tiles: %dx%d' % (kit, sheet.cols, sheet.rows), len(sheet.blocks), 'blocks')
+        if 'train' in only:
+            make_train(studio)
     finally:
         studio.close()

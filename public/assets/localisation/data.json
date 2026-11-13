@@ -47,7 +47,8 @@
         "record_bin": "DIG",
         "listening": "LISTEN",
         "speaker": "LOOK",
-        "sofa": "SIT"
+        "sofa": "SIT",
+        "berghain": "Queue up"
       },
       "ubahn": {
         "exit": "Stairs up",
@@ -71,6 +72,9 @@
           "text": "Get some money",
           "done": "Got some money!"
         }
+      },
+      "fhain": {
+        "name": "Friedrichshain"
       }
     },
     "inventory": {
@@ -117,9 +121,15 @@
     "ubahn": {
       "ticket": "Single ticket 3.50 EUR. You have",
       "closing": "Zurueckbleiben bitte!",
-      "announce": "U7 nach Rudow",
-      "next": "NEXT STOP: KOTTBUSSER TOR",
-      "soon": "(this part is not built yet)"
+      "nextstop": "NEXT STOP",
+      "neukoelln": {
+        "name": "U-Bahn Neukoelln",
+        "announce": "U7 nach Rudow"
+      },
+      "fhain": {
+        "name": "Friedrichshain",
+        "announce": "U5 nach Hoenow"
+      }
     },
     "dj": {
       "dj": {
@@ -209,6 +219,9 @@
         "title": "The container",
         "intro": "Someone already went through this one."
       }
+    },
+    "berghain": {
+      "bouncer": "Not tonight."
     }
   },
   "de": {
@@ -259,7 +272,8 @@
         "record_bin": "DIG",
         "listening": "LISTEN",
         "speaker": "LOOK",
-        "sofa": "SIT"
+        "sofa": "SIT",
+        "berghain": "Anstellen"
       },
       "ubahn": {
         "exit": "Stairs up",
@@ -283,6 +297,9 @@
           "text": "Get some money",
           "done": "Got some money!"
         }
+      },
+      "fhain": {
+        "name": "Friedrichshain"
       }
     },
     "inventory": {
@@ -329,9 +346,15 @@
     "ubahn": {
       "ticket": "Single ticket 3.50 EUR. You have",
       "closing": "Zurueckbleiben bitte!",
-      "announce": "U7 nach Rudow",
-      "next": "NEXT STOP: KOTTBUSSER TOR",
-      "soon": "(this part is not built yet)"
+      "nextstop": "NAECHSTER HALT",
+      "neukoelln": {
+        "name": "U-Bahn Neukoelln",
+        "announce": "U7 nach Rudow"
+      },
+      "fhain": {
+        "name": "Friedrichshain",
+        "announce": "U5 nach Hoenow"
+      }
     },
     "dj": {
       "dj": {
@@ -421,6 +444,9 @@
         "title": "The container",
         "intro": "Someone already went through this one."
       }
+    },
+    "berghain": {
+      "bouncer": "Heute nicht."
     }
   }
 }

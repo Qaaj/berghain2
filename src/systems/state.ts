@@ -1,4 +1,6 @@
 export type WeatherKind = 'clear' | 'rain' | 'snow' | 'wind';
+// A street with a U-Bahn station under it; the train runs between them
+export type District = 'neukoelln' | 'fhain';
 
 // Shared game state across scenes (OG player_model)
 export const playerState = {

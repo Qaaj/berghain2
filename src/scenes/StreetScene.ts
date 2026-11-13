@@ -5,7 +5,7 @@ import { Player } from '../objects/Player';
 import { Controls } from '../systems/input';
 import { INSPECT_BLOCKS, openInspect } from '../systems/inspect';
 import { MessageQueue, PlayerNotification, SpeechBubble } from '../systems/messages';
-import { playerState, resetPlayer } from '../systems/state';
+import { playerState, resetPlayer, type District } from '../systems/state';
 import { lightLamps } from '../systems/lamplight';
 import { localise } from '../systems/text';
 import { TileLevel } from '../systems/tilelevel';
@@ -14,8 +14,11 @@ import { Weather } from '../systems/weather';
 const NPC_ROLES = ['smoker', 'weirdo', 'cop'] as const;
 let introShown = false;
 
+// Each district is a street level; Friedrichshain is reached by U-Bahn and has the Berghain
+const LEVEL_KEY: Record<District, string> = { neukoelln: 'street', fhain: 'fhain' };
+
 interface Interactable {
-  type: string; // 'object.door' | 'object.ubahn' | 'object.cat' | 'npc.<role>' | 'inspect.<view>'
+  type: string; // 'object.door' | 'object.ubahn' | 'object.cat' | 'object.berghain' | 'npc.<role>' | 'inspect.<view>'
   x: number;
   width: number;
   npc?: Phaser.GameObjects.Sprite;
@@ -23,8 +26,9 @@ interface Interactable {
   place?: string; // for close-ups: which copy of the object, so its contents are remembered
 }
 
-// The Neukölln street. The level comes from public/assets/tilemaps/street.json (built in the Sprite Fusion
-// editor, see art/scripts/import_map.py); marker tiles in its "markers" layer place the player, doors, NPCs...
+// A street: Neukölln (public/assets/tilemaps/street.json) or Friedrichshain (fhain.json), both built in the
+// Sprite Fusion editor or by art/scripts/build_*_map.py; marker tiles in the "markers" layer place the player,
+// doors, NPCs...
 export class StreetScene extends Phaser.Scene {
   private player!: Player;
   private controls!: Controls;
@@ -37,13 +41,19 @@ export class StreetScene extends Phaser.Scene {
   private inFrontOf: Interactable | null = null;
   private talking = false;
   private startX = 0;
+  private district: District = 'neukoelln';
 
   constructor() {
     super('Street');
   }
 
+  init(data: { district?: District }) {
+    this.district = data?.district ?? 'neukoelln';
+  }
+
   create() {
     const { width: W, height: H } = this.scale;
+    const home = this.district === 'neukoelln';
     this.interactables = [];
     this.talking = false;
 
@@ -55,7 +65,7 @@ export class StreetScene extends Phaser.Scene {
       .setScrollFactor(0)
       .setDepth(-1);
 
-    const level = new TileLevel(this, 'street');
+    const level = new TileLevel(this, LEVEL_KEY[this.district]);
     // Traffic lights run the German cycle: red, red+amber, green, amber (frames drawn by art/scripts/street_props.py)
     level.animate(this, [
       { block: 'ampel_red', ms: 6000 },
@@ -67,7 +77,7 @@ export class StreetScene extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, level.widthPx, level.heightPx + 200);
     this.cameras.main.setBounds(0, 0, level.widthPx, level.heightPx).setBackgroundColor(0x000000);
 
-    for (const m of [...level.markersNamed('door'), ...level.markersNamed('djdoor'), ...level.markersNamed('ubahn')]) {
+    for (const name of ['door', 'djdoor', 'ubahn', 'berghain']) for (const m of level.markersNamed(name)) {
       this.interactables.push({ type: `object.${m.name}`, x: m.x, width: m.w });
     }
     for (const role of NPC_ROLES) {
@@ -93,7 +103,8 @@ export class StreetScene extends Phaser.Scene {
     const start = level.markersNamed('start')[0];
     this.startX = (start ? start.x + start.w / 2 : 150) - 48;
     const spawnY = (start ? start.y : level.heightPx - 96) - 96 - 4;
-    this.player = new Player(this, playerState.streetX ?? this.startX, spawnY, 'jump');
+    // Friedrichshain is only reached by U-Bahn, and its start marker is at the top of the stairs
+    this.player = new Player(this, home ? (playerState.streetX ?? this.startX) : this.startX, spawnY, 'jump');
     this.player.onAction = () => this.interact();
     this.physics.add.collider(this.player, level.solid);
 
@@ -117,7 +128,9 @@ export class StreetScene extends Phaser.Scene {
     this.bubble = new SpeechBubble(this);
     this.weather = new Weather(this, level, this.messages);
 
-    if (!introShown) {
+    if (!home) {
+      this.messages.show(localise(this, 'levels.fhain.name'), MessageType.MEDIUM);
+    } else if (!introShown) {
       introShown = true;
       this.messages.show(localise(this, 'welcome'), MessageType.SMALL);
       this.messages.show(localise(this, 'levels.level1.name'), MessageType.MEDIUM);
@@ -173,7 +186,7 @@ export class StreetScene extends Phaser.Scene {
       const ubahn = target.type === 'object.ubahn';
       p.freeze();
       p.play(ubahn ? 'walk_down' : 'go_inside');
-      playerState.streetX = p.x;
+      if (this.district === 'neukoelln') playerState.streetX = p.x;
       this.tweens.add({
         targets: p,
         alpha: 0,
@@ -181,8 +194,16 @@ export class StreetScene extends Phaser.Scene {
         delay: 250,
         duration: 500,
         onComplete: () =>
-          ubahn ? this.scene.start('Ubahn') : this.scene.start('Building', { shop: target.type === 'object.djdoor' ? 'dj' : 'spati' }),
+          ubahn
+            ? this.scene.start('Ubahn', { station: this.district })
+            : this.scene.start('Building', { shop: target.type === 'object.djdoor' ? 'dj' : 'spati' }),
       });
+      return true;
+    }
+
+    // Not tonight: the club can't be entered yet
+    if (target.type === 'object.berghain') {
+      this.bubble.say(localise(this, 'berghain.bouncer'), target.x + target.width / 2 + 60, p.y - 10, 2600);
       return true;
     }
 

@@ -10,8 +10,8 @@
     "typecheck": "tsc --noEmit",
     "import-map": "python3 art/scripts/import_map.py",
     "doctor": "bash scripts/check-setup.sh",
-    "art": "python3 art/scripts/street_art.py && python3 art/scripts/ubahn_art.py && python3 art/scripts/spati_art.py && python3 art/scripts/dj_art.py && python3 art/scripts/inspect_art.py",
-    "maps": "python3 art/scripts/build_street_map.py && python3 art/scripts/build_ubahn_map.py && python3 art/scripts/build_spati_map.py && python3 art/scripts/build_dj_map.py"
+    "art": "python3 art/scripts/street_art.py && python3 art/scripts/ubahn_art.py && python3 art/scripts/spati_art.py && python3 art/scripts/dj_art.py && python3 art/scripts/inspect_art.py && python3 art/scripts/fhain_art.py",
+    "maps": "python3 art/scripts/build_street_map.py && python3 art/scripts/build_ubahn_map.py && python3 art/scripts/build_spati_map.py && python3 art/scripts/build_dj_map.py && python3 art/scripts/build_fhain_map.py"
   },
   "dependencies": {
     "phaser": "^4.2.1"
