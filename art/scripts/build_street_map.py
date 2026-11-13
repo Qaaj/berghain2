@@ -146,8 +146,6 @@ def build():
     # rubbish out for collection, in front of the player (kept clear of doors, markers and NPCs)
     L.put('front', 'bin_black_full', 30, 11)
     L.put('front', 'trash_bags', 32, 12)
-    L.put('front', 'bin_black', 63, 11)
-    L.put('front', 'trash_bag', 65, 12)
     L.put('front', 'bin_black', 87, 11)
     L.put('front', 'trash_bags', 93, 12)
     L.put('front', 'trash_bag', 95, 12)
