@@ -25,8 +25,10 @@ npm run dev          # http://localhost:5173
 WASD mirrors the arrow keys everywhere, so on the street W interacts, like ↑. E interacts everywhere. A gamepad works too (D-pad or left stick, A to interact). `npm run build` typechecks and writes a static site to `dist/`.
 
 **What's in it:** a Neukölln street (shops, windows, graffiti, a plaza with the U-Bahn entrance, a crosswalk, NPCs, a
-burning bin, a cat), the Späti (counter and shopkeeper, fridges, a Pfand machine, a cat), and a U7 platform where a
-BVG train arrives, opens its doors and leaves. Progress: cigarettes (chapter 1) → bottle for money (chapter 2).
+burning bin, a cat, trees and wheelie bins you walk behind, working traffic lights, and weather that turns between
+clear, rain, snow and wind), the Späti (counter and shopkeeper, fridges, a Pfand machine, a cat), a DJ record shop
+(a DJ at the booth, record bins to dig through, a listening station), and a U7 platform where a BVG train arrives,
+opens its doors and leaves. Progress: cigarettes (chapter 1) → bottle for money (chapter 2).
 
 ## The workflow this repo is set up for
 
@@ -44,7 +46,7 @@ BVG train arrives, opens its doors and leaves. Progress: cigarettes (chapter 1) 
   through [pixel-plugin](https://github.com/willibrandon/pixel-plugin)'s `pixel-mcp` server, so every asset is
   reproducible *and* editable in Aseprite. Claude Code can also call the plugin's tools directly.
 - **Levels are tiles you place by hand.** Two tilesets (`art/tilesets/`) are made for the editor: a Neukölln street kit
-  (facades, windows, balconies, eight shopfronts, street furniture, graffiti, skyline, marker tiles) and a U-Bahn
+  (facades, windows, balconies, nine shopfronts, street furniture, graffiti, skyline, marker tiles) and a U-Bahn
   station kit. Labelled guides sit next to them. See [art/EDITOR.md](art/EDITOR.md).
 - **One command imports an export.** `npm run import-map -- street map.zip` matches tiles by their pixels, keeps layer
   names and collision flags, and writes what the game loads.
@@ -75,7 +77,7 @@ troubleshooting: the `setup-art-tools` skill ([.claude/skills/setup-art-tools/SK
 npm run dev                                          # play
 npm run build                                        # typecheck + production build
 npm run art                                          # redraw every tileset and prop through Aseprite
-npm run maps                                         # regenerate the starter levels
+npm run maps                                         # regenerate the starter levels (street, U-Bahn, Späti, DJ shop)
 npm run import-map -- street ~/Downloads/map.zip     # import a level from Sprite Fusion (or: ubahn)
 python3 art/scripts/tile_guide.py neukoelln_street   # labelled guide image of a tileset
 ```
@@ -105,8 +107,8 @@ Example prompts: *"Draw a bike repair shop front for the street kit and put it b
 
 ```
 src/                 the game
-  scenes/            Boot, Street, Building (Späti), Ubahn
-  systems/           tilelevel (editor maps), input, messages, text, state
+  scenes/            Boot, Street, Building (the record shop and the Späti), Ubahn
+  systems/           tilelevel (editor maps), input, messages, text, state, weather
   objects/           Player, Hud
 art/
   scripts/           the drawing toolkit, tileset and prop scripts, map builders, import_map.py
