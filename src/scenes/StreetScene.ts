@@ -51,6 +51,13 @@ export class StreetScene extends Phaser.Scene {
       .setDepth(-1);
 
     const level = new TileLevel(this, 'street');
+    // Traffic lights run the German cycle: red, red+amber, green, amber (frames drawn by art/scripts/street_props.py)
+    level.animate(this, [
+      { block: 'ampel_red', ms: 6000 },
+      { block: 'ampel_redamber', ms: 1200 },
+      { block: 'ampel_green', ms: 6000 },
+      { block: 'ampel_amber', ms: 2000 },
+    ]);
     this.physics.world.setBounds(0, 0, level.widthPx, level.heightPx + 200);
     this.cameras.main.setBounds(0, 0, level.widthPx, level.heightPx).setBackgroundColor(0x000000);
 

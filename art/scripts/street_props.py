@@ -166,18 +166,37 @@ def litfass(s):
     s.rect(2, 60, 28, 4, '#47433c')
 
 
-def ampel(s, walking):
-    s.rect(7, 20, 2, 44, '#5b5a5a')
-    s.rect(3, 2, 10, 20, IRON)
-    s.rect(4, 3, 8, 18, '#0d0c0f')
-    col, glow = ('#2fa84a', '#12ff00') if walking else ('#be2633', '#ff4d5e')
-    s.rect(5, 6, 6, 12, shade(col, 0.5))
-    man = (['..##..', '..##..', '.####.', '######', '.####.', '.#..#.', '.#..#.', '.#..#.', '.#..#.'] if not walking else
-           ['..##..', '..##..', '.####.', '#####.', '.####.', '.#..#.', '#...#.', '#...#.', '#.....'])
-    for dy, row in enumerate(man):
-        for dx, ch in enumerate(row):
-            if ch == '#':
-                s.set(5 + dx, 7 + dy, glow)
+AMPEL_LAMPS = (('red', '#be2633', '#ff4d5e'), ('amber', '#d9861c', '#ffc23a'), ('green', '#2fa84a', '#5aff6e'))
+# The German cycle: red -> red+amber -> green -> amber -> red. src/scenes/StreetScene.ts swaps these frames.
+AMPEL_PHASES = (('ampel_red', {'red'}), ('ampel_redamber', {'red', 'amber'}), ('ampel_green', {'green'}),
+                ('ampel_amber', {'amber'}))
+
+
+BEZEL = ['..####..', '.######.', '########', '########', '########', '########', '.######.', '..####..']
+LENS = ['.####.', '######', '######', '######', '######', '.####.']
+CORE = ['.##.', '####', '####', '.##.']
+
+
+def ampel(s, lit):
+    """A traffic light: pole, housing and three round lamps; `lit` names the ones that are on."""
+    def disc(x0, y0, mask, col):
+        for dy, row in enumerate(mask):
+            for dx, ch in enumerate(row):
+                if ch == '#':
+                    s.set(x0 + dx, y0 + dy, col)
+
+    s.rect(7, 27, 2, 37, '#5b5a5a'); s.vline(7, 27, 37, '#807e7e')
+    s.rect(2, 0, 12, 27, IRON)
+    s.vline(2, 0, 27, '#2c2929')
+    for i, (name, col, glow) in enumerate(AMPEL_LAMPS):
+        y = 1 + i * 8
+        disc(4, y, BEZEL, '#0d0c0f')
+        if name in lit:
+            disc(5, y + 1, LENS, col)
+            disc(6, y + 2, CORE, glow)
+            s.set(6, y + 2, '#fff4e0')                        # highlight
+        else:
+            disc(5, y + 1, LENS, shade(col, 0.3))
     s.rect(6, 62, 4, 2, '#3c3a3a')
 
 
@@ -226,8 +245,8 @@ def furniture(sheet):
     car(sheet.add('car_red', 8, 3), '#7a2a2a')
     postbox(sheet.add('postbox', 1, 2))
     litfass(sheet.add('litfass', 2, 4))
-    ampel(sheet.add('ampel_red', 1, 4), False)
-    ampel(sheet.add('ampel_green', 1, 4), True)
+    for name, lit in AMPEL_PHASES:
+        ampel(sheet.add(name, 1, 4), lit)
     bench(sheet.add('bench', 2, 1))
     haltestelle(sheet.add('haltestelle', 1, 4))
     street_sign(sheet.add('sign_weser', 2, 1), 'WESERSTR')

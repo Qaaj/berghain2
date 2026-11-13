@@ -79,3 +79,5 @@ markers of the same kind merge into one wider zone.
 - Hidden layers aren't exported by the editor.
 - Only the Späti has an interior so far, so every **D** door leads there.
 - The train is not a tile: it drives in by itself (`marker T` says where it stops) and can be boarded at its doors.
+- Traffic lights animate by themselves: place any `ampel_*` frame (red, redamber, green, amber) and the street cycles
+  every traffic light through red → red+amber → green → amber, all in step.

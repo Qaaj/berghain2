@@ -1,7 +1,7 @@
 {
  "tile": 16,
  "cols": 16,
- "rows": 71,
+ "rows": 72,
  "blocks": {
   "pave_top_a": {
    "x": 0,
@@ -755,7 +755,7 @@
    "id": 787,
    "group": "street furniture"
   },
-  "ampel_green": {
+  "ampel_redamber": {
    "x": 4,
    "y": 49,
    "w": 1,
@@ -763,31 +763,39 @@
    "id": 788,
    "group": "street furniture"
   },
-  "bench": {
+  "ampel_green": {
    "x": 5,
-   "y": 49,
-   "w": 2,
-   "h": 1,
-   "id": 789,
-   "group": "street furniture"
-  },
-  "haltestelle": {
-   "x": 7,
    "y": 49,
    "w": 1,
    "h": 4,
-   "id": 791,
+   "id": 789,
    "group": "street furniture"
   },
-  "sign_weser": {
-   "x": 8,
+  "ampel_amber": {
+   "x": 6,
+   "y": 49,
+   "w": 1,
+   "h": 4,
+   "id": 790,
+   "group": "street furniture"
+  },
+  "bench": {
+   "x": 7,
    "y": 49,
    "w": 2,
    "h": 1,
-   "id": 792,
+   "id": 791,
    "group": "street furniture"
   },
-  "sign_karl": {
+  "haltestelle": {
+   "x": 9,
+   "y": 49,
+   "w": 1,
+   "h": 4,
+   "id": 793,
+   "group": "street furniture"
+  },
+  "sign_weser": {
    "x": 10,
    "y": 49,
    "w": 2,
@@ -795,23 +803,15 @@
    "id": 794,
    "group": "street furniture"
   },
-  "poller": {
+  "sign_karl": {
    "x": 12,
    "y": 49,
-   "w": 1,
+   "w": 2,
    "h": 1,
    "id": 796,
    "group": "street furniture"
   },
-  "sat_dish": {
-   "x": 13,
-   "y": 49,
-   "w": 1,
-   "h": 1,
-   "id": 797,
-   "group": "street furniture"
-  },
-  "pot_plant": {
+  "poller": {
    "x": 14,
    "y": 49,
    "w": 1,
@@ -819,236 +819,252 @@
    "id": 798,
    "group": "street furniture"
   },
-  "tag_rave": {
+  "sat_dish": {
+   "x": 15,
+   "y": 49,
+   "w": 1,
+   "h": 1,
+   "id": 799,
+   "group": "street furniture"
+  },
+  "pot_plant": {
    "x": 0,
    "y": 53,
-   "w": 2,
+   "w": 1,
    "h": 1,
    "id": 848,
+   "group": "street furniture"
+  },
+  "tag_rave": {
+   "x": 0,
+   "y": 54,
+   "w": 2,
+   "h": 1,
+   "id": 864,
    "group": "graffiti"
   },
   "tag_toy": {
    "x": 2,
-   "y": 53,
+   "y": 54,
    "w": 2,
    "h": 1,
-   "id": 850,
+   "id": 866,
    "group": "graffiti"
   },
   "tag_kotti": {
    "x": 4,
-   "y": 53,
+   "y": 54,
    "w": 3,
    "h": 1,
-   "id": 852,
+   "id": 868,
    "group": "graffiti"
   },
   "tag_star": {
    "x": 7,
-   "y": 53,
+   "y": 54,
    "w": 1,
    "h": 1,
-   "id": 855,
+   "id": 871,
    "group": "graffiti"
   },
   "tag_spiral": {
    "x": 8,
-   "y": 53,
+   "y": 54,
    "w": 1,
    "h": 1,
-   "id": 856,
+   "id": 872,
    "group": "graffiti"
   },
   "tag_eye": {
    "x": 9,
-   "y": 53,
+   "y": 54,
    "w": 1,
    "h": 1,
-   "id": 857,
+   "id": 873,
    "group": "graffiti"
   },
   "mural_a": {
    "x": 10,
-   "y": 53,
+   "y": 54,
    "w": 4,
    "h": 3,
-   "id": 858,
+   "id": 874,
    "group": "graffiti"
   },
   "mural_b": {
    "x": 0,
-   "y": 56,
+   "y": 57,
    "w": 3,
    "h": 2,
-   "id": 896,
+   "id": 912,
    "group": "graffiti"
   },
   "poster_gig": {
    "x": 3,
-   "y": 56,
+   "y": 57,
    "w": 1,
    "h": 2,
-   "id": 899,
+   "id": 915,
    "group": "graffiti"
   },
   "poster_party": {
    "x": 4,
-   "y": 56,
+   "y": 57,
    "w": 1,
    "h": 2,
-   "id": 900,
+   "id": 916,
    "group": "graffiti"
   },
   "poster_dub": {
    "x": 5,
-   "y": 56,
+   "y": 57,
    "w": 1,
    "h": 2,
-   "id": 901,
+   "id": 917,
    "group": "graffiti"
   },
   "stickers": {
    "x": 6,
-   "y": 56,
+   "y": 57,
    "w": 1,
    "h": 1,
-   "id": 902,
+   "id": 918,
    "group": "graffiti"
   },
   "moon": {
    "x": 0,
-   "y": 58,
+   "y": 59,
    "w": 2,
    "h": 2,
-   "id": 928,
+   "id": 944,
    "group": "sky and skyline"
   },
   "star_a": {
    "x": 2,
-   "y": 58,
+   "y": 59,
    "w": 1,
    "h": 1,
-   "id": 930,
+   "id": 946,
    "group": "sky and skyline"
   },
   "star_b": {
    "x": 3,
-   "y": 58,
+   "y": 59,
    "w": 1,
    "h": 1,
-   "id": 931,
+   "id": 947,
    "group": "sky and skyline"
   },
   "skyline_a": {
    "x": 4,
-   "y": 58,
+   "y": 59,
    "w": 4,
    "h": 3,
-   "id": 932,
+   "id": 948,
    "group": "sky and skyline"
   },
   "skyline_b": {
    "x": 8,
-   "y": 58,
+   "y": 59,
    "w": 4,
    "h": 4,
-   "id": 936,
+   "id": 952,
    "group": "sky and skyline"
   },
   "skyline_c": {
    "x": 12,
-   "y": 58,
+   "y": 59,
    "w": 3,
    "h": 3,
-   "id": 940,
+   "id": 956,
    "group": "sky and skyline"
   },
   "skyline_fill": {
    "x": 15,
-   "y": 58,
+   "y": 59,
    "w": 1,
    "h": 1,
-   "id": 943,
+   "id": 959,
    "group": "sky and skyline"
   },
   "fernsehturm": {
    "x": 0,
-   "y": 62,
+   "y": 63,
    "w": 2,
    "h": 8,
-   "id": 992,
+   "id": 1008,
    "group": "sky and skyline"
   },
   "marker_start": {
    "x": 0,
-   "y": 70,
+   "y": 71,
    "w": 1,
    "h": 1,
-   "id": 1120,
+   "id": 1136,
    "group": "markers"
   },
   "marker_door": {
    "x": 1,
-   "y": 70,
+   "y": 71,
    "w": 1,
    "h": 1,
-   "id": 1121,
+   "id": 1137,
    "group": "markers"
   },
   "marker_djdoor": {
    "x": 2,
-   "y": 70,
+   "y": 71,
    "w": 1,
    "h": 1,
-   "id": 1122,
+   "id": 1138,
    "group": "markers"
   },
   "marker_ubahn": {
    "x": 3,
-   "y": 70,
+   "y": 71,
    "w": 1,
    "h": 1,
-   "id": 1123,
+   "id": 1139,
    "group": "markers"
   },
   "marker_smoker": {
    "x": 4,
-   "y": 70,
+   "y": 71,
    "w": 1,
    "h": 1,
-   "id": 1124,
+   "id": 1140,
    "group": "markers"
   },
   "marker_weirdo": {
    "x": 5,
-   "y": 70,
+   "y": 71,
    "w": 1,
    "h": 1,
-   "id": 1125,
+   "id": 1141,
    "group": "markers"
   },
   "marker_cop": {
    "x": 6,
-   "y": 70,
+   "y": 71,
    "w": 1,
    "h": 1,
-   "id": 1126,
+   "id": 1142,
    "group": "markers"
   },
   "marker_fire": {
    "x": 7,
-   "y": 70,
+   "y": 71,
    "w": 1,
    "h": 1,
-   "id": 1127,
+   "id": 1143,
    "group": "markers"
   },
   "marker_cat": {
    "x": 8,
-   "y": 70,
+   "y": 71,
    "w": 1,
    "h": 1,
-   "id": 1128,
+   "id": 1144,
    "group": "markers"
   }
  }

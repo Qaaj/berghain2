@@ -135,7 +135,7 @@ def build():
     L.put('props', 'poller', 55, 12)
     L.put('props', 'poller', 60, 12)
     L.put('props', 'ampel_red', 55, 9)
-    L.put('props', 'ampel_green', 59, 9)
+    L.put('props', 'ampel_red', 59, 9)
     L.put('props', 'haltestelle', 78, 9)
     L.put('props', 'bench', 76, 12)
     # plaza
