@@ -24,10 +24,11 @@ const DOOR_W = 20;
 
 type TrainState = 'away' | 'arriving' | 'open' | 'leaving';
 
-// One train line with two stops; boarding at either one rides to the other
-const STATIONS: Record<District, { level: string; next: District }> = {
-  neukoelln: { level: 'ubahn', next: 'fhain' },
-  fhain: { level: 'ubahn_fhain', next: 'neukoelln' },
+// One train line with two stops; boarding at either one rides to the other. The cab's display shows the
+// station's line (the U5 cab is drawn by art/scripts/ubahn_art.py as train_cab_u5).
+const STATIONS: Record<District, { level: string; next: District; cab: string }> = {
+  neukoelln: { level: 'ubahn', next: 'fhain', cab: 'cab' },
+  fhain: { level: 'ubahn_fhain', next: 'neukoelln', cab: 'cab_u5' },
 };
 const RIDE_MS = 4200;
 
@@ -124,7 +125,7 @@ export class UbahnScene extends Phaser.Scene {
     this.train = { x: stopX, stopX, awayX: levelW + 400, leaveX: stopX - CAR_W * CONSIST.length - 400 };
     CONSIST.forEach((c, i) => {
       const img = this.add
-        .image(stopX + i * CAR_W, bottomY, `ubahn_train_${c.kind}_open`)
+        .image(stopX + i * CAR_W, bottomY, `${this.trainKey(c.kind)}_open`)
         .setOrigin(0, 1)
         .setFlipX(c.flip)
         .setDepth(2.5);
@@ -140,8 +141,12 @@ export class UbahnScene extends Phaser.Scene {
     this.cars.forEach((img, i) => img.setX(x + i * CAR_W));
   }
 
+  private trainKey(kind: 'cab' | 'car') {
+    return `ubahn_train_${kind === 'cab' ? STATIONS[this.station].cab : kind}`;
+  }
+
   private setDoors(open: boolean) {
-    CONSIST.forEach((c, i) => this.cars[i].setTexture(`ubahn_train_${c.kind}${open ? '_open' : ''}`));
+    CONSIST.forEach((c, i) => this.cars[i].setTexture(`${this.trainKey(c.kind)}${open ? '_open' : ''}`));
   }
 
   private leaveStation() {

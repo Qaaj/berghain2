@@ -439,7 +439,7 @@ CAR_W, CAR_H = 128, 80
 BODY, BODY_HI, BODY_LO = '#d6a90e', '#f1c93a', '#a88108'
 
 
-def train_car(open_doors, cab=False):
+def train_car(open_doors, cab=False, line='U7'):
     s = Sprite(CAR_W, CAR_H, outline=True)
     x0 = 14 if cab else 1
     # body, with a nose on the cab
@@ -499,7 +499,7 @@ def train_car(open_doors, cab=False):
             left = 14 - int((y - 6) * 14 / 34) + 2
             for x in range(left, 24):
                 s.set(x, y, '#0b1a22')
-        s.rect(26, 8, 10, 6, '#121114'); s.text(27, 9, 'U7', '#ffb000')
+        s.rect(26, 8, 10, 6, '#121114'); s.text(27, 9, line, '#ffb000')
         s.rect(1, 46, 3, 3, '#f6f2d0'); s.rect(1, 53, 3, 3, '#f6f2d0')
         s.rect(0, 58, 12, 3, '#3c3a3a')
     # bogies
@@ -513,9 +513,11 @@ def train_car(open_doors, cab=False):
 
 
 def make_train(studio):
-    for name, open_doors, cab in (('train_car', False, False), ('train_car_open', True, False),
-                                  ('train_cab', False, True), ('train_cab_open', True, True)):
-        studio.make('ubahn_' + name, train_car(open_doors, cab), 'ubahn/%s.png' % name)
+    # The cab's destination display shows the line: U7 in Neukölln, U5 in Friedrichshain (the cars are shared)
+    for name, open_doors, cab, line in (('train_car', False, False, 'U7'), ('train_car_open', True, False, 'U7'),
+                                        ('train_cab', False, True, 'U7'), ('train_cab_open', True, True, 'U7'),
+                                        ('train_cab_u5', False, True, 'U5'), ('train_cab_u5_open', True, True, 'U5')):
+        studio.make('ubahn_' + name, train_car(open_doors, cab, line), 'ubahn/%s.png' % name)
         print('drew', name)
 
 
