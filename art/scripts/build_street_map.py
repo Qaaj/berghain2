@@ -3,7 +3,8 @@
 It is only a starting point: open art/tilesets/neukoelln_street.png in the Sprite Fusion tilemap editor,
 build your own street with the layer names below, export, and run import_map.py to replace it.
 
-Layers, bottom to top:  far (scrolls at half speed) | buildings | details | ground (collider) | props |
+Layers, bottom to top:  far (scrolls at half speed) | buildings | details | yard (things on the empty lot) |
+                        ground (collider) | props (incl. the chain-link fence) |
                         markers (hidden, spawns things) | front (drawn over the player, e.g. trees, bins)
 Marker tiles (see the 'markers' section of the tileset): P player start, D door into the Späti,
 R door into the record shop, U U-Bahn entrance, S/W/C smoker/weirdo/cop, F fire bin, K cat. An entity stands on the bottom of its marker tile.
@@ -12,7 +13,7 @@ import random
 
 from tilemaplib import Level
 
-W, H = 110, 15
+W, H = 132, 15
 GROUND = 13          # the row the player walks on top of
 PAL = 'abcde'
 
@@ -20,7 +21,7 @@ PAL = 'abcde'
 def build():
     L = Level('neukoelln_street', W, H)
     rng = random.Random(1)
-    for name, collider in (('far', False), ('buildings', False), ('details', False), ('ground', True),
+    for name, collider in (('far', False), ('buildings', False), ('details', False), ('yard', False), ('ground', True),
                            ('props', False), ('markers', False), ('front', False)):
         L.layer(name, collider)
 
@@ -155,13 +156,13 @@ def build():
     x = 0
     seq = ['skyline_b', 'skyline_a', 'skyline_c', 'skyline_b', 'skyline_a', 'skyline_c']
     i = 0
-    while x < 66:
+    while x < 82:                                  # half the level width plus a screen, for the parallax
         name = seq[i % len(seq)]
         b = L.catalog['blocks'][name]
         L.put('far', name, x, 12 - b['h'])
         x += b['w']
         i += 1
-    for x in range(0, 66):
+    for x in range(0, 82):
         L.put('far', 'skyline_fill', x, 12)
         L.put('far', 'skyline_fill', x, 13)
         L.put('far', 'skyline_fill', x, 14)
@@ -170,6 +171,9 @@ def build():
     for i in range(30):
         L.put('far', rng.choice(['star_a', 'star_b']), rng.randint(0, 65), rng.randint(0, 5))
     L.put('far', 'moon', 16, 1)
+    star_rng = random.Random(4)
+    for i in range(8):
+        L.put('far', star_rng.choice(['star_a', 'star_b']), star_rng.randint(66, 81), star_rng.randint(0, 5))
 
     # -------------------------------------------------------------- markers
     L.put('markers', 'marker_start', 3, 12)
@@ -180,7 +184,40 @@ def build():
     L.put('markers', 'marker_fire', 42, 12)
     L.put('markers', 'marker_cat', 57, 12)
     L.put('markers', 'marker_cop', 66, 12)
+
+    # Built last, with its own random generator, so the street before it comes out exactly as it did.
+    vacant_lot(L, 110, 12, random.Random(2))
+    rng.seed(3)
+    apartment_building(122, 'door_apt_green', 'b')
+    L.put('props', 'lamp', 124, 9)
+    L.put('details', 'poster_party', 131, 9)
     return L
+
+
+def vacant_lot(L, x0, w, rng):
+    """An empty lot between the houses: no building, open sky (the far skyline shows through), trodden earth,
+    weeds, a birch and dumped rubbish, behind a chain-link fence along the pavement."""
+    for x in range(x0, x0 + w):
+        L.put('details', 'lot_dirt_top_' + rng.choice('aab'), x, 11)
+        L.put('details', 'lot_dirt', x, 12)
+    for dx, name in ((0, 'lot_mound'), (3, 'weeds_b'), (4, 'rubble'), (6, 'weeds_a'), (9, 'mattress'), (11, 'weeds_b')):
+        L.put('yard', name, x0 + dx, 11)
+    L.put('yard', 'birch', x0 + 7, 7)
+    L.put('yard', 'tyres', x0 + 1, 12)
+    L.put('yard', 'shopping_cart', x0 + 3, 12)
+    L.put('yard', 'pallet', x0 + 8, 12)
+    fence(L, x0, w, {2: 'fence_mesh_b', 5: 'fence_sign', 9: 'fence_mesh_torn'})
+
+
+def fence(L, x0, w, special=()):
+    """A chain-link fence standing on the pavement from x0 for w tiles: end posts, a post every 4 tiles, plain
+    mesh in between. `special` maps an offset to another panel (fence_mesh_b, fence_mesh_torn, fence_sign)."""
+    top = GROUND - 3
+    for dx in range(w):
+        L.put('props', 'fence_end_l' if dx == 0 else 'fence_end_r' if dx == w - 1 else
+              'fence_post' if dx % 4 == 0 else 'fence_mesh_a', x0 + dx, top)
+    for dx, name in dict(special).items():
+        L.put('props', name, x0 + dx, top)
 
 
 if __name__ == '__main__':

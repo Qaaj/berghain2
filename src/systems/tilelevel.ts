@@ -113,7 +113,7 @@ export class TileLevel {
     show(0);
   }
 
-  // Every placed copy of a catalog block, found by its top-left tile, in pixels (x, y = top-left) and tiles
+  // Every placed copy of a block, found by its top-left tile in any drawn layer: top-left pixel, size, and tile position
   blocksNamed(name: string): { x: number; y: number; w: number; h: number; tx: number; ty: number }[] {
     const b = this.catalog[name];
     if (!b) return [];

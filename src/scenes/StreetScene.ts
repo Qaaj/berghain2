@@ -6,6 +6,7 @@ import { Controls } from '../systems/input';
 import { INSPECT_BLOCKS, openInspect } from '../systems/inspect';
 import { MessageQueue, PlayerNotification, SpeechBubble } from '../systems/messages';
 import { playerState, resetPlayer } from '../systems/state';
+import { lightLamps } from '../systems/lamplight';
 import { localise } from '../systems/text';
 import { TileLevel } from '../systems/tilelevel';
 import { Weather } from '../systems/weather';
@@ -62,6 +63,7 @@ export class StreetScene extends Phaser.Scene {
       { block: 'ampel_green', ms: 6000 },
       { block: 'ampel_amber', ms: 2000 },
     ]);
+    lightLamps(this, level);
     this.physics.world.setBounds(0, 0, level.widthPx, level.heightPx + 200);
     this.cameras.main.setBounds(0, 0, level.widthPx, level.heightPx).setBackgroundColor(0x000000);
 
