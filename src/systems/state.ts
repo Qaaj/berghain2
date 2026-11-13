@@ -6,7 +6,8 @@ export const playerState = {
   mana: 5,
   isAlive: true,
   inventory: [] as string[],
-  // Items taken out of close-up views, as "<place>:<spot>" (see systems/inspect.ts), so they stay taken
+  // Pickups already taken, one entry per placement ("<place>:<spot>" from close-ups, "<shop>:<item>@x,y" indoors),
+  // so each copy stays taken even after the item leaves the inventory (a returned bottle doesn't respawn)
   looted: [] as string[],
   chapter: 1,
   money: 0, // in cents
