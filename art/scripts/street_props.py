@@ -464,7 +464,7 @@ MARKERS = [  # name, letter, colour
 
 
 # Added after the original set, in their own row at the end of the sheet so earlier tile ids stay put
-LATE_MARKERS = [('marker_dealer', 'X', '#8fd18a')]
+LATE_MARKERS = [('marker_dealer', 'X', '#8fd18a'), ('marker_jule', 'J', '#e08a3c')]
 
 
 def marker_tile(s, letter, col):

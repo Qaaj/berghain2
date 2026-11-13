@@ -68,6 +68,7 @@ markers of the same kind merge into one wider zone.
 | **V** ticket | | ticket machine |
 | **S / W / C** | smoker / weirdo / cop NPCs | S / W |
 | **X** dealer | the dealer you can buy from (last row of the sheet) | |
+| **J** Jule | the neighbour who sends you to the dealer for weed (last row of the sheet) | |
 | **F** fire | a burning bin (hurts) | |
 | **K** cat | a cat you can pet | |
 

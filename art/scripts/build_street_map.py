@@ -7,7 +7,7 @@ Layers, bottom to top:  far (scrolls at half speed) | buildings | details | yard
                         ground (collider) | props (incl. the chain-link fence) |
                         markers (hidden, spawns things) | front (drawn over the player, e.g. trees, bins)
 Marker tiles (see the 'markers' section of the tileset): P player start, D door into the Späti,
-R door into the record shop, U U-Bahn entrance, S/W/C smoker/weirdo/cop, X dealer, F fire bin, K cat. An entity stands on the bottom of its marker tile.
+R door into the record shop, U U-Bahn entrance, S/W/C smoker/weirdo/cop, X dealer, J Jule, F fire bin, K cat. An entity stands on the bottom of its marker tile.
 """
 import random
 
@@ -185,6 +185,7 @@ def build():
     L.put('markers', 'marker_cat', 57, 12)
     L.put('markers', 'marker_cop', 66, 12)
     L.put('markers', 'marker_dealer', 90, 12)      # on the wall under the KOTTI tag, next to the closed-down shop
+    L.put('markers', 'marker_jule', 22, 12)        # on the stoop of her building, two doors from the Späti
 
     # Built last, with its own random generator, so the street before it comes out exactly as it did.
     vacant_lot(L, 110, 12, random.Random(2))

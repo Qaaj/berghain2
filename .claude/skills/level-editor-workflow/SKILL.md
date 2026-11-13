@@ -19,7 +19,7 @@ Fusion desktop editor from the repo's tilesets; the game loads the result. The f
   `collider: true` is solid (`ground`) · everything else is drawn behind the player in file order.
 - **Marker tiles** (letters on coloured squares in the tileset's `markers` section) place things; an entity stands on
   the **bottom** of its tile and adjacent same-kind markers merge. Street: P start, D door (→ Späti), U ubahn,
-  S/W/C NPCs, X dealer, F fire bin, K cat. U-Bahn: P start, E stairs, T train stop, V ticket, S/W passengers.
+  S/W/C NPCs, X dealer, J Jule, F fire bin, K cat. U-Bahn: P start, E stairs, T train stop, V ticket, S/W passengers.
   The names come from the catalog (`marker_door` → `door`); `StreetScene`/`UbahnScene` decide what each does.
 
 ## Import an export
