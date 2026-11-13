@@ -1,6 +1,12 @@
 {
   "en": {
     "player": {},
+    "weather": {
+      "rain": "It starts to rain",
+      "snow": "It starts to snow",
+      "wind": "The wind picks up",
+      "clear": "The sky clears up"
+    },
     "interactable": {
       "npc": {
         "smoker": {
@@ -141,6 +147,12 @@
   },
   "de": {
     "player": {},
+    "weather": {
+      "rain": "Es regnet",
+      "snow": "Es schneit",
+      "wind": "Der Wind frischt auf",
+      "clear": "Der Himmel klart auf"
+    },
     "interactable": {
       "npc": {
         "smoker": {

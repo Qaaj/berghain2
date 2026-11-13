@@ -4,7 +4,7 @@ import { BootScene } from './scenes/BootScene';
 import { BuildingScene } from './scenes/BuildingScene';
 import { StreetScene } from './scenes/StreetScene';
 import { UbahnScene } from './scenes/UbahnScene';
-import { playerState } from './systems/state';
+import { playerState, type WeatherKind } from './systems/state';
 
 const game = new Phaser.Game({
   type: Phaser.AUTO,
@@ -27,5 +27,7 @@ if (import.meta.env.DEV) {
     await new Promise((r) => setTimeout(r, ms));
     fire('keyup');
   };
-  Object.assign(window, { game, playerState, hold });
+  // weather('snow') switches the street weather now ('clear' | 'rain' | 'snow' | 'wind')
+  const weather = (kind: WeatherKind) => (game.scene.getScene('Street') as StreetScene).weather.set(kind);
+  Object.assign(window, { game, playerState, hold, weather });
 }

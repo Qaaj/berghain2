@@ -7,6 +7,7 @@ import { MessageQueue, PlayerNotification, SpeechBubble } from '../systems/messa
 import { playerState, resetPlayer } from '../systems/state';
 import { localise } from '../systems/text';
 import { TileLevel } from '../systems/tilelevel';
+import { Weather } from '../systems/weather';
 
 const NPC_ROLES = ['smoker', 'weirdo', 'cop'] as const;
 let introShown = false;
@@ -28,6 +29,7 @@ export class StreetScene extends Phaser.Scene {
   private messages!: MessageQueue;
   private notification!: PlayerNotification;
   private bubble!: SpeechBubble;
+  weather!: Weather;
   private interactables: Interactable[] = [];
   private inFrontOf: Interactable | null = null;
   private talking = false;
@@ -97,6 +99,7 @@ export class StreetScene extends Phaser.Scene {
     this.messages = new MessageQueue(this);
     this.notification = new PlayerNotification(this);
     this.bubble = new SpeechBubble(this);
+    this.weather = new Weather(this, level, this.messages);
 
     if (!introShown) {
       introShown = true;
@@ -109,10 +112,12 @@ export class StreetScene extends Phaser.Scene {
     this.cameras.main.fadeIn(300);
   }
 
-  update() {
+  update(_time: number, delta: number) {
     this.controls.update();
     this.updateInteractionPrompt();
     this.player.tick(this.controls);
+    this.weather.update(delta);
+    this.weather.push(this.player);
     this.notification.follow(this.player.body);
 
     if (this.player.body.y > this.scale.height + 100) playerState.health = 0;

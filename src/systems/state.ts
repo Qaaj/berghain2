@@ -1,3 +1,5 @@
+export type WeatherKind = 'clear' | 'rain' | 'snow' | 'wind';
+
 // Shared game state across scenes (OG player_model)
 export const playerState = {
   health: 100,
@@ -8,6 +10,9 @@ export const playerState = {
   money: 0, // in cents
   // Where to put the player when coming back to the street (null = the level's start marker)
   streetX: null as number | null,
+  // Street weather persists while you're indoors; null until the street picks the first one
+  weather: null as WeatherKind | null,
+  weatherLeft: 0, // ms of street time until the weather turns
 };
 
 export function resetPlayer() {
