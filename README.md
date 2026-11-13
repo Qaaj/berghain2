@@ -17,12 +17,12 @@ npm run dev          # http://localhost:5173
 
 | | Street / U-Bahn | Inside the Späti |
 |---|---|---|
-| Move | ← → | arrow keys |
+| Move | ← → or A D | arrow keys or W A S D |
 | Jump | Space | — |
-| Interact (doors, NPCs, machines, train) | ↑ | Space |
+| Interact (doors, NPCs, machines, train) | E, ↑ or W | E or Space |
 | Sprint | Shift | Shift |
 
-A gamepad works too (D-pad or left stick, A to interact). `npm run build` typechecks and writes a static site to `dist/`.
+WASD mirrors the arrow keys everywhere, so on the street W interacts, like ↑. E interacts everywhere. A gamepad works too (D-pad or left stick, A to interact). `npm run build` typechecks and writes a static site to `dist/`.
 
 **What's in it:** a Neukölln street (shops, windows, graffiti, a plaza with the U-Bahn entrance, a crosswalk, NPCs, a
 burning bin, a cat), the Späti (counter and shopkeeper, fridges, a Pfand machine, a cat), and a U7 platform where a
