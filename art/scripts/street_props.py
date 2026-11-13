@@ -20,8 +20,10 @@ def lamp(s):
 
 
 def tree(sheet):
+    """One 5x7 block: crown on top, trunk underneath. It goes in the `front` layer, so the player walks behind
+    the whole tree; the trunk starts inside the foliage so there is no gap between them."""
     rng = noise(44)
-    s = sheet.add('tree_crown', 5, 4)
+    s = sheet.add('tree', 5, 7)
     for cx, cy, rx, ry in ((40, 34, 36, 26), (20, 40, 19, 18), (60, 40, 19, 18), (40, 18, 26, 16), (22, 24, 16, 14), (58, 24, 16, 14)):
         s.ellipse(cx, cy, rx, ry, '#0c2a14')
     for (x, y), col in list(s.p.items()):
@@ -36,13 +38,22 @@ def tree(sheet):
         x, y = rng.randint(8, 72), rng.randint(14, 56)
         if (x, y) in s.p:
             s.set(x, y, '#ffd878')
-    s = sheet.add('tree_trunk', 1, 3)
-    s.rect(5, 0, 6, 48, '#3d2a1c')
-    s.vline(5, 0, 48, '#5a3f28'); s.vline(10, 0, 48, '#2a1c12')
-    s.rect(3, 42, 10, 6, '#3d2a1c'); s.rect(2, 45, 12, 3, '#3d2a1c')
+
+    crown = set(s.p)
+    X, T = 32, 64                                             # trunk tile: middle column, below the crown rows
+
+    def bark(x0, y0, w, h, col):
+        for y in range(y0, y0 + h):
+            for x in range(x0, x0 + w):
+                if (X + x, T + y) not in crown:
+                    s.set(X + x, T + y, col)
+
+    bark(5, -20, 6, 68, '#3d2a1c')
+    bark(5, -20, 1, 68, '#5a3f28'); bark(10, -20, 1, 68, '#2a1c12')
+    bark(3, 42, 10, 6, '#3d2a1c'); bark(2, 45, 12, 3, '#3d2a1c')
     for y in range(4, 44, 6):
-        s.set(7, y, '#2a1c12'); s.set(8, y + 2, '#2a1c12')
-    s.rect(4, 14, 2, 14, '#1a7a2a')                           # ivy
+        bark(7, y, 1, 1, '#2a1c12'); bark(8, y + 2, 1, 1, '#2a1c12')
+    bark(4, 14, 2, 14, '#1a7a2a')                             # ivy
     s = sheet.add('tree_small', 3, 4)
     s.ellipse(24, 16, 17, 13, '#0c2a14')
     s.ellipse(17, 20, 10, 8, '#12401f'); s.ellipse(30, 18, 9, 8, '#12401f')

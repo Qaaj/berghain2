@@ -25,9 +25,9 @@ Create these, bottom to top. Anything with the **collision** flag turned on beco
 | `buildings` | Plaster, windows, cornices, roofs, **shopfronts** and doors. |
 | `details` | Balconies, graffiti, posters, signs, dishes. |
 | `ground` | Pavement, curb, road. **Collision on.** The player walks on the top edge of the first row. |
-| `props` | Lamps, bins, bikes, benches, trees' trunks, the U-Bahn entrance, traffic lights. |
+| `props` | Lamps, bins, bikes, benches, the U-Bahn entrance, traffic lights. |
 | `markers` | Marker tiles (see below). Never drawn in the game. |
-| `front` | Drawn **over** the player: tree crowns. |
+| `front` | Drawn **over** the player: trees (the `tree` block is crown and trunk in one, so you walk behind all of it). |
 
 | U-Bahn layer | What goes in it |
 |---|---|
@@ -52,6 +52,7 @@ markers of the same kind merge into one wider zone.
 |---|---|---|
 | **P** start | where the player begins | same |
 | **D** door | enter the Späti | |
+| **R** djdoor | enter the record shop | |
 | **U** ubahn | go down into the station | |
 | **E** exit | | stairs up to the street |
 | **T** train | | where the train's nose stops |
@@ -77,7 +78,7 @@ markers of the same kind merge into one wider zone.
 ## Tips
 
 - Hidden layers aren't exported by the editor.
-- Only the Späti has an interior so far, so every **D** door leads there.
+- Every **D** door leads into the Späti and every **R** door into the record shop.
 - The train is not a tile: it drives in by itself (`marker T` says where it stops) and can be boarded at its doors.
 - Traffic lights animate by themselves: place any `ampel_*` frame (red, redamber, green, amber) and the street cycles
   every traffic light through red → red+amber → green → amber, all in step.

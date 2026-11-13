@@ -4,7 +4,7 @@ import * as Phaser from 'phaser';
 // art/scripts/import_map.py. Layers keep the names they have in the editor:
 //   "far*"      scrolls at half speed (skyline, moon)
 //   "markers"   never drawn; each tile spawns something (player start, doors, NPCs...) where it stands
-//   "front*"    drawn over the player (tree crowns)
+//   "front*"    drawn over the player (trees)
 //   any layer with the `collider` property becomes solid
 // Everything else is drawn behind the player in the order it appears in the file.
 export interface Marker {
