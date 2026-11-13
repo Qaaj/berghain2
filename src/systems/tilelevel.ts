@@ -113,6 +113,19 @@ export class TileLevel {
     show(0);
   }
 
+  // Top-left pixel of every placed copy of a block, found by its top-left tile, in any drawn layer
+  blocksNamed(name: string) {
+    const b = this.catalog[name];
+    const found: { x: number; y: number }[] = [];
+    if (!b) return found;
+    for (const layer of this.layers) {
+      layer.forEachTile((tile) => {
+        if (tile.index - 1 === b.id) found.push({ x: tile.pixelX, y: tile.pixelY });
+      });
+    }
+    return found;
+  }
+
   markersNamed(name: string) {
     return this.markers.filter((m) => m.name === name);
   }
